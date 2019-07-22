@@ -1,0 +1,37 @@
+---
+name: Button
+menu: Components
+route: /components/button
+---
+
+# Button
+
+import { Playground, Props } from 'docz'
+import Button from './Button'
+
+You can document using markdown.
+
+- list item
+- another item
+
+You can also use JSX directly
+
+<Button buttonType="betaPrimary">Click me</Button>
+
+Or you can create a Playground:
+
+<Playground>
+  <Button buttonType='betaPrimary'>Click Me</Button>
+  <Button buttonType='betaSecondary'>Click Me</Button>
+</Playground>
+
+ You can show raw code:
+ ```ts
+<Button buttonType="betaButton">Click Me</Button>
+```
+
+It is also easy document a props table:
+
+## Props
+
+<Props of={Button} />

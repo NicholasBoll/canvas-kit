@@ -1,0 +1,45 @@
+---
+name: Checkbox
+menu: Components
+route: /components/checkbox
+---
+
+import { useState } from 'react'
+import { Playground, Props } from 'docz'
+import Checkbox from './Checkbox'
+
+# Checkbox
+
+Checkbox is a low-level component that needs to be controlled by a stateful component. Use a checkbox for binary true/false or yes/no type of input. An input can stand alone or be part of a group of options.
+
+## Variations
+|  |  |
+| --- | --- | --- | --- |
+| Unchecked | <Checkbox /> |
+| Checked | <Checkbox checked={true} /> |
+| Disabled | <Checkbox disabled={true} /> |
+| Disabled Checked | <Checkbox checked={true} disabled={true} /> |
+
+## Examples
+
+<Playground>
+  {() => {
+    const CheckboxExample = () => {
+      const [checked, setChecked] = useState(false)
+      const toggleChecked = () => {
+        setChecked(!checked)
+      }
+
+      return (
+        <Checkbox disabled={false} checked={checked} onChange={toggleChecked} />
+      )
+    }
+
+    return <CheckboxExample />
+  }}
+</Playground>
+
+## Props
+
+<Props of={Checkbox} />
+
