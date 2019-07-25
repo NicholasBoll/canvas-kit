@@ -89,12 +89,14 @@
     "tslint-config-prettier": "^1.14.0",
     "tslint-react": "^3.6.0",
     "typescript": "^3.5.1",
-    "validate-commit-msg": "^2.14.0"
+    "validate-commit-msg": "^2.14.0",
+    "gatsby-plugin-typescript": "2.1.2",
+    "gatsby-plugin-eslint": "2.0.5"
   },
   "scripts": {
     "start": "node --max-old-space-size=2048 node_modules/.bin/start-storybook -p 9001 -c .storybook",
     "clean": "lerna run clean",
-    "build": "lerna run build",
+    "build": "gatsby build",
     "build:rebuild": "lerna run build:rebuild",
     "create-module": "./create-module.sh",
     "precommit": "lint-staged",
@@ -106,7 +108,9 @@
     "format:tslint": "tslint --project tsconfig.json --fix",
     "format": "yarn format:prettier && yarn format:tslint",
     "test": "TZ=UTC jest",
-    "updateSnaps": "TZ=UTC jest -u"
+    "updateSnaps": "TZ=UTC jest -u",
+    "dev": "gatsby develop",
+    "serve": "gatsby serve"
   },
   "config": {
     "commitizen": {

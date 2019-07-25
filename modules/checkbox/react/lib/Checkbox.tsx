@@ -224,13 +224,13 @@ const CheckboxLabel = styled('label')<{disabled?: boolean}>(
 export default class Checkbox extends React.Component<CheckboxProps> {
   static ErrorType = ErrorType;
 
-  public static defaultProps = {
+  static defaultProps = {
     checked: false,
     label: '',
     id: uuid(),
   };
 
-  public render() {
+  render() {
     const {
       checked,
       disabled,

@@ -1,0 +1,5194 @@
+{
+  "config": {
+    "title": "Canvas Kit",
+    "description": "My awesome app using docz",
+    "menu": [],
+    "repository": null,
+    "native": false,
+    "themeConfig": {},
+    "separator": "-",
+    "typescript": true
+  },
+  "entries": [
+    {
+      "key": "API_PATTERN_GUIDELINES.md",
+      "value": {
+        "id": "d819bbafe09c8e0ae9b67e1597986b23",
+        "filepath": "API_PATTERN_GUIDELINES.md",
+        "fullpath": "/Users/nicholas.boll/projects/canvas-kit/API_PATTERN_GUIDELINES.md",
+        "link": "",
+        "slug": "api-pattern-guidelines",
+        "route": "/api-pattern-guidelines",
+        "name": "Api pattern guidelines",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "api--pattern-guidelines",
+            "depth": 1,
+            "value": "API & Pattern Guidelines"
+          },
+          {
+            "slug": "canvas",
+            "depth": 2,
+            "value": "Canvas"
+          },
+          {
+            "slug": "naming",
+            "depth": 2,
+            "value": "Naming"
+          },
+          {
+            "slug": "props",
+            "depth": 4,
+            "value": "Props"
+          },
+          {
+            "slug": "t-shirt-sizes",
+            "depth": 4,
+            "value": "T-shirt Sizes"
+          },
+          {
+            "slug": "theme-types",
+            "depth": 4,
+            "value": "Theme Types"
+          },
+          {
+            "slug": "event-handlers",
+            "depth": 4,
+            "value": "Event Handlers"
+          },
+          {
+            "slug": "enums",
+            "depth": 4,
+            "value": "Enums"
+          },
+          {
+            "slug": "patterns",
+            "depth": 2,
+            "value": "Patterns"
+          },
+          {
+            "slug": "event-handlers-1",
+            "depth": 4,
+            "value": "Event Handlers"
+          },
+          {
+            "slug": "grow-interface",
+            "depth": 4,
+            "value": "Grow Interface"
+          },
+          {
+            "slug": "static-class-variables",
+            "depth": 4,
+            "value": "Static Class Variables"
+          },
+          {
+            "slug": "input-provider",
+            "depth": 4,
+            "value": "Input Provider"
+          },
+          {
+            "slug": "prop-spread-behavior",
+            "depth": 4,
+            "value": "Prop Spread Behavior"
+          },
+          {
+            "slug": "controlled-components",
+            "depth": 4,
+            "value": "Controlled Components"
+          },
+          {
+            "slug": "ref-usage",
+            "depth": 4,
+            "value": "Ref Usage"
+          },
+          {
+            "slug": "accessibility",
+            "depth": 4,
+            "value": "Accessibility"
+          },
+          {
+            "slug": "child-mapping",
+            "depth": 4,
+            "value": "Child Mapping"
+          },
+          {
+            "slug": "logic-flow",
+            "depth": 4,
+            "value": "Logic Flow"
+          },
+          {
+            "slug": "code-style",
+            "depth": 2,
+            "value": "Code Style"
+          },
+          {
+            "slug": "default-props",
+            "depth": 4,
+            "value": "Default Props"
+          },
+          {
+            "slug": "class-function-binding",
+            "depth": 4,
+            "value": "Class Function Binding"
+          },
+          {
+            "slug": "element-choice",
+            "depth": 4,
+            "value": "Element Choice"
+          },
+          {
+            "slug": "styled-components",
+            "depth": 4,
+            "value": "Styled Components"
+          },
+          {
+            "slug": "exports",
+            "depth": 4,
+            "value": "Exports"
+          },
+          {
+            "slug": "documentation",
+            "depth": 2,
+            "value": "Documentation"
+          },
+          {
+            "slug": "readmes",
+            "depth": 4,
+            "value": "Readmes"
+          },
+          {
+            "slug": "storybook-structure",
+            "depth": 4,
+            "value": "Storybook Structure"
+          }
+        ]
+      }
+    },
+    {
+      "key": "COMPONENT_STATUS.md",
+      "value": {
+        "id": "6ecba97764207ed53fd5abbb076c7b9b",
+        "filepath": "COMPONENT_STATUS.md",
+        "fullpath": "/Users/nicholas.boll/projects/canvas-kit/COMPONENT_STATUS.md",
+        "link": "",
+        "slug": "component-status",
+        "route": "/component-status",
+        "name": "Component status",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "component-status",
+            "depth": 1,
+            "value": "Component Status"
+          },
+          {
+            "slug": "primitives",
+            "depth": 2,
+            "value": "Primitives"
+          },
+          {
+            "slug": "components",
+            "depth": 2,
+            "value": "Components"
+          }
+        ]
+      }
+    },
+    {
+      "key": "CONTRIBUTORS.md",
+      "value": {
+        "id": "f0eaedffe49f98e11072394a678af7cc",
+        "filepath": "CONTRIBUTORS.md",
+        "fullpath": "/Users/nicholas.boll/projects/canvas-kit/CONTRIBUTORS.md",
+        "link": "",
+        "slug": "contributors",
+        "route": "/contributors",
+        "name": "Contributors",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "canvas-kit-contributors-sorted-alphabetically",
+            "depth": 1,
+            "value": "Canvas Kit contributors (sorted alphabetically)"
+          }
+        ]
+      }
+    },
+    {
+      "key": "modules/_canvas-kit-react/index.mdx",
+      "value": {
+        "name": "Getting Started",
+        "route": "/",
+        "id": "f9b6e4a321a9b4c95b32157a3347f754",
+        "filepath": "modules/_canvas-kit-react/index.mdx",
+        "fullpath": "/Users/nicholas.boll/projects/canvas-kit/modules/_canvas-kit-react/index.mdx",
+        "link": "",
+        "slug": "modules-canvas-kit-react-index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "getting-started",
+            "depth": 1,
+            "value": "Getting Started"
+          }
+        ]
+      }
+    },
+    {
+      "key": "modules/button/react/lib/index.mdx",
+      "value": {
+        "name": "Button",
+        "menu": "Components",
+        "route": "/components/button",
+        "id": "c569579244a27d5e791880d975dbb905",
+        "filepath": "modules/button/react/lib/index.mdx",
+        "fullpath": "/Users/nicholas.boll/projects/canvas-kit/modules/button/react/lib/index.mdx",
+        "link": "",
+        "slug": "modules-button-react-lib-index",
+        "headings": [
+          {
+            "slug": "button",
+            "depth": 1,
+            "value": "Button"
+          },
+          {
+            "slug": "props",
+            "depth": 2,
+            "value": "Props"
+          }
+        ]
+      }
+    },
+    {
+      "key": "modules/checkbox/react/lib/index.mdx",
+      "value": {
+        "name": "Checkbox",
+        "menu": "Components",
+        "route": "/components/checkbox",
+        "id": "7bd813b4cd605001f887d80874177716",
+        "filepath": "modules/checkbox/react/lib/index.mdx",
+        "fullpath": "/Users/nicholas.boll/projects/canvas-kit/modules/checkbox/react/lib/index.mdx",
+        "link": "",
+        "slug": "modules-checkbox-react-lib-index",
+        "headings": [
+          {
+            "slug": "checkbox",
+            "depth": 1,
+            "value": "Checkbox"
+          },
+          {
+            "slug": "variations",
+            "depth": 2,
+            "value": "Variations"
+          },
+          {
+            "slug": "examples",
+            "depth": 2,
+            "value": "Examples"
+          },
+          {
+            "slug": "props",
+            "depth": 2,
+            "value": "Props"
+          }
+        ]
+      }
+    }
+  ],
+  "props": [
+    {
+      "key": "utils/storybook/ControlledComponentWrapper.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "ControlledComponentWrapper",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
+      "key": "utils/storybook/InputProviderDecorator.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "InputProviderDecorator",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
+      "key": "utils/storybook/SectionDecorator.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "__type",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
+      "key": "modules/action-bar/react/lib/ActionBar.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "ActionBar",
+          "methods": [],
+          "props": {
+            "fixed": {
+              "defaultValue": null,
+              "description": "If the actionBar is fixed to the bottom of the screen",
+              "name": "fixed",
+              "parent": {
+                "fileName": "modules/action-bar/react/lib/ActionBar.tsx",
+                "name": "ActionBarProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/banner/react/lib/Banner.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Banner",
+          "methods": [],
+          "props": {
+            "onClick": {
+              "defaultValue": null,
+              "description": "Action when interacting with the banner",
+              "name": "onClick",
+              "parent": {
+                "fileName": "modules/banner/react/lib/Banner.tsx",
+                "name": "BannerProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((e: SyntheticEvent<Element, Event>) => void) | undefined"
+              }
+            },
+            "label": {
+              "defaultValue": null,
+              "description": "Text inside the banner",
+              "name": "label",
+              "parent": {
+                "fileName": "modules/banner/react/lib/Banner.tsx",
+                "name": "BannerProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "variant": {
+              "defaultValue": {
+                "value": "BannerVariant.Full"
+              },
+              "description": "Size and position of the banner",
+              "name": "variant",
+              "parent": {
+                "fileName": "modules/banner/react/lib/Banner.tsx",
+                "name": "BannerProps"
+              },
+              "required": false,
+              "type": {
+                "name": "BannerVariant | undefined"
+              }
+            },
+            "theme": {
+              "defaultValue": {
+                "value": "BannerTheme.Alert"
+              },
+              "description": "Color theme of the banner",
+              "name": "theme",
+              "parent": {
+                "fileName": "modules/banner/react/lib/Banner.tsx",
+                "name": "BannerProps"
+              },
+              "required": false,
+              "type": {
+                "name": "BannerTheme | undefined"
+              }
+            },
+            "actionText": {
+              "defaultValue": {
+                "value": "View All"
+              },
+              "description": "Text on the right, call to action",
+              "name": "actionText",
+              "parent": {
+                "fileName": "modules/banner/react/lib/Banner.tsx",
+                "name": "BannerProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/avatar/react/lib/Avatar.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Avatar",
+          "methods": [],
+          "props": {
+            "themeColor": {
+              "defaultValue": {
+                "value": "AvatarTheme.Light"
+              },
+              "description": "An AvatarTheme enum indicating which theme to use for the default state (Light vs. Dark)",
+              "name": "themeColor",
+              "parent": {
+                "fileName": "modules/avatar/react/lib/Avatar.tsx",
+                "name": "AvatarProps"
+              },
+              "required": true,
+              "type": {
+                "name": "AvatarTheme"
+              }
+            },
+            "size": {
+              "defaultValue": {
+                "value": "SystemIconCircleSize.m"
+              },
+              "description": "An AvatarSize enum or number value indicating the size of the avatar",
+              "name": "size",
+              "parent": {
+                "fileName": "modules/avatar/react/lib/Avatar.tsx",
+                "name": "AvatarProps"
+              },
+              "required": true,
+              "type": {
+                "name": "number"
+              }
+            },
+            "altText": {
+              "defaultValue": {
+                "value": "Avatar"
+              },
+              "description": "Text describing what the avatar is showing",
+              "name": "altText",
+              "parent": {
+                "fileName": "modules/avatar/react/lib/Avatar.tsx",
+                "name": "AvatarProps"
+              },
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "url": {
+              "defaultValue": null,
+              "description": "The url of the users avatar photo",
+              "name": "url",
+              "parent": {
+                "fileName": "modules/avatar/react/lib/Avatar.tsx",
+                "name": "AvatarProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "onClick": {
+              "defaultValue": null,
+              "description": "An event handler function that gets called when the avatar is clicked",
+              "name": "onClick",
+              "parent": {
+                "fileName": "modules/avatar/react/lib/Avatar.tsx",
+                "name": "AvatarProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((e: SyntheticEvent<Element, Event>) => void) | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/avatar/react/lib/Avatar.tsx",
+                "name": "AvatarProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/button/react/lib/Button.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Button",
+          "methods": [],
+          "props": {
+            "children": {
+              "defaultValue": null,
+              "description": "Button cannot be empty.",
+              "name": "children",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "ButtonProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "buttonType": {
+              "defaultValue": {
+                "value": "ButtonTypes.Secondary"
+              },
+              "description": "Type of button.",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonTypes | BetaButtonTypes | undefined"
+              }
+            },
+            "buttonSize": {
+              "defaultValue": {
+                "value": "ButtonSizes.Large"
+              },
+              "description": "Size of button.",
+              "name": "buttonSize",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonSizes | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            },
+            "dataLabel": {
+              "defaultValue": null,
+              "description": "Data label of button.",
+              "name": "dataLabel",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "String | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon for button.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            }
+          }
+        },
+        {
+          "description": "",
+          "displayName": "beta_Button",
+          "methods": [],
+          "props": {
+            "children": {
+              "defaultValue": null,
+              "description": "Button cannot be empty.",
+              "name": "children",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "ButtonProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "buttonType": {
+              "defaultValue": {
+                "value": "BetaButtonTypes.Secondary"
+              },
+              "description": "Type of button.",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "BetaButtonTypes | undefined"
+              }
+            },
+            "buttonSize": {
+              "defaultValue": {
+                "value": "ButtonSizes.Medium"
+              },
+              "description": "Size of button.",
+              "name": "buttonSize",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonSizes | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            },
+            "dataLabel": {
+              "defaultValue": null,
+              "description": "Data label of button.",
+              "name": "dataLabel",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "String | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon for button.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/button/react/lib/ButtonBase.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "ButtonBaseCon",
+          "methods": [],
+          "props": {
+            "children": {
+              "defaultValue": null,
+              "description": "Button cannot be empty.",
+              "name": "children",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "ButtonProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "buttonType": {
+              "defaultValue": null,
+              "description": "Type of button.",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonTypes | BetaButtonTypes | undefined"
+              }
+            },
+            "buttonSize": {
+              "defaultValue": null,
+              "description": "Size of button.",
+              "name": "buttonSize",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonSizes | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            },
+            "dataLabel": {
+              "defaultValue": null,
+              "description": "Data label of button.",
+              "name": "dataLabel",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "String | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon for button.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            },
+            "theme": {
+              "defaultValue": null,
+              "description": "",
+              "name": "theme",
+              "required": false,
+              "type": {
+                "name": "any"
+              }
+            },
+            "innerRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "innerRef",
+              "required": false,
+              "type": {
+                "name": "((instance: any) => void) | RefObject<any> | null | undefined"
+              }
+            }
+          }
+        },
+        {
+          "description": "",
+          "displayName": "ButtonBaseLabel",
+          "methods": [],
+          "props": {
+            "children": {
+              "defaultValue": null,
+              "description": "Button cannot be empty.",
+              "name": "children",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "ButtonProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "buttonType": {
+              "defaultValue": null,
+              "description": "Type of button.",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonTypes | BetaButtonTypes | TextButtonTypes | IconButtonTypes | undefined"
+              }
+            },
+            "buttonSize": {
+              "defaultValue": null,
+              "description": "Size of button.",
+              "name": "buttonSize",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonSizes | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            },
+            "dataLabel": {
+              "defaultValue": null,
+              "description": "Data label of button.",
+              "name": "dataLabel",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "String | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon for button.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            },
+            "theme": {
+              "defaultValue": null,
+              "description": "",
+              "name": "theme",
+              "required": false,
+              "type": {
+                "name": "any"
+              }
+            },
+            "innerRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "innerRef",
+              "required": false,
+              "type": {
+                "name": "((instance: any) => void) | RefObject<any> | null | undefined"
+              }
+            }
+          }
+        },
+        {
+          "description": "",
+          "displayName": "ButtonLabelData",
+          "methods": [],
+          "props": {
+            "children": {
+              "defaultValue": null,
+              "description": "Button cannot be empty.",
+              "name": "children",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "ButtonProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "buttonType": {
+              "defaultValue": null,
+              "description": "Type of button.",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonTypes | BetaButtonTypes | undefined"
+              }
+            },
+            "buttonSize": {
+              "defaultValue": null,
+              "description": "Size of button.",
+              "name": "buttonSize",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonSizes | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            },
+            "dataLabel": {
+              "defaultValue": null,
+              "description": "Data label of button.",
+              "name": "dataLabel",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "String | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon for button.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            },
+            "theme": {
+              "defaultValue": null,
+              "description": "",
+              "name": "theme",
+              "required": false,
+              "type": {
+                "name": "any"
+              }
+            },
+            "innerRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "innerRef",
+              "required": false,
+              "type": {
+                "name": "((instance: any) => void) | RefObject<any> | null | undefined"
+              }
+            }
+          }
+        },
+        {
+          "description": "",
+          "displayName": "ButtonLabelIcon",
+          "methods": [],
+          "props": {
+            "dropdown": {
+              "defaultValue": null,
+              "description": "",
+              "name": "dropdown",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/button/react/lib/ButtonBase.tsx",
+                "name": "ButtonLabelIconProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "buttonType": {
+              "defaultValue": null,
+              "description": "Type of button.",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonTypes | BetaButtonTypes | TextButtonTypes | IconButtonTypes | undefined"
+              }
+            },
+            "buttonSize": {
+              "defaultValue": null,
+              "description": "Size of button.",
+              "name": "buttonSize",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonSizes | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            },
+            "dataLabel": {
+              "defaultValue": null,
+              "description": "Data label of button.",
+              "name": "dataLabel",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "String | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon for button.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/button/react/lib/ButtonColors.ts",
+      "value": []
+    },
+    {
+      "key": "modules/button/react/lib/ButtonStyles.ts",
+      "value": []
+    },
+    {
+      "key": "modules/button/react/lib/DropdownButton.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "DropdownButton",
+          "methods": [],
+          "props": {
+            "buttonType": {
+              "defaultValue": {
+                "value": "BetaButtonTypes.Primary"
+              },
+              "description": "Type of button.",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonTypes | BetaButtonTypes | undefined"
+              }
+            },
+            "buttonSize": {
+              "defaultValue": {
+                "value": "ButtonSizes.Large"
+              },
+              "description": "Size of button.",
+              "name": "buttonSize",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonSizes | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            },
+            "dataLabel": {
+              "defaultValue": null,
+              "description": "Data label of button.",
+              "name": "dataLabel",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "String | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon for button.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/button/react/lib/IconButton.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "IconButtonCon",
+          "methods": [],
+          "props": {
+            "toggled": {
+              "defaultValue": null,
+              "description": "Whether the icon button is toggled on or off",
+              "name": "toggled",
+              "parent": {
+                "fileName": "modules/button/react/lib/IconButton.tsx",
+                "name": "IconButtonProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "buttonSize": {
+              "defaultValue": null,
+              "description": "Size of icon button",
+              "name": "buttonSize",
+              "parent": {
+                "fileName": "modules/button/react/lib/IconButton.tsx",
+                "name": "IconButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonSizes.Small | ButtonSizes.Medium | undefined"
+              }
+            },
+            "onToggleChange": {
+              "defaultValue": null,
+              "description": "Callback that fires when a button changes toggled states",
+              "name": "onToggleChange",
+              "parent": {
+                "fileName": "modules/button/react/lib/IconButton.tsx",
+                "name": "IconButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((toggled: boolean | undefined) => void) | undefined"
+              }
+            },
+            "buttonType": {
+              "defaultValue": null,
+              "description": "Type of button.",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "IconButtonTypes | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            },
+            "dataLabel": {
+              "defaultValue": null,
+              "description": "Data label of button.",
+              "name": "dataLabel",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "String | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon for button.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            },
+            "theme": {
+              "defaultValue": null,
+              "description": "",
+              "name": "theme",
+              "required": false,
+              "type": {
+                "name": "any"
+              }
+            },
+            "innerRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "innerRef",
+              "required": false,
+              "type": {
+                "name": "((instance: any) => void) | RefObject<any> | null | undefined"
+              }
+            }
+          }
+        },
+        {
+          "description": "",
+          "displayName": "IconButton",
+          "methods": [],
+          "props": {
+            "toggled": {
+              "defaultValue": {
+                "value": "undefined"
+              },
+              "description": "Whether the icon button is toggled on or off",
+              "name": "toggled",
+              "parent": {
+                "fileName": "modules/button/react/lib/IconButton.tsx",
+                "name": "IconButtonProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "buttonSize": {
+              "defaultValue": null,
+              "description": "Size of icon button",
+              "name": "buttonSize",
+              "parent": {
+                "fileName": "modules/button/react/lib/IconButton.tsx",
+                "name": "IconButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonSizes.Small | ButtonSizes.Medium | undefined"
+              }
+            },
+            "onToggleChange": {
+              "defaultValue": null,
+              "description": "Callback that fires when a button changes toggled states",
+              "name": "onToggleChange",
+              "parent": {
+                "fileName": "modules/button/react/lib/IconButton.tsx",
+                "name": "IconButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((toggled: boolean | undefined) => void) | undefined"
+              }
+            },
+            "buttonType": {
+              "defaultValue": {
+                "value": "IconButtonTypes.Circle"
+              },
+              "description": "Type of button.",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "IconButtonTypes | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            },
+            "dataLabel": {
+              "defaultValue": null,
+              "description": "Data label of button.",
+              "name": "dataLabel",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "String | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon for button.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/button/react/lib/IconButtonToggleGroup.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "IconButtonToggleGroup",
+          "methods": [],
+          "props": {
+            "children": {
+              "defaultValue": null,
+              "description": "React children must be of type IconButton and have at least two.",
+              "name": "children",
+              "parent": {
+                "fileName": "modules/button/react/lib/IconButtonToggleGroup.tsx",
+                "name": "IconButtonToggleGroupProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ReactElement<IconButtonProps, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>[] | ... 6 more ... | (ReactElement<...>[] & ReactPortal)"
+              }
+            },
+            "value": {
+              "defaultValue": {
+                "value": "0"
+              },
+              "description": "The value or index of the IconButton that should be toggled on.\nIf a string is passed, the IconButton with the corresponding value will be selected.\nIf a number is passed, ihe IconButton with the corresponding index will be selected.",
+              "name": "value",
+              "parent": {
+                "fileName": "modules/button/react/lib/IconButtonToggleGroup.tsx",
+                "name": "IconButtonToggleGroupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            },
+            "isRTL": {
+              "defaultValue": null,
+              "description": "Internationalization config",
+              "name": "isRTL",
+              "parent": {
+                "fileName": "modules/button/react/lib/IconButtonToggleGroup.tsx",
+                "name": "IconButtonToggleGroupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "Callback function when a button is selected, optional.\nIf the selected button has a value, it will be returned.\nOtherwise, the index of the button in the group will be returned.",
+              "name": "onChange",
+              "parent": {
+                "fileName": "modules/button/react/lib/IconButtonToggleGroup.tsx",
+                "name": "IconButtonToggleGroupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((value: ReactText) => void) | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/button/react/lib/SimpleButton.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "SimpleButton",
+          "methods": [],
+          "props": {
+            "buttonType": {
+              "defaultValue": null,
+              "description": "",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/SimpleButton.tsx",
+                "name": "Props"
+              },
+              "required": true,
+              "type": {
+                "name": "\"primary\" | \"secondary\""
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/button/react/lib/TextButton.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "TextButton",
+          "methods": [],
+          "props": {
+            "iconPosition": {
+              "defaultValue": {
+                "value": "IconPositions.Left"
+              },
+              "description": "",
+              "name": "iconPosition",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/button/react/lib/TextButton.tsx",
+                "name": "TextButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "IconPositions | undefined"
+              }
+            },
+            "buttonType": {
+              "defaultValue": {
+                "value": "TextButtonTypes.Default"
+              },
+              "description": "Type of button.",
+              "name": "buttonType",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "TextButtonTypes | undefined"
+              }
+            },
+            "buttonSize": {
+              "defaultValue": {
+                "value": "ButtonSizes.Large"
+              },
+              "description": "Size of button.",
+              "name": "buttonSize",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ButtonSizes | undefined"
+              }
+            },
+            "buttonRef": {
+              "defaultValue": null,
+              "description": "Ref of button that the styled component renders.",
+              "name": "buttonRef",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLButtonElement | null) => void) | RefObject<HTMLButtonElement> | null | undefined"
+              }
+            },
+            "dataLabel": {
+              "defaultValue": null,
+              "description": "Data label of button.",
+              "name": "dataLabel",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "String | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon for button.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/button/react/lib/Button.tsx",
+                "name": "BaseButtonProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/checkbox/react/lib/Checkbox.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Checkbox",
+          "methods": [],
+          "props": {
+            "checked": {
+              "defaultValue": {
+                "value": "false"
+              },
+              "description": "",
+              "name": "checked",
+              "parent": {
+                "fileName": "modules/checkbox/react/lib/Checkbox.tsx",
+                "name": "CheckboxProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "disabled": {
+              "defaultValue": null,
+              "description": "",
+              "name": "disabled",
+              "parent": {
+                "fileName": "modules/checkbox/react/lib/Checkbox.tsx",
+                "name": "CheckboxProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "id": {
+              "defaultValue": null,
+              "description": "",
+              "name": "id",
+              "parent": {
+                "fileName": "modules/checkbox/react/lib/Checkbox.tsx",
+                "name": "CheckboxProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "inputRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "inputRef",
+              "parent": {
+                "fileName": "modules/checkbox/react/lib/Checkbox.tsx",
+                "name": "CheckboxProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLInputElement | null) => void) | RefObject<HTMLInputElement> | null | undefined"
+              }
+            },
+            "label": {
+              "defaultValue": {
+                "value": ""
+              },
+              "description": "",
+              "name": "label",
+              "parent": {
+                "fileName": "modules/checkbox/react/lib/Checkbox.tsx",
+                "name": "CheckboxProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onChange",
+              "parent": {
+                "fileName": "modules/checkbox/react/lib/Checkbox.tsx",
+                "name": "CheckboxProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((e: SyntheticEvent<Element, Event>) => void) | undefined"
+              }
+            },
+            "value": {
+              "defaultValue": null,
+              "description": "",
+              "name": "value",
+              "parent": {
+                "fileName": "modules/checkbox/react/lib/Checkbox.tsx",
+                "name": "CheckboxProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "error": {
+              "defaultValue": null,
+              "description": "",
+              "name": "error",
+              "parent": {
+                "fileName": "modules/checkbox/react/lib/Checkbox.tsx",
+                "name": "CheckboxProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ErrorType | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/card/react/lib/Card.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Card",
+          "methods": [],
+          "props": {
+            "heading": {
+              "defaultValue": null,
+              "description": "Heading at the top of the card.",
+              "name": "heading",
+              "parent": {
+                "fileName": "modules/card/react/lib/Card.tsx",
+                "name": "CardProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "padding": {
+              "defaultValue": {
+                "value": "spacing.l"
+              },
+              "description": "Padding of the card.",
+              "name": "padding",
+              "parent": {
+                "fileName": "modules/card/react/lib/Card.tsx",
+                "name": "CardProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasSpacingValue"
+              }
+            },
+            "depth": {
+              "defaultValue": null,
+              "description": "Depth of the card.",
+              "name": "depth",
+              "parent": {
+                "fileName": "modules/card/react/lib/Card.tsx",
+                "name": "CardProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasDepthValue"
+              }
+            },
+            "width": {
+              "defaultValue": null,
+              "description": "Width of the card.",
+              "name": "width",
+              "parent": {
+                "fileName": "modules/card/react/lib/Card.tsx",
+                "name": "CardProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            },
+            "height": {
+              "defaultValue": null,
+              "description": "Height of the card.",
+              "name": "height",
+              "parent": {
+                "fileName": "modules/card/react/lib/Card.tsx",
+                "name": "CardProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/color-picker/react/lib/ColorInput.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "ColorInput",
+          "methods": [],
+          "props": {
+            "value": {
+              "defaultValue": {
+                "value": ""
+              },
+              "description": "",
+              "name": "value",
+              "parent": {
+                "fileName": "modules/color-picker/react/lib/ColorInput.tsx",
+                "name": "ColorInputProps"
+              },
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "error": {
+              "defaultValue": null,
+              "description": "",
+              "name": "error",
+              "parent": {
+                "fileName": "modules/color-picker/react/lib/ColorInput.tsx",
+                "name": "ColorInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ErrorType | undefined"
+              }
+            },
+            "inputRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "inputRef",
+              "parent": {
+                "fileName": "modules/color-picker/react/lib/ColorInput.tsx",
+                "name": "ColorInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLInputElement | null) => void) | RefObject<HTMLInputElement> | null | undefined"
+              }
+            },
+            "showCheck": {
+              "defaultValue": null,
+              "description": "",
+              "name": "showCheck",
+              "parent": {
+                "fileName": "modules/color-picker/react/lib/ColorInput.tsx",
+                "name": "ColorInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "placeholder": {
+              "defaultValue": {
+                "value": "FFFFFF"
+              },
+              "description": "",
+              "name": "placeholder",
+              "parent": {
+                "fileName": "modules/color-picker/react/lib/ColorInput.tsx",
+                "name": "ColorInputProps"
+              },
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onChange",
+              "parent": {
+                "fileName": "modules/color-picker/react/lib/ColorInput.tsx",
+                "name": "ColorInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((event: ChangeEvent<HTMLInputElement>) => void) | undefined"
+              }
+            },
+            "onValidColorChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onValidColorChange",
+              "parent": {
+                "fileName": "modules/color-picker/react/lib/ColorInput.tsx",
+                "name": "ColorInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((color: string) => void) | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/color-picker/react/lib/ColorPreview.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "ColorPreview",
+          "methods": [],
+          "props": {
+            "value": {
+              "defaultValue": null,
+              "description": "",
+              "name": "value",
+              "parent": {
+                "fileName": "modules/color-picker/react/lib/ColorPreview.tsx",
+                "name": "ColorPreviewProps"
+              },
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "id": {
+              "defaultValue": null,
+              "description": "",
+              "name": "id",
+              "parent": {
+                "fileName": "modules/color-picker/react/lib/ColorPreview.tsx",
+                "name": "ColorPreviewProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/common/react/lib/Popper.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Popper",
+          "methods": [],
+          "props": {
+            "anchorElement": {
+              "defaultValue": null,
+              "description": "",
+              "name": "anchorElement",
+              "parent": {
+                "fileName": "modules/common/react/lib/Popper.tsx",
+                "name": "PopperProps"
+              },
+              "required": true,
+              "type": {
+                "name": "Element"
+              }
+            },
+            "containerElement": {
+              "defaultValue": null,
+              "description": "",
+              "name": "containerElement",
+              "parent": {
+                "fileName": "modules/common/react/lib/Popper.tsx",
+                "name": "PopperProps"
+              },
+              "required": false,
+              "type": {
+                "name": "Element | undefined"
+              }
+            },
+            "open": {
+              "defaultValue": {
+                "value": "true"
+              },
+              "description": "",
+              "name": "open",
+              "parent": {
+                "fileName": "modules/common/react/lib/Popper.tsx",
+                "name": "PopperProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "placement": {
+              "defaultValue": {
+                "value": "bottom"
+              },
+              "description": "",
+              "name": "placement",
+              "parent": {
+                "fileName": "modules/common/react/lib/Popper.tsx",
+                "name": "PopperProps"
+              },
+              "required": true,
+              "type": {
+                "name": "Placement"
+              }
+            },
+            "popperOptions": {
+              "defaultValue": null,
+              "description": "",
+              "name": "popperOptions",
+              "parent": {
+                "fileName": "modules/common/react/lib/Popper.tsx",
+                "name": "PopperProps"
+              },
+              "required": false,
+              "type": {
+                "name": "PopperOptions | undefined"
+              }
+            },
+            "portal": {
+              "defaultValue": {
+                "value": "true"
+              },
+              "description": "",
+              "name": "portal",
+              "parent": {
+                "fileName": "modules/common/react/lib/Popper.tsx",
+                "name": "PopperProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/cookie-banner/react/lib/CookieBanner.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "CookieBanner",
+          "methods": [],
+          "props": {
+            "isClosed": {
+              "defaultValue": null,
+              "description": "Whether or not the banner is closed.",
+              "name": "isClosed",
+              "parent": {
+                "fileName": "modules/cookie-banner/react/lib/CookieBanner.tsx",
+                "name": "CookieBannerProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "onAccept": {
+              "defaultValue": null,
+              "description": "Callback executed upon accepting cookies.\nThe function should set `isClosed` to true.",
+              "name": "onAccept",
+              "parent": {
+                "fileName": "modules/cookie-banner/react/lib/CookieBanner.tsx",
+                "name": "CookieBannerProps"
+              },
+              "required": true,
+              "type": {
+                "name": "(e: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+              }
+            },
+            "onClickSettings": {
+              "defaultValue": null,
+              "description": "Callback executed upon clicking the \"Cookie Settings\" button.\nAdding this will automatically display the \"Cookie Settings\" button.",
+              "name": "onClickSettings",
+              "parent": {
+                "fileName": "modules/cookie-banner/react/lib/CookieBanner.tsx",
+                "name": "CookieBannerProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((e: MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined"
+              }
+            },
+            "notice": {
+              "defaultValue": {
+                "value": "CookieBanner.DefaultNotice"
+              },
+              "description": "Custom cookie notice text or element to display.",
+              "name": "notice",
+              "parent": {
+                "fileName": "modules/cookie-banner/react/lib/CookieBanner.tsx",
+                "name": "CookieBannerProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ReactNode"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/core/react/lib/InputProvider.tsx",
+      "value": [
+        {
+          "description": "This component takes heavy inspiration from what-input (https://github.com/ten1seven/what-input)",
+          "displayName": "InputProvider",
+          "methods": [],
+          "props": {
+            "provideIntent": {
+              "defaultValue": null,
+              "description": "",
+              "name": "provideIntent",
+              "parent": {
+                "fileName": "modules/core/react/lib/InputProvider.tsx",
+                "name": "InputProviderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/form-field/react/lib/FormField.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "FormField",
+          "methods": [],
+          "props": {
+            "labelPosition": {
+              "defaultValue": {
+                "value": "FormField.LabelPosition.Top"
+              },
+              "description": "",
+              "name": "labelPosition",
+              "parent": {
+                "fileName": "modules/form-field/react/lib/FormField.tsx",
+                "name": "FormFieldProps"
+              },
+              "required": true,
+              "type": {
+                "name": "LabelPosition"
+              }
+            },
+            "label": {
+              "defaultValue": null,
+              "description": "",
+              "name": "label",
+              "parent": {
+                "fileName": "modules/form-field/react/lib/FormField.tsx",
+                "name": "FormFieldProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "hintText": {
+              "defaultValue": null,
+              "description": "",
+              "name": "hintText",
+              "parent": {
+                "fileName": "modules/form-field/react/lib/FormField.tsx",
+                "name": "FormFieldProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "hintId": {
+              "defaultValue": null,
+              "description": "",
+              "name": "hintId",
+              "parent": {
+                "fileName": "modules/form-field/react/lib/FormField.tsx",
+                "name": "FormFieldProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "inputId": {
+              "defaultValue": null,
+              "description": "",
+              "name": "inputId",
+              "parent": {
+                "fileName": "modules/form-field/react/lib/FormField.tsx",
+                "name": "FormFieldProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "error": {
+              "defaultValue": null,
+              "description": "",
+              "name": "error",
+              "parent": {
+                "fileName": "modules/form-field/react/lib/FormField.tsx",
+                "name": "FormFieldProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ErrorType | undefined"
+              }
+            },
+            "useFieldset": {
+              "defaultValue": {
+                "value": "false"
+              },
+              "description": "",
+              "name": "useFieldset",
+              "parent": {
+                "fileName": "modules/form-field/react/lib/FormField.tsx",
+                "name": "FormFieldProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/form-field/react/lib/Hint.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Hint",
+          "methods": [],
+          "props": {
+            "error": {
+              "defaultValue": null,
+              "description": "",
+              "name": "error",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/form-field/react/lib/Hint.tsx",
+                "name": "HintProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ErrorType | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/form-field/react/lib/Label.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Label",
+          "methods": [],
+          "props": {
+            "labelPosition": {
+              "defaultValue": {
+                "value": "Label.Position.Top"
+              },
+              "description": "",
+              "name": "labelPosition",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/form-field/react/lib/Label.tsx",
+                "name": "LabelProps"
+              },
+              "required": true,
+              "type": {
+                "name": "LabelPosition"
+              }
+            },
+            "isLegend": {
+              "defaultValue": {
+                "value": "false"
+              },
+              "description": "",
+              "name": "isLegend",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/form-field/react/lib/Label.tsx",
+                "name": "LabelProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "htmlFor": {
+              "defaultValue": null,
+              "description": "",
+              "name": "htmlFor",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/form-field/react/lib/Label.tsx",
+                "name": "LabelProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/icon/react/lib/AccentIcon.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "accentIconStyles",
+          "methods": [],
+          "props": {
+            "color": {
+              "defaultValue": null,
+              "description": "",
+              "name": "color",
+              "parent": {
+                "fileName": "modules/icon/react/lib/AccentIcon.tsx",
+                "name": "AccentIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "transparent": {
+              "defaultValue": null,
+              "description": "",
+              "name": "transparent",
+              "parent": {
+                "fileName": "modules/icon/react/lib/AccentIcon.tsx",
+                "name": "AccentIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        },
+        {
+          "description": "",
+          "displayName": "AccentIcon",
+          "methods": [],
+          "props": {
+            "icon": {
+              "defaultValue": null,
+              "description": "",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/icon/react/lib/AccentIcon.tsx",
+                "name": "AccentIconProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasAccentIcon"
+              }
+            },
+            "size": {
+              "defaultValue": null,
+              "description": "",
+              "name": "size",
+              "parent": {
+                "fileName": "modules/icon/react/lib/AccentIcon.tsx",
+                "name": "AccentIconProps"
+              },
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "transparent": {
+              "defaultValue": null,
+              "description": "",
+              "name": "transparent",
+              "parent": {
+                "fileName": "modules/icon/react/lib/AccentIcon.tsx",
+                "name": "AccentIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/icon/react/lib/AppletIcon.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "appletIconStyles",
+          "methods": [],
+          "props": {
+            "color": {
+              "defaultValue": null,
+              "description": "",
+              "name": "color",
+              "parent": {
+                "fileName": "modules/icon/react/lib/AppletIcon.tsx",
+                "name": "AppletIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "BrandingColors | undefined"
+              }
+            }
+          }
+        },
+        {
+          "description": "",
+          "displayName": "AppletIcon",
+          "methods": [],
+          "props": {
+            "icon": {
+              "defaultValue": null,
+              "description": "",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/icon/react/lib/AppletIcon.tsx",
+                "name": "AppletIconProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasAppletIcon"
+              }
+            },
+            "size": {
+              "defaultValue": null,
+              "description": "",
+              "name": "size",
+              "parent": {
+                "fileName": "modules/icon/react/lib/AppletIcon.tsx",
+                "name": "AppletIconProps"
+              },
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/icon/react/lib/Graphic.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "graphicStyles",
+          "methods": [],
+          "props": {
+            "width": {
+              "defaultValue": null,
+              "description": "",
+              "name": "width",
+              "parent": {
+                "fileName": "modules/icon/react/lib/Graphic.tsx",
+                "name": "GraphicStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            },
+            "height": {
+              "defaultValue": null,
+              "description": "",
+              "name": "height",
+              "parent": {
+                "fileName": "modules/icon/react/lib/Graphic.tsx",
+                "name": "GraphicStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            },
+            "grow": {
+              "defaultValue": null,
+              "description": "",
+              "name": "grow",
+              "parent": {
+                "fileName": "modules/icon/react/lib/Graphic.tsx",
+                "name": "GraphicStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        },
+        {
+          "description": "",
+          "displayName": "Graphic",
+          "methods": [],
+          "props": {
+            "src": {
+              "defaultValue": null,
+              "description": "",
+              "name": "src",
+              "parent": {
+                "fileName": "modules/icon/react/lib/Graphic.tsx",
+                "name": "GraphicProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasGraphic"
+              }
+            },
+            "width": {
+              "defaultValue": null,
+              "description": "",
+              "name": "width",
+              "parent": {
+                "fileName": "modules/icon/react/lib/Graphic.tsx",
+                "name": "GraphicStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            },
+            "height": {
+              "defaultValue": null,
+              "description": "",
+              "name": "height",
+              "parent": {
+                "fileName": "modules/icon/react/lib/Graphic.tsx",
+                "name": "GraphicStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            },
+            "grow": {
+              "defaultValue": null,
+              "description": "",
+              "name": "grow",
+              "parent": {
+                "fileName": "modules/icon/react/lib/Graphic.tsx",
+                "name": "GraphicStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/icon/react/lib/Icon.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Icon",
+          "methods": [],
+          "props": {
+            "src": {
+              "defaultValue": null,
+              "description": "",
+              "name": "src",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/icon/react/lib/Icon.tsx",
+                "name": "IconProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasIcon"
+              }
+            },
+            "size": {
+              "defaultValue": null,
+              "description": "",
+              "name": "size",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/icon/react/lib/Icon.tsx",
+                "name": "IconProps"
+              },
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "type": {
+              "defaultValue": null,
+              "description": "",
+              "name": "type",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/icon/react/lib/Icon.tsx",
+                "name": "IconProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasIconTypes.Accent | CanvasIconTypes.Applet | CanvasIconTypes.System"
+              }
+            },
+            "styles": {
+              "defaultValue": null,
+              "description": "",
+              "name": "styles",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/icon/react/lib/Svg.tsx",
+                "name": "SvgProps"
+              },
+              "required": false,
+              "type": {
+                "name": "Interpolation"
+              }
+            },
+            "elemProps": {
+              "defaultValue": {
+                "value": "{}"
+              },
+              "description": "",
+              "name": "elemProps",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/icon/react/lib/Svg.tsx",
+                "name": "SvgProps"
+              },
+              "required": true,
+              "type": {
+                "name": "DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/icon/react/lib/Svg.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Svg",
+          "methods": [],
+          "props": {
+            "src": {
+              "defaultValue": null,
+              "description": "",
+              "name": "src",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/icon/react/lib/Svg.tsx",
+                "name": "SvgProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasIcon"
+              }
+            },
+            "styles": {
+              "defaultValue": null,
+              "description": "",
+              "name": "styles",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/icon/react/lib/Svg.tsx",
+                "name": "SvgProps"
+              },
+              "required": false,
+              "type": {
+                "name": "Interpolation"
+              }
+            },
+            "elemProps": {
+              "defaultValue": {
+                "value": "{}"
+              },
+              "description": "",
+              "name": "elemProps",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/icon/react/lib/Svg.tsx",
+                "name": "SvgProps"
+              },
+              "required": true,
+              "type": {
+                "name": "DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>"
+              }
+            },
+            "type": {
+              "defaultValue": null,
+              "description": "",
+              "name": "type",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/icon/react/lib/Svg.tsx",
+                "name": "SvgProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasIconTypes"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/icon/react/lib/SystemIcon.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "systemIconStyles",
+          "methods": [],
+          "props": {
+            "accent": {
+              "defaultValue": null,
+              "description": "",
+              "name": "accent",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "accentHover": {
+              "defaultValue": null,
+              "description": "",
+              "name": "accentHover",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "background": {
+              "defaultValue": null,
+              "description": "",
+              "name": "background",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "backgroundHover": {
+              "defaultValue": null,
+              "description": "",
+              "name": "backgroundHover",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "color": {
+              "defaultValue": null,
+              "description": "",
+              "name": "color",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "colorHover": {
+              "defaultValue": null,
+              "description": "",
+              "name": "colorHover",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "fill": {
+              "defaultValue": null,
+              "description": "",
+              "name": "fill",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "fillHover": {
+              "defaultValue": null,
+              "description": "",
+              "name": "fillHover",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        },
+        {
+          "description": "",
+          "displayName": "SystemIcon",
+          "methods": [],
+          "props": {
+            "icon": {
+              "defaultValue": null,
+              "description": "",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasSystemIcon"
+              }
+            },
+            "size": {
+              "defaultValue": null,
+              "description": "",
+              "name": "size",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconProps"
+              },
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "accent": {
+              "defaultValue": null,
+              "description": "",
+              "name": "accent",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "accentHover": {
+              "defaultValue": null,
+              "description": "",
+              "name": "accentHover",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "background": {
+              "defaultValue": null,
+              "description": "",
+              "name": "background",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "backgroundHover": {
+              "defaultValue": null,
+              "description": "",
+              "name": "backgroundHover",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "colorHover": {
+              "defaultValue": null,
+              "description": "",
+              "name": "colorHover",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "fill": {
+              "defaultValue": null,
+              "description": "",
+              "name": "fill",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "fillHover": {
+              "defaultValue": null,
+              "description": "",
+              "name": "fillHover",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIcon.tsx",
+                "name": "SystemIconStyles"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/icon/react/lib/SystemIconCircle.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "SystemIconCircle",
+          "methods": [],
+          "props": {
+            "background": {
+              "defaultValue": {
+                "value": "colors.soap300"
+              },
+              "description": "",
+              "name": "background",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIconCircle.tsx",
+                "name": "SystemIconCircleProps"
+              },
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIconCircle.tsx",
+                "name": "SystemIconCircleProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasSystemIcon"
+              }
+            },
+            "size": {
+              "defaultValue": {
+                "value": "SystemIconCircleSize.l"
+              },
+              "description": "",
+              "name": "size",
+              "parent": {
+                "fileName": "modules/icon/react/lib/SystemIconCircle.tsx",
+                "name": "SystemIconCircleProps"
+              },
+              "required": true,
+              "type": {
+                "name": "number"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/layout/react/lib/Column.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Column",
+          "methods": [],
+          "props": {
+            "children": {
+              "defaultValue": null,
+              "description": "Column cannot be empty.",
+              "name": "children",
+              "parent": {
+                "fileName": "modules/layout/react/lib/Column.tsx",
+                "name": "ColumnProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "spacing": {
+              "defaultValue": null,
+              "description": "Spacing of columns.",
+              "name": "spacing",
+              "parent": {
+                "fileName": "modules/layout/react/lib/Column.tsx",
+                "name": "ColumnProps"
+              },
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "columns": {
+              "defaultValue": null,
+              "description": "Widths of columns.",
+              "name": "columns",
+              "parent": {
+                "fileName": "modules/layout/react/lib/Column.tsx",
+                "name": "ColumnProps"
+              },
+              "required": false,
+              "type": {
+                "name": "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | undefined"
+              }
+            },
+            "width": {
+              "defaultValue": null,
+              "description": "Fixed width of columns",
+              "name": "width",
+              "parent": {
+                "fileName": "modules/layout/react/lib/Column.tsx",
+                "name": "ColumnProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/layout/react/lib/Layout.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Layout",
+          "methods": [],
+          "props": {
+            "children": {
+              "defaultValue": null,
+              "description": "Layout cannot be empty.",
+              "name": "children",
+              "parent": {
+                "fileName": "modules/layout/react/lib/Layout.tsx",
+                "name": "LayoutProps"
+              },
+              "required": true,
+              "type": {
+                "name": "string | number | boolean | {} | ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)> | ... 49 more ... | undefined"
+              }
+            },
+            "spacing": {
+              "defaultValue": null,
+              "description": "Spacing of layout children.",
+              "name": "spacing",
+              "parent": {
+                "fileName": "modules/layout/react/lib/Layout.tsx",
+                "name": "LayoutProps"
+              },
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "gutter": {
+              "defaultValue": {
+                "value": "canvas.spacing.xs"
+              },
+              "description": "Gutter of layout",
+              "name": "gutter",
+              "parent": {
+                "fileName": "modules/layout/react/lib/Layout.tsx",
+                "name": "LayoutProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            },
+            "capWidth": {
+              "defaultValue": null,
+              "description": "If there should be a max-width",
+              "name": "capWidth",
+              "parent": {
+                "fileName": "modules/layout/react/lib/Layout.tsx",
+                "name": "LayoutProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/header/react/lib/GlobalHeader.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "GlobalHeader",
+          "methods": [],
+          "props": {
+            "brand": {
+              "defaultValue": null,
+              "description": "A React node that will replace the dub logo and title if provided.",
+              "name": "brand",
+              "parent": {
+                "fileName": "modules/header/react/lib/GlobalHeader.tsx",
+                "name": "GlobalHeaderProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "menuToggle": {
+              "defaultValue": null,
+              "description": "A React node that will replace the menuToggle if provided.",
+              "name": "menuToggle",
+              "parent": {
+                "fileName": "modules/header/react/lib/GlobalHeader.tsx",
+                "name": "GlobalHeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "onMenuClick": {
+              "defaultValue": null,
+              "description": "An event handler function that gets called when the responsive menu icon is clicked",
+              "name": "onMenuClick",
+              "parent": {
+                "fileName": "modules/header/react/lib/GlobalHeader.tsx",
+                "name": "GlobalHeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((e: SyntheticEvent<Element, Event>) => void) | undefined"
+              }
+            },
+            "onSearchSubmit": {
+              "defaultValue": null,
+              "description": "An event handler function that gets called when the search field is submitted",
+              "name": "onSearchSubmit",
+              "parent": {
+                "fileName": "modules/header/react/lib/GlobalHeader.tsx",
+                "name": "GlobalHeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((query: string) => void) | undefined"
+              }
+            },
+            "breakpoint": {
+              "defaultValue": {
+                "value": "600"
+              },
+              "description": "An object that allows for custom specified breakpoint",
+              "name": "breakpoint",
+              "parent": {
+                "fileName": "modules/header/react/lib/GlobalHeader.tsx",
+                "name": "GlobalHeaderProps"
+              },
+              "required": true,
+              "type": {
+                "name": "number"
+              }
+            },
+            "onBreakpointChange": {
+              "defaultValue": null,
+              "description": "An event handler function that gets called when the screen size changes to a different breakpoint key",
+              "name": "onBreakpointChange",
+              "parent": {
+                "fileName": "modules/header/react/lib/GlobalHeader.tsx",
+                "name": "GlobalHeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((key: string) => void) | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/header/react/lib/Header.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Header",
+          "methods": [],
+          "props": {
+            "menuToggle": {
+              "defaultValue": null,
+              "description": "A React node that will replace the menuToggle if provided.",
+              "name": "menuToggle",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "themeColor": {
+              "defaultValue": {
+                "value": "HeaderTheme.White"
+              },
+              "description": "A HeaderTheme enum indicating which theme to use (White, Blue or Transparent)",
+              "name": "themeColor",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": true,
+              "type": {
+                "name": "HeaderTheme"
+              }
+            },
+            "variant": {
+              "defaultValue": {
+                "value": "HeaderVariant.Dub"
+              },
+              "description": "A HeaderVariant enum indicating whether to use the Dub (small) or Full (large) version",
+              "name": "variant",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": true,
+              "type": {
+                "name": "HeaderVariant"
+              }
+            },
+            "title": {
+              "defaultValue": null,
+              "description": "The title to display in the header. Not used if `brand` is provided",
+              "name": "title",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "brand": {
+              "defaultValue": null,
+              "description": "A React node that will replace the dub logo and title if provided.",
+              "name": "brand",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "brandUrl": {
+              "defaultValue": null,
+              "description": "The URL href of the logo link",
+              "name": "brandUrl",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "centeredNav": {
+              "defaultValue": null,
+              "description": "True if the nav should be centered. False if it should be aligned right",
+              "name": "centeredNav",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "onMenuClick": {
+              "defaultValue": null,
+              "description": "An event handler function that gets called when the responsive menu icon is clicked",
+              "name": "onMenuClick",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((e: SyntheticEvent<Element, Event>) => void) | undefined"
+              }
+            },
+            "onSearchSubmit": {
+              "defaultValue": null,
+              "description": "An event handler function that gets called when the search field is submitted",
+              "name": "onSearchSubmit",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((query: string) => void) | undefined"
+              }
+            },
+            "breakpoints": {
+              "defaultValue": {
+                "value": "{\n      sm: 320,\n      md: 768,\n      lg: 1120,\n    }"
+              },
+              "description": "An object that allows for custom specified breakpoints (sm, md, lg)",
+              "name": "breakpoints",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": true,
+              "type": {
+                "name": "{ [key: string]: number; sm: number; md: number; lg: number; }"
+              }
+            },
+            "onBreakpointChange": {
+              "defaultValue": null,
+              "description": "An event handler function that gets called when the screen size changes to a different breakpoint key",
+              "name": "onBreakpointChange",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/header/react/lib/Header.tsx",
+                "name": "HeaderProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((key: ReactText) => void) | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/modal/react/lib/Modal.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Modal",
+          "methods": [],
+          "props": {
+            "open": {
+              "defaultValue": {
+                "value": "false"
+              },
+              "description": "",
+              "name": "open",
+              "parent": {
+                "fileName": "modules/modal/react/lib/Modal.tsx",
+                "name": "ModalProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "padding": {
+              "defaultValue": {
+                "value": "Modal.Padding.l"
+              },
+              "description": "",
+              "name": "padding",
+              "parent": {
+                "fileName": "modules/modal/react/lib/Modal.tsx",
+                "name": "ModalProps"
+              },
+              "required": true,
+              "type": {
+                "name": "PopupPadding"
+              }
+            },
+            "transformOrigin": {
+              "defaultValue": {
+                "value": "{\n      horizontal: 'center',\n      vertical: 'top',\n    }"
+              },
+              "description": "",
+              "name": "transformOrigin",
+              "parent": {
+                "fileName": "modules/modal/react/lib/Modal.tsx",
+                "name": "ModalProps"
+              },
+              "required": true,
+              "type": {
+                "name": "TransformOrigin"
+              }
+            },
+            "width": {
+              "defaultValue": {
+                "value": "Modal.Width.s"
+              },
+              "description": "",
+              "name": "width",
+              "parent": {
+                "fileName": "modules/modal/react/lib/Modal.tsx",
+                "name": "ModalProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ModalWidth"
+              }
+            },
+            "handleClose": {
+              "defaultValue": null,
+              "description": "",
+              "name": "handleClose",
+              "parent": {
+                "fileName": "modules/modal/react/lib/Modal.tsx",
+                "name": "ModalProps"
+              },
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "heading": {
+              "defaultValue": null,
+              "description": "",
+              "name": "heading",
+              "parent": {
+                "fileName": "modules/modal/react/lib/Modal.tsx",
+                "name": "ModalProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/menu/react/lib/Menu.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Menu",
+          "methods": [],
+          "props": {
+            "isOpen": {
+              "defaultValue": {
+                "value": "true"
+              },
+              "description": "",
+              "name": "isOpen",
+              "parent": {
+                "fileName": "modules/menu/react/lib/Menu.tsx",
+                "name": "MenuProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "width": {
+              "defaultValue": null,
+              "description": "",
+              "name": "width",
+              "parent": {
+                "fileName": "modules/menu/react/lib/Menu.tsx",
+                "name": "MenuProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            },
+            "onSelect": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onSelect",
+              "parent": {
+                "fileName": "modules/menu/react/lib/Menu.tsx",
+                "name": "MenuProps"
+              },
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "onClose": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onClose",
+              "parent": {
+                "fileName": "modules/menu/react/lib/Menu.tsx",
+                "name": "MenuProps"
+              },
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "initialSelectedItem": {
+              "defaultValue": null,
+              "description": "",
+              "name": "initialSelectedItem",
+              "parent": {
+                "fileName": "modules/menu/react/lib/Menu.tsx",
+                "name": "MenuProps"
+              },
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "id": {
+              "defaultValue": null,
+              "description": "",
+              "name": "id",
+              "parent": {
+                "fileName": "modules/menu/react/lib/Menu.tsx",
+                "name": "MenuProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "labeledBy": {
+              "defaultValue": null,
+              "description": "",
+              "name": "labeledBy",
+              "parent": {
+                "fileName": "modules/menu/react/lib/Menu.tsx",
+                "name": "MenuProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/menu/react/lib/MenuItem.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "MenuItem",
+          "methods": [],
+          "props": {
+            "onClick": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onClick",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/menu/react/lib/MenuItem.tsx",
+                "name": "MenuItemProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((event: SyntheticEvent<Element, Event>) => void) | undefined"
+              }
+            },
+            "id": {
+              "defaultValue": null,
+              "description": "",
+              "name": "id",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/menu/react/lib/MenuItem.tsx",
+                "name": "MenuItemProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "",
+              "name": "icon",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/menu/react/lib/MenuItem.tsx",
+                "name": "MenuItemProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            },
+            "secondaryIcon": {
+              "defaultValue": null,
+              "description": "",
+              "name": "secondaryIcon",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/menu/react/lib/MenuItem.tsx",
+                "name": "MenuItemProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            },
+            "label": {
+              "defaultValue": null,
+              "description": "",
+              "name": "label",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/menu/react/lib/MenuItem.tsx",
+                "name": "MenuItemProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "hasDivider": {
+              "defaultValue": null,
+              "description": "",
+              "name": "hasDivider",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/menu/react/lib/MenuItem.tsx",
+                "name": "MenuItemProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "isDisabled": {
+              "defaultValue": null,
+              "description": "",
+              "name": "isDisabled",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/menu/react/lib/MenuItem.tsx",
+                "name": "MenuItemProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "isFocused": {
+              "defaultValue": null,
+              "description": "",
+              "name": "isFocused",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/menu/react/lib/MenuItem.tsx",
+                "name": "MenuItemProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/loading-animation/react/lib/LoadingDots.tsx",
+      "value": [
+        {
+          "description": "A simple component that displays three horizontal dots, to be used when some data is loading.",
+          "displayName": "LoadingDots",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
+      "key": "modules/loading-animation/react/lib/LoadingSpinner.tsx",
+      "value": [
+        {
+          "description": "Renders a Loading Spinner component",
+          "displayName": "LoadingSpinner",
+          "methods": [],
+          "props": {
+            "color": {
+              "defaultValue": null,
+              "description": "Optional loading spinner color.",
+              "name": "color",
+              "parent": {
+                "fileName": "modules/loading-animation/react/lib/LoadingSpinner.tsx",
+                "name": "LoadingSpinnerProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "scale": {
+              "defaultValue": null,
+              "description": "Determines the scale of the spinner. Defaults to 1",
+              "name": "scale",
+              "parent": {
+                "fileName": "modules/loading-animation/react/lib/LoadingSpinner.tsx",
+                "name": "LoadingSpinnerProps"
+              },
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/popup/react/lib/Popup.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Popup",
+          "methods": [],
+          "props": {
+            "padding": {
+              "defaultValue": {
+                "value": "Popup.padding.l"
+              },
+              "description": "",
+              "name": "padding",
+              "parent": {
+                "fileName": "modules/popup/react/lib/Popup.tsx",
+                "name": "PopupProps"
+              },
+              "required": true,
+              "type": {
+                "name": "PopupPadding"
+              }
+            },
+            "transformOrigin": {
+              "defaultValue": {
+                "value": "{\n      horizontal: 'center',\n      vertical: 'top',\n    }"
+              },
+              "description": "",
+              "name": "transformOrigin",
+              "parent": {
+                "fileName": "modules/popup/react/lib/Popup.tsx",
+                "name": "PopupProps"
+              },
+              "required": true,
+              "type": {
+                "name": "TransformOrigin"
+              }
+            },
+            "closeIconSize": {
+              "defaultValue": {
+                "value": "ButtonSizes.Medium"
+              },
+              "description": "",
+              "name": "closeIconSize",
+              "parent": {
+                "fileName": "modules/popup/react/lib/Popup.tsx",
+                "name": "PopupProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ButtonSizes.Small | ButtonSizes.Medium"
+              }
+            },
+            "popupRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "popupRef",
+              "parent": {
+                "fileName": "modules/popup/react/lib/Popup.tsx",
+                "name": "PopupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLDivElement | null) => void) | RefObject<HTMLDivElement> | null | undefined"
+              }
+            },
+            "handleClose": {
+              "defaultValue": null,
+              "description": "",
+              "name": "handleClose",
+              "parent": {
+                "fileName": "modules/popup/react/lib/Popup.tsx",
+                "name": "PopupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "width": {
+              "defaultValue": null,
+              "description": "",
+              "name": "width",
+              "parent": {
+                "fileName": "modules/popup/react/lib/Popup.tsx",
+                "name": "PopupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            },
+            "heading": {
+              "defaultValue": null,
+              "description": "",
+              "name": "heading",
+              "parent": {
+                "fileName": "modules/popup/react/lib/Popup.tsx",
+                "name": "PopupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "depth": {
+              "defaultValue": null,
+              "description": "",
+              "name": "depth",
+              "parent": {
+                "fileName": "modules/popup/react/lib/Popup.tsx",
+                "name": "PopupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "{ boxShadow: \"0px 4px 8px 0 rgba(0, 0, 0, 0.1)\"; } | { boxShadow: \"inset 0px 0px 8px 0 rgba(82, 97, 115, 0.09)\"; } | { boxShadow: \"0px 2px 4px 0 rgba(0, 0, 0, 0.08)\"; } | { boxShadow: \"0px 8px 16px 0 rgba(0, 0, 0, 0.12)\"; } | { ...; } | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/page-header/react/lib/PageHeader.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "PageHeader",
+          "methods": [],
+          "props": {
+            "title": {
+              "defaultValue": {
+                "value": ""
+              },
+              "description": "",
+              "name": "title",
+              "parent": {
+                "fileName": "modules/page-header/react/lib/PageHeader.tsx",
+                "name": "PageHeaderProps"
+              },
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "marketing": {
+              "defaultValue": {
+                "value": "false"
+              },
+              "description": "",
+              "name": "marketing",
+              "parent": {
+                "fileName": "modules/page-header/react/lib/PageHeader.tsx",
+                "name": "PageHeaderProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "breakpoints": {
+              "defaultValue": {
+                "value": "{\n      sm: 768,\n      md: 992,\n      lg: 1200,\n    }"
+              },
+              "description": "",
+              "name": "breakpoints",
+              "parent": {
+                "fileName": "modules/page-header/react/lib/PageHeader.tsx",
+                "name": "PageHeaderProps"
+              },
+              "required": true,
+              "type": {
+                "name": "{ sm: number; md: number; lg: number; }"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/radio/react/lib/Radio.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Radio",
+          "methods": [],
+          "props": {
+            "checked": {
+              "defaultValue": {
+                "value": "false"
+              },
+              "description": "",
+              "name": "checked",
+              "parent": {
+                "fileName": "modules/radio/react/lib/Radio.tsx",
+                "name": "RadioProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "disabled": {
+              "defaultValue": null,
+              "description": "",
+              "name": "disabled",
+              "parent": {
+                "fileName": "modules/radio/react/lib/Radio.tsx",
+                "name": "RadioProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "id": {
+              "defaultValue": null,
+              "description": "",
+              "name": "id",
+              "parent": {
+                "fileName": "modules/radio/react/lib/Radio.tsx",
+                "name": "RadioProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "inputRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "inputRef",
+              "parent": {
+                "fileName": "modules/radio/react/lib/Radio.tsx",
+                "name": "RadioProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLInputElement | null) => void) | RefObject<HTMLInputElement> | null | undefined"
+              }
+            },
+            "label": {
+              "defaultValue": {
+                "value": ""
+              },
+              "description": "",
+              "name": "label",
+              "parent": {
+                "fileName": "modules/radio/react/lib/Radio.tsx",
+                "name": "RadioProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "name": {
+              "defaultValue": null,
+              "description": "",
+              "name": "name",
+              "parent": {
+                "fileName": "modules/radio/react/lib/Radio.tsx",
+                "name": "RadioProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onChange",
+              "parent": {
+                "fileName": "modules/radio/react/lib/Radio.tsx",
+                "name": "RadioProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((e: SyntheticEvent<Element, Event>) => void) | undefined"
+              }
+            },
+            "value": {
+              "defaultValue": null,
+              "description": "",
+              "name": "value",
+              "parent": {
+                "fileName": "modules/radio/react/lib/Radio.tsx",
+                "name": "RadioProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/radio/react/lib/RadioGroup.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "RadioGroup",
+          "methods": [],
+          "props": {
+            "children": {
+              "defaultValue": null,
+              "description": "React children must be of type Radio and have at least two.",
+              "name": "children",
+              "parent": {
+                "fileName": "modules/radio/react/lib/RadioGroup.tsx",
+                "name": "RadioGroupProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ReactElement<Radio, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>[] | ... 6 more ... | (ReactElement<...>[] & ReactPortal)"
+              }
+            },
+            "value": {
+              "defaultValue": {
+                "value": "0"
+              },
+              "description": "The value or index of the Radio that should be toggled on.\nIf a string is passed, the Radio with the corresponding value will be selected.\nIf a number is passed, ihe Radio with the corresponding index will be selected.",
+              "name": "value",
+              "parent": {
+                "fileName": "modules/radio/react/lib/RadioGroup.tsx",
+                "name": "RadioGroupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | number | undefined"
+              }
+            },
+            "name": {
+              "defaultValue": null,
+              "description": "",
+              "name": "name",
+              "parent": {
+                "fileName": "modules/radio/react/lib/RadioGroup.tsx",
+                "name": "RadioGroupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "error": {
+              "defaultValue": null,
+              "description": "",
+              "name": "error",
+              "parent": {
+                "fileName": "modules/radio/react/lib/RadioGroup.tsx",
+                "name": "RadioGroupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ErrorType | undefined"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "Callback function when a button is selected, optional.\nIf the selected button has a value, it will be returned.\nOtherwise, the index of the button in the group will be returned.",
+              "name": "onChange",
+              "parent": {
+                "fileName": "modules/radio/react/lib/RadioGroup.tsx",
+                "name": "RadioGroupProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((value: ReactText) => void) | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/select/react/lib/Select.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Select",
+          "methods": [],
+          "props": {
+            "children": {
+              "defaultValue": null,
+              "description": "React children must be of type SelectOption and have at least two.",
+              "name": "children",
+              "parent": {
+                "fileName": "modules/select/react/lib/Select.tsx",
+                "name": "SelectProps"
+              },
+              "required": true,
+              "type": {
+                "name": "ReactElement<SelectOption, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>[] | ... 6 more ... | (ReactElement<...>[] & ReactPortal)"
+              }
+            },
+            "disabled": {
+              "defaultValue": {
+                "value": "false"
+              },
+              "description": "",
+              "name": "disabled",
+              "parent": {
+                "fileName": "modules/select/react/lib/Select.tsx",
+                "name": "SelectProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "error": {
+              "defaultValue": null,
+              "description": "",
+              "name": "error",
+              "parent": {
+                "fileName": "modules/select/react/lib/Select.tsx",
+                "name": "SelectProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ErrorType | undefined"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onChange",
+              "parent": {
+                "fileName": "modules/select/react/lib/Select.tsx",
+                "name": "SelectProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((e: SyntheticEvent<Element, Event>) => void) | undefined"
+              }
+            },
+            "value": {
+              "defaultValue": null,
+              "description": "",
+              "name": "value",
+              "parent": {
+                "fileName": "modules/select/react/lib/Select.tsx",
+                "name": "SelectProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/select/react/lib/SelectOption.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "SelectOption",
+          "methods": [],
+          "props": {
+            "value": {
+              "defaultValue": null,
+              "description": "",
+              "name": "value",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/select/react/lib/SelectOption.tsx",
+                "name": "SelectOptionProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "label": {
+              "defaultValue": null,
+              "description": "",
+              "name": "label",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/select/react/lib/SelectOption.tsx",
+                "name": "SelectOptionProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "disabled": {
+              "defaultValue": {
+                "value": "false"
+              },
+              "description": "",
+              "name": "disabled",
+              "parent": {
+                "fileName": "/Users/nicholas.boll/projects/canvas-kit/modules/select/react/lib/SelectOption.tsx",
+                "name": "SelectOptionProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/side-panel/react/lib/SidePanel.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "SidePanel",
+          "methods": [],
+          "props": {
+            "open": {
+              "defaultValue": null,
+              "description": "",
+              "name": "open",
+              "parent": {
+                "fileName": "modules/side-panel/react/lib/SidePanel.tsx",
+                "name": "SidePanelProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "onToggleClick": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onToggleClick",
+              "parent": {
+                "fileName": "modules/side-panel/react/lib/SidePanel.tsx",
+                "name": "SidePanelProps"
+              },
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "header": {
+              "defaultValue": null,
+              "description": "",
+              "name": "header",
+              "parent": {
+                "fileName": "modules/side-panel/react/lib/SidePanel.tsx",
+                "name": "SidePanelProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactNode"
+              }
+            },
+            "openDirection": {
+              "defaultValue": {
+                "value": "SidePanelOpenDirection.Left"
+              },
+              "description": "",
+              "name": "openDirection",
+              "parent": {
+                "fileName": "modules/side-panel/react/lib/SidePanel.tsx",
+                "name": "SidePanelProps"
+              },
+              "required": false,
+              "type": {
+                "name": "SidePanelOpenDirection | undefined"
+              }
+            },
+            "onBreakpointChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onBreakpointChange",
+              "parent": {
+                "fileName": "modules/side-panel/react/lib/SidePanel.tsx",
+                "name": "SidePanelProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((open: boolean) => void) | undefined"
+              }
+            },
+            "padding": {
+              "defaultValue": null,
+              "description": "",
+              "name": "padding",
+              "parent": {
+                "fileName": "modules/side-panel/react/lib/SidePanel.tsx",
+                "name": "SidePanelProps"
+              },
+              "required": false,
+              "type": {
+                "name": "\"0px\" | \"4px\" | \"8px\" | \"12px\" | \"16px\" | \"24px\" | \"32px\" | \"40px\" | \"64px\" | \"80px\" | undefined"
+              }
+            },
+            "breakpoint": {
+              "defaultValue": {
+                "value": "768"
+              },
+              "description": "",
+              "name": "breakpoint",
+              "parent": {
+                "fileName": "modules/side-panel/react/lib/SidePanel.tsx",
+                "name": "SidePanelProps"
+              },
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "openWidth": {
+              "defaultValue": {
+                "value": "300"
+              },
+              "description": "",
+              "name": "openWidth",
+              "parent": {
+                "fileName": "modules/side-panel/react/lib/SidePanel.tsx",
+                "name": "SidePanelProps"
+              },
+              "required": false,
+              "type": {
+                "name": "number | undefined"
+              }
+            },
+            "sidePanelBackgroundColor": {
+              "defaultValue": {
+                "value": "SidePanelBackgroundColor.White"
+              },
+              "description": "",
+              "name": "sidePanelBackgroundColor",
+              "parent": {
+                "fileName": "modules/side-panel/react/lib/SidePanel.tsx",
+                "name": "SidePanelProps"
+              },
+              "required": false,
+              "type": {
+                "name": "SidePanelBackgroundColor | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/status-indicator/react/lib/StatusIndicator.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "StatusIndicator",
+          "methods": [],
+          "props": {
+            "type": {
+              "defaultValue": null,
+              "description": "Type of status indicator (e.g. Gray, Orange etc.).",
+              "name": "type",
+              "parent": {
+                "fileName": "modules/status-indicator/react/lib/StatusIndicator.tsx",
+                "name": "StatusIndicatorProps"
+              },
+              "required": true,
+              "type": {
+                "name": "StatusType"
+              }
+            },
+            "emphasis": {
+              "defaultValue": {
+                "value": "StatusEmphasis.High"
+              },
+              "description": "Emphasis of status indicator (e.g. High v Low).",
+              "name": "emphasis",
+              "parent": {
+                "fileName": "modules/status-indicator/react/lib/StatusIndicator.tsx",
+                "name": "StatusIndicatorProps"
+              },
+              "required": true,
+              "type": {
+                "name": "StatusEmphasis"
+              }
+            },
+            "label": {
+              "defaultValue": null,
+              "description": "Label of status indicator.",
+              "name": "label",
+              "parent": {
+                "fileName": "modules/status-indicator/react/lib/StatusIndicator.tsx",
+                "name": "StatusIndicatorProps"
+              },
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "icon": {
+              "defaultValue": null,
+              "description": "Icon to be used along with the status label.",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/status-indicator/react/lib/StatusIndicator.tsx",
+                "name": "StatusIndicatorProps"
+              },
+              "required": false,
+              "type": {
+                "name": "CanvasSystemIcon | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/switch/react/lib/Switch.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Switch",
+          "methods": [],
+          "props": {
+            "checked": {
+              "defaultValue": {
+                "value": "false"
+              },
+              "description": "",
+              "name": "checked",
+              "parent": {
+                "fileName": "modules/switch/react/lib/Switch.tsx",
+                "name": "SwitchProps"
+              },
+              "required": true,
+              "type": {
+                "name": "boolean"
+              }
+            },
+            "disabled": {
+              "defaultValue": null,
+              "description": "",
+              "name": "disabled",
+              "parent": {
+                "fileName": "modules/switch/react/lib/Switch.tsx",
+                "name": "SwitchProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "id": {
+              "defaultValue": null,
+              "description": "",
+              "name": "id",
+              "parent": {
+                "fileName": "modules/switch/react/lib/Switch.tsx",
+                "name": "SwitchProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onChange",
+              "parent": {
+                "fileName": "modules/switch/react/lib/Switch.tsx",
+                "name": "SwitchProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((e: SyntheticEvent<Element, Event>) => void) | undefined"
+              }
+            },
+            "value": {
+              "defaultValue": null,
+              "description": "",
+              "name": "value",
+              "parent": {
+                "fileName": "modules/switch/react/lib/Switch.tsx",
+                "name": "SwitchProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "inputRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "inputRef",
+              "parent": {
+                "fileName": "modules/switch/react/lib/Switch.tsx",
+                "name": "SwitchProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLInputElement | null) => void) | RefObject<HTMLInputElement> | null | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/text-input/react/lib/InputIconContainer.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "InputIconContainer",
+          "methods": [],
+          "props": {
+            "icon": {
+              "defaultValue": null,
+              "description": "",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/text-input/react/lib/InputIconContainer.tsx",
+                "name": "InputIconContainerProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ReactElement<SystemIcon, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)> | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/text-input/react/lib/TextInput.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "TextInput",
+          "methods": [],
+          "props": {
+            "disabled": {
+              "defaultValue": null,
+              "description": "",
+              "name": "disabled",
+              "parent": {
+                "fileName": "modules/text-input/react/lib/TextInput.tsx",
+                "name": "TextInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "error": {
+              "defaultValue": null,
+              "description": "",
+              "name": "error",
+              "parent": {
+                "fileName": "modules/text-input/react/lib/TextInput.tsx",
+                "name": "TextInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ErrorType | undefined"
+              }
+            },
+            "hasIcon": {
+              "defaultValue": null,
+              "description": "",
+              "name": "hasIcon",
+              "parent": {
+                "fileName": "modules/text-input/react/lib/TextInput.tsx",
+                "name": "TextInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "inputRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "inputRef",
+              "parent": {
+                "fileName": "modules/text-input/react/lib/TextInput.tsx",
+                "name": "TextInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLInputElement | null) => void) | RefObject<HTMLInputElement> | null | undefined"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onChange",
+              "parent": {
+                "fileName": "modules/text-input/react/lib/TextInput.tsx",
+                "name": "TextInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((event: ChangeEvent<HTMLInputElement>) => void) | undefined"
+              }
+            },
+            "placeholder": {
+              "defaultValue": null,
+              "description": "",
+              "name": "placeholder",
+              "parent": {
+                "fileName": "modules/text-input/react/lib/TextInput.tsx",
+                "name": "TextInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "readOnly": {
+              "defaultValue": null,
+              "description": "",
+              "name": "readOnly",
+              "parent": {
+                "fileName": "modules/text-input/react/lib/TextInput.tsx",
+                "name": "TextInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "type": {
+              "defaultValue": {
+                "value": "text"
+              },
+              "description": "",
+              "name": "type",
+              "parent": {
+                "fileName": "modules/text-input/react/lib/TextInput.tsx",
+                "name": "TextInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "value": {
+              "defaultValue": null,
+              "description": "",
+              "name": "value",
+              "parent": {
+                "fileName": "modules/text-input/react/lib/TextInput.tsx",
+                "name": "TextInputProps"
+              },
+              "required": false,
+              "type": {
+                "name": "any"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/table/react/lib/Table.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Table",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
+      "key": "modules/table/react/lib/TableRow.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "TableRow",
+          "methods": [],
+          "props": {
+            "state": {
+              "defaultValue": null,
+              "description": "State of the row",
+              "name": "state",
+              "parent": {
+                "fileName": "modules/table/react/lib/TableRow.tsx",
+                "name": "TableRowProps"
+              },
+              "required": false,
+              "type": {
+                "name": "TableRowStates | undefined"
+              }
+            },
+            "header": {
+              "defaultValue": null,
+              "description": "Whether or not the row contains header elements",
+              "name": "header",
+              "parent": {
+                "fileName": "modules/table/react/lib/TableRow.tsx",
+                "name": "TableRowProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/text-area/react/lib/TextArea.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "TextArea",
+          "methods": [],
+          "props": {
+            "disabled": {
+              "defaultValue": null,
+              "description": "",
+              "name": "disabled",
+              "parent": {
+                "fileName": "modules/text-area/react/lib/TextArea.tsx",
+                "name": "TextAreaProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "error": {
+              "defaultValue": null,
+              "description": "",
+              "name": "error",
+              "parent": {
+                "fileName": "modules/text-area/react/lib/TextArea.tsx",
+                "name": "TextAreaProps"
+              },
+              "required": false,
+              "type": {
+                "name": "ErrorType | undefined"
+              }
+            },
+            "inputRef": {
+              "defaultValue": null,
+              "description": "",
+              "name": "inputRef",
+              "parent": {
+                "fileName": "modules/text-area/react/lib/TextArea.tsx",
+                "name": "TextAreaProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((instance: HTMLTextAreaElement | null) => void) | RefObject<HTMLTextAreaElement> | null | undefined"
+              }
+            },
+            "onChange": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onChange",
+              "parent": {
+                "fileName": "modules/text-area/react/lib/TextArea.tsx",
+                "name": "TextAreaProps"
+              },
+              "required": false,
+              "type": {
+                "name": "((event: ChangeEvent<HTMLTextAreaElement>) => void) | undefined"
+              }
+            },
+            "placeholder": {
+              "defaultValue": null,
+              "description": "",
+              "name": "placeholder",
+              "parent": {
+                "fileName": "modules/text-area/react/lib/TextArea.tsx",
+                "name": "TextAreaProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "readOnly": {
+              "defaultValue": null,
+              "description": "",
+              "name": "readOnly",
+              "parent": {
+                "fileName": "modules/text-area/react/lib/TextArea.tsx",
+                "name": "TextAreaProps"
+              },
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "resize": {
+              "defaultValue": {
+                "value": "TextAreaResizeDirection.Both"
+              },
+              "description": "",
+              "name": "resize",
+              "parent": {
+                "fileName": "modules/text-area/react/lib/TextArea.tsx",
+                "name": "TextAreaProps"
+              },
+              "required": true,
+              "type": {
+                "name": "TextAreaResizeDirection"
+              }
+            },
+            "value": {
+              "defaultValue": null,
+              "description": "",
+              "name": "value",
+              "parent": {
+                "fileName": "modules/text-area/react/lib/TextArea.tsx",
+                "name": "TextAreaProps"
+              },
+              "required": false,
+              "type": {
+                "name": "any"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/toast/react/lib/Toast.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Toast",
+          "methods": [],
+          "props": {
+            "icon": {
+              "defaultValue": null,
+              "description": "",
+              "name": "icon",
+              "parent": {
+                "fileName": "modules/toast/react/lib/Toast.tsx",
+                "name": "ToastProps"
+              },
+              "required": true,
+              "type": {
+                "name": "CanvasSystemIcon"
+              }
+            },
+            "iconColor": {
+              "defaultValue": {
+                "value": "colors.greenApple400"
+              },
+              "description": "",
+              "name": "iconColor",
+              "parent": {
+                "fileName": "modules/toast/react/lib/Toast.tsx",
+                "name": "ToastProps"
+              },
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "onClose": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onClose",
+              "parent": {
+                "fileName": "modules/toast/react/lib/Toast.tsx",
+                "name": "ToastProps"
+              },
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "onActionClick": {
+              "defaultValue": null,
+              "description": "",
+              "name": "onActionClick",
+              "parent": {
+                "fileName": "modules/toast/react/lib/Toast.tsx",
+                "name": "ToastProps"
+              },
+              "required": false,
+              "type": {
+                "name": "(() => void) | undefined"
+              }
+            },
+            "actionText": {
+              "defaultValue": null,
+              "description": "",
+              "name": "actionText",
+              "parent": {
+                "fileName": "modules/toast/react/lib/Toast.tsx",
+                "name": "ToastProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "transformOrigin": {
+              "defaultValue": null,
+              "description": "",
+              "name": "transformOrigin",
+              "parent": {
+                "fileName": "modules/toast/react/lib/Toast.tsx",
+                "name": "ToastProps"
+              },
+              "required": false,
+              "type": {
+                "name": "TransformOrigin | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/tooltip/react/lib/Tooltip.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Tooltip",
+          "methods": [],
+          "props": {
+            "transformOrigin": {
+              "defaultValue": {
+                "value": "{\n      horizontal: 'center',\n      vertical: 'bottom',\n    }"
+              },
+              "description": "",
+              "name": "transformOrigin",
+              "parent": {
+                "fileName": "modules/tooltip/react/lib/Tooltip.tsx",
+                "name": "TooltipProps"
+              },
+              "required": true,
+              "type": {
+                "name": "TransformOrigin"
+              }
+            },
+            "id": {
+              "defaultValue": null,
+              "description": "",
+              "name": "id",
+              "parent": {
+                "fileName": "modules/tooltip/react/lib/Tooltip.tsx",
+                "name": "TooltipProps"
+              },
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/header/react/lib/parts/DubLogoTitle.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "DubLogoTitle",
+          "methods": [],
+          "props": {
+            "themeColor": {
+              "defaultValue": {
+                "value": "HeaderTheme.White"
+              },
+              "description": "A HeaderTheme enum indicating which theme to use (White, Blue or Transparent)",
+              "name": "themeColor",
+              "required": true,
+              "type": {
+                "name": "HeaderTheme"
+              }
+            },
+            "title": {
+              "defaultValue": null,
+              "description": "The title to display in the header. Not used if `brand` is provided",
+              "name": "title",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "bgColor": {
+              "defaultValue": null,
+              "description": "The background color/gradient to be used behind the logo",
+              "name": "bgColor",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/header/react/lib/parts/Search.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Search",
+          "methods": [],
+          "props": {
+            "themeColor": {
+              "defaultValue": {
+                "value": "HeaderTheme.White"
+              },
+              "description": "The theme of the header the search input is being rendered in",
+              "name": "themeColor",
+              "required": true,
+              "type": {
+                "name": "HeaderTheme"
+              }
+            },
+            "placeholder": {
+              "defaultValue": {
+                "value": "Search"
+              },
+              "description": "The placeholder text in the input",
+              "name": "placeholder",
+              "required": true,
+              "type": {
+                "name": "string"
+              }
+            },
+            "value": {
+              "defaultValue": null,
+              "description": "The current value of the text input if a search has already been performed",
+              "name": "value",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "rightAlign": {
+              "defaultValue": null,
+              "description": "False if the search input should grow to left align it. True if it should right align.",
+              "name": "rightAlign",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "collapse": {
+              "defaultValue": null,
+              "description": "True if the search input should be collapsed into a toggle icon (for responsive).",
+              "name": "collapse",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            },
+            "onSearchSubmit": {
+              "defaultValue": null,
+              "description": "An function that gets called and passed the current input value when the search form is submitted",
+              "name": "onSearchSubmit",
+              "required": false,
+              "type": {
+                "name": "((query: string) => void) | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "modules/header/react/lib/parts/WorkdayLogoTitle.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "WorkdayLogoTitle",
+          "methods": [],
+          "props": {
+            "themeColor": {
+              "defaultValue": {
+                "value": "HeaderTheme.White"
+              },
+              "description": "A HeaderTheme enum indicating which theme to use (White, Blue or Transparent)",
+              "name": "themeColor",
+              "required": true,
+              "type": {
+                "name": "HeaderTheme"
+              }
+            },
+            "title": {
+              "defaultValue": {
+                "value": ""
+              },
+              "description": "The title to display in the header. Not used if `brand` is provided",
+              "name": "title",
+              "required": false,
+              "type": {
+                "name": "string | undefined"
+              }
+            },
+            "variant": {
+              "defaultValue": null,
+              "description": "",
+              "name": "variant",
+              "required": false,
+              "type": {
+                "name": "HeaderVariant | undefined"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

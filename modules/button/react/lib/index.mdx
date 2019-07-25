@@ -1,0 +1,32 @@
+---
+name: Button
+menu: Components
+route: /components/button
+---
+
+# Button
+
+import { Playground, Props } from 'docz'
+import { SimpleButton } from './SimpleButton'
+
+You can document using markdown.
+
+- list item
+- another item
+
+You can also use JSX directly
+
+<SimpleButton buttonType="betaPrimary">Click me</SimpleButton>
+
+Or you can create a Playground:
+
+ You can show raw code:
+ ```ts
+<SimpleButton buttonType="betaButton">Click Me</SimpleButton>
+```
+
+It is also easy document a props table:
+
+## Props
+
+<Props of={SimpleButton} />
