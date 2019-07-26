@@ -264,12 +264,13 @@ cat > $readme << EOF
 EOF
 
 # Adds module dependency and export for React and CSS
+node "utils/create-module.js" "$name" "react";
 node "utils/create-module.js" "$name" "css";
 
 else
 
 # Adds module dependency and export for React only
-node "utils/create-module.js" "$name";
+node "utils/create-module.js" "$name" "react";
 
 fi
 
