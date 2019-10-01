@@ -26,4 +26,6 @@ jobs:
       run: yarn build
     - name: Unit tests
       run: yarn test
+    - name: Integration tests
+      run: yarn cypress run --record --key ${{ secrets.CYPRESS_KEY }}
       
