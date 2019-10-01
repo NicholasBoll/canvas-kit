@@ -26,6 +26,8 @@ jobs:
       run: yarn build
     - name: Unit tests
       run: yarn test
+    - name: storybook
+      run: yarn start & npx wait-on http://localhost:9001
     - name: Integration tests
       run: yarn cypress run --record --key ${{ secrets.CYPRESS_KEY }}
       
