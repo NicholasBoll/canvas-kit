@@ -30,4 +30,9 @@ jobs:
       run: yarn start & npx wait-on http://localhost:9001
     - name: Integration tests
       run: yarn cypress run --record --key ${{ secrets.CYPRESS_KEY }}
+      env:
+        TRAVIS: 1 # Pretend to be Travis for Cypress
+        TRAVIS_COMMIT: ${{ github.sha }}
+        TRAVIS_PULL_REQUEST_BRANCH: ${{ github.head_ref }}
+        TRAVIS_COMMIT_MESSAGE: Unknown
       
