@@ -14,15 +14,15 @@ jobs:
         node-version: [10.x]
     
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+#     - uses: actions/checkout@v1
+#     - uses: actions/setup-node@v1
+#       with:
+#         node-version: ${{ matrix.node-version }}
     - name: Echo Variables
       run: |
         echo GITHUB_SHA
         echo ${{ github.sha }}
-        echo github
+        echo ${{ github }}
 #     - name: Install Packages
 #       run: yarn install --production=false
 #     - name: Linting
