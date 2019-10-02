@@ -23,6 +23,8 @@ jobs:
         echo GITHUB_SHA
         echo ${{ github.sha }}
         echo ${{ github.event.pull_request.head.sha }}
+        echo ${{ github.event.pull_request.head.ref }}
+        echo ${{ github.event.pull_request.head.label }}
 #     - name: Install Packages
 #       run: yarn install --production=false
 #     - name: Linting
@@ -37,7 +39,7 @@ jobs:
 #       run: yarn cypress run --record --key ${{ secrets.CYPRESS_KEY }}
 #       env:
 #         TRAVIS: 1 # Pretend to be Travis for Cypress
-#         TRAVIS_COMMIT: ${{ GITHUB_SHA }}
+#         TRAVIS_COMMIT: ${{ github.event.pull_request.head.sha }} # GITHUB_SHA/github.sha is the merge commit, this is the last commit on the PR
 #         TRAVIS_PULL_REQUEST_BRANCH: ${{ github.head_ref }}
 #         TRAVIS_COMMIT_MESSAGE: Unknown
       
