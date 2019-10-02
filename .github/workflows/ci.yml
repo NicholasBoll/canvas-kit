@@ -15,30 +15,32 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
 #     - uses: actions/setup-node@v1
 #       with:
 #         node-version: ${{ matrix.node-version }}
     - name: Echo Variables
       run: |
-        echo GITHUB_SHA
+        echo ${GITHUB_SHA}
         echo ${{ github.sha }}
         echo ${{ github.event.pull_request.head.sha }}
-        git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }}
-    - name: Install Packages
-      run: yarn install --production=false
-    - name: Linting
-      run: yarn lint
-    - name: Build
-      run: yarn build
-    - name: Unit tests
-      run: yarn test
-    - name: storybook
-      run: yarn start & npx wait-on http://localhost:9001
-    - name: Integration tests
-      run: yarn cypress run --record --key ${{ secrets.CYPRESS_KEY }}
-      env:
-        TRAVIS: 1 # Pretend to be Travis for Cypress
-        TRAVIS_COMMIT: ${{ github.event.pull_request.head.sha }} # GITHUB_SHA/github.sha is the merge commit, this is the last commit on the PR
-        TRAVIS_PULL_REQUEST_BRANCH: ${{ github.head_ref }}
+        git log --format=%B -n 1
+#     - name: Install Packages
+#       run: yarn install --production=false
+#     - name: Linting
+#       run: yarn lint
+#     - name: Build
+#       run: yarn build
+#     - name: Unit tests
+#       run: yarn test
+#     - name: storybook
+#       run: yarn start & npx wait-on http://localhost:9001
+#     - name: Integration tests
+#       run: yarn cypress run --record --key ${{ secrets.CYPRESS_KEY }}
+#       env:
+#         TRAVIS: 1 # Pretend to be Travis for Cypress
+#         TRAVIS_COMMIT: ${{ github.event.pull_request.head.sha }} # GITHUB_SHA/github.sha is the merge commit, this is the last commit on the PR
+#         TRAVIS_PULL_REQUEST_BRANCH: ${{ github.head_ref }}
 #         TRAVIS_COMMIT_MESSAGE: Unknown
       
