@@ -6,20 +6,14 @@ on:
       - master
 
 jobs:
-  build:
-
+  unit_test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x]
     
     steps:
     - uses: actions/checkout@v1
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
     - uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 10.x
     - name: Install Packages
       run: yarn install --production=false
     - name: Linting
@@ -28,6 +22,17 @@ jobs:
       run: yarn build
     - name: Unit tests
       run: yarn test
+
+  integration_test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    - name: Install Packages
+      run: yarn install --production=false
     - name: storybook
       run: yarn start & npx wait-on http://localhost:9001
     - name: Integration tests
