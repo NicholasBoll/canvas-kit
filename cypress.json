@@ -1,5 +1,5 @@
 {
-  "projectId": "odida5",
+  "projectId": "hkkvrh",
   "baseUrl": "http://localhost:9001",
-  "supportFile": "cypress/support/index.ts"
+  "supportFile": "cypress/support/index.ts",
 }
