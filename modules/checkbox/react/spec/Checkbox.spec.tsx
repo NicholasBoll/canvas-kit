@@ -45,7 +45,7 @@ describe('Checkbox', () => {
   });
 
   test('Checkbox should spread extra props', () => {
-    const component = mount(<Checkbox data-propspread="test" />);
+    const component = mount(<Checkbox data-propspread="test" onChange={cb} />);
     const input = component
       .find('input') // TODO: Standardize on prop spread location (see #150)
       .getDOMNode();
@@ -56,21 +56,47 @@ describe('Checkbox', () => {
 
 describe('Checkbox Accessibility', () => {
   test('Checkbox should pass axe DOM accessibility guidelines', async () => {
-    const html = ReactDOMServer.renderToString(<Checkbox id={'123'} label={'Label'} />);
+    const html = ReactDOMServer.renderToString(
+      <Checkbox id={'123'} label={'Label'} onChange={jest.fn()} />
+    );
     expect(await axe(html)).toHaveNoViolations();
   });
 
   test('Checkbox without a defined id should pass axe DOM accessibility guidelines', async () => {
-    const html = ReactDOMServer.renderToString(<Checkbox label={'Label'} />);
+    const html = ReactDOMServer.renderToString(<Checkbox label={'Label'} onChange={jest.fn()} />);
     expect(await axe(html)).toHaveNoViolations();
   });
 
   test('Checkbox wrapped in a FormField should pass axe DOM accessibility guidelines', async () => {
     const html = ReactDOMServer.renderToString(
       <FormField label="My Field" inputId="my-checkbox-field">
-        <Checkbox disabled={false} checked={true} id="my-checkbox-field" />;
+        <Checkbox disabled={false} checked={true} id="my-checkbox-field" onChange={jest.fn()} />;
       </FormField>
     );
     expect(await axe(html)).toHaveNoViolations();
+  });
+
+  test('Checkbox creates a unique id for each instance', async () => {
+    const fragment = mount(
+      <form>
+        <Checkbox checked={true} onChange={jest.fn()} disabled={false} />;
+        <Checkbox onChange={jest.fn()} disabled={false} />;
+      </form>
+    );
+
+    const id1 = fragment
+      .find('input')
+      .at(0)
+      .getDOMNode()
+      .getAttribute('id');
+
+    const id2 = fragment
+      .find('input')
+      .at(1)
+      .getDOMNode()
+      .getAttribute('id');
+
+    expect(id1).not.toEqual(id2);
+    fragment.unmount();
   });
 });

@@ -9,26 +9,36 @@
 
 [data-whatinput='keyboard'] {
   @include wdc-focusable-buttons() {
-    box-shadow: 0 0 0 2px $wdc-btn-border-color-focus;
+    box-shadow: $wdc-btn-focus-ring;
     outline: none;
   }
 
-  .wdc-btn-primary:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):focus {
-      @extend .wdc-btn-primary.wdc-btn-focus;
+  .wdc-btn-primary:not([disabled]):not(.wdc-btn-disabled):not([tabindex='-1']):focus {
+    @extend .wdc-btn-primary.wdc-btn-focus;
+
+    &:hover {
+      background-color: $wdc-btn-bg-primary-hover;
+    }
+    &:active {
+      background-color: $wdc-btn-bg-primary-active;
     }
   }
 
-  .wdc-btn-split-icon:not([disabled]):not(.wdc-btn-disabled),
-  .wdc-btn-split-text:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):focus {
-      @extend .wdc-btn-split-text.wdc-btn-focus;
+  .wdc-btn:not([disabled]):not(.wdc-btn-disabled):not(.wdc-btn-primary):not(.wdc-btn-delete):not([tabindex='-1']):focus {
+    &:hover {
+      background-color: $wdc-btn-bg-secondary-hover;
+    }
+    &:active {
+      background-color: $wdc-btn-bg-secondary-active;
     }
   }
 
-  .wdc-btn-delete:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):focus {
-      @extend .wdc-btn-delete.wdc-btn-focus;
+  .wdc-btn-delete:not([disabled]):not(.wdc-btn-disabled):not([tabindex='-1']):focus {
+    &:hover {
+      background-color: $wdc-btn-bg-delete-hover;
+    }
+    &:active {
+      background-color: $wdc-btn-bg-delete-active;
     }
   }
 }
@@ -37,57 +47,42 @@
 [data-whatinput='touch'] {
   @include wdc-focusable-buttons() {
     outline: none;
+    box-shadow: none;
   }
 
-  .wdc-btn-primary:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):focus {
-      box-shadow: none;
-    }
-  }
-
-  .wdc-btn:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):focus {
-      @include wdc-btn-box-shadow($wdc-btn-border-color);
-    }
-  }
-
-  .wdc-btn:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):hover {
+  .wdc-btn:not([disabled]):not(.wdc-btn-disabled):not([tabindex='-1']) {
+    &:hover {
       @extend .wdc-btn-hover;
-      @include wdc-btn-box-shadow($wdc-btn-border-color-hover);
     }
-  }
-
-  .wdc-btn:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):active {
+    &:active {
       @extend .wdc-btn-active;
     }
   }
 
-  .wdc-btn-primary.wdc-btn-split-text:not([disabled]):not(.wdc-btn-disabled),
-  .wdc-btn-primary.wdc-btn-split-icon:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):focus {
-      box-shadow: none;
-    }
-  }
-
-  .wdc-btn-delete:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):focus {
-      @include wdc-btn-box-shadow($wdc-btn-border-color-delete);
-      background: $wdc-btn-bg-delete;
-      color: $wdc-btn-color-delete;
-    }
-  }
-
-  .wdc-btn-delete:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):hover {
+  .wdc-btn-delete:not([disabled]):not(.wdc-btn-disabled):not([tabindex='-1']) {
+    &:hover {
       @extend .wdc-btn-delete.wdc-btn-hover;
     }
+    &:active {
+      @extend .wdc-btn-delete.wdc-btn-active;
+    }
   }
 
-  .wdc-btn-delete:not([disabled]):not(.wdc-btn-disabled) {
-    &:not([tabindex='-1']):active {
-      @extend .wdc-btn-delete.wdc-btn-active;
+  .wdc-btn-icon,
+  .wdc-btn-icon-square,
+  .wdc-btn-icon-square-filled,
+  .wdc-btn-icon-circle,
+  .wdc-btn-icon-circle-filled,
+  .wdc-btn-icon-plain,
+  .wdc-btn-icon-inverse,
+  .wdc-btn-icon-inverse-filled {
+    &:not([disabled]):not(.wdc-btn-disabled):not([tabindex='-1']) {
+      &:focus,
+      &:hover,
+      &:active {
+        box-shadow: none;
+        border: transparent;
+      }
     }
   }
 }

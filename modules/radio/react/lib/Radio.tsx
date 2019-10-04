@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import {focusRing} from '@workday/canvas-kit-react-common';
 import canvas, {
+  borderRadius,
   colors,
   inputColors,
   spacingNumbers as spacing,
@@ -44,7 +45,7 @@ const RadioInputWrapper = styled('div')<Pick<RadioProps, 'disabled'>>(
   {
     height: radioHeight,
     '&::after': {
-      borderRadius: '100%',
+      borderRadius: borderRadius.circle,
       boxShadow: '0 0 0 0 ' + colors.soap200,
       content: '""',
       display: 'inline-block',
@@ -180,15 +181,16 @@ export default class Radio extends React.Component<RadioProps> {
   public static defaultProps = {
     checked: false,
     label: '',
-    id: uuid(),
   };
+
+  private id = uuid();
 
   public render() {
     // TODO: Standardize on prop spread location (see #150)
     const {
       checked,
       disabled,
-      id,
+      id = this.id,
       inputRef,
       label,
       name,

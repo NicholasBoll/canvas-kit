@@ -5,6 +5,7 @@ import {
   depth as depthValues,
   type,
   spacing,
+  borderRadius,
   CanvasDepthValue,
   CanvasSpacingValue,
 } from '@workday/canvas-kit-react-core';
@@ -14,6 +15,11 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
    * Heading at the top of the card.
    */
   heading?: React.ReactNode;
+
+  /**
+   * Heading ID for accessibility. Useful tie to an `aria-labelledby`
+   */
+  headingId?: string;
 
   /**
    * Padding of the card.
@@ -40,7 +46,7 @@ const Box = styled('div')<CardProps>(
   {
     backgroundColor: colors.frenchVanilla100,
     border: `1px solid ${colors.soap500}`,
-    borderRadius: 3,
+    borderRadius: borderRadius.l,
     boxSizing: 'border-box',
   },
   ({depth}) => depth,
@@ -51,6 +57,7 @@ const Box = styled('div')<CardProps>(
 
 const Header = styled('h3')(type.h3, {
   marginBottom: spacing.m,
+  marginTop: 0,
 });
 
 const Body = styled('div')(type.body);
@@ -62,11 +69,11 @@ export default class Card extends React.Component<CardProps> {
   };
 
   public render() {
-    const {heading, ...elemProps} = this.props;
+    const {heading, headingId, ...elemProps} = this.props;
 
     return (
       <Box {...elemProps}>
-        {heading && <Header>{heading}</Header>}
+        {heading && <Header id={headingId}>{heading}</Header>}
         <Body>{this.props.children}</Body>
       </Box>
     );
