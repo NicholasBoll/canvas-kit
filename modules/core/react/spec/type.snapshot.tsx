@@ -1,5 +1,6 @@
+/** @jsx jsx */
+import {css, jsx} from '@emotion/core';
 import * as React from 'react';
-import {css} from 'react-emotion';
 import * as renderer from 'react-test-renderer';
 
 import canvas, {H1, H2, H3, H4, H5} from '..';
@@ -47,25 +48,23 @@ export const type = (hierarchy: any) => (
 
     <h3 style={hierarchy.h3}>Variants</h3>
 
-    <span className={css(hierarchy.body, hierarchy.variant.button)}>Button Text</span>
+    <span css={css(hierarchy.body, hierarchy.variant.button)}>Button Text</span>
     <br />
-    <span className={css(hierarchy.body, hierarchy.variant.caps)}>Caps Text</span>
+    <span css={css(hierarchy.body, hierarchy.variant.caps)}>Caps Text</span>
     <br />
-    <label className={css(hierarchy.body, hierarchy.variant.label)}>Label Text</label>
+    <label css={css(hierarchy.body, hierarchy.variant.label)}>Label Text</label>
     <br />
-    <span className={css(hierarchy.body, hierarchy.variant.hint)}>Hint Text</span>
+    <span css={css(hierarchy.body, hierarchy.variant.hint)}>Hint Text</span>
     <br />
-    <span className={css(hierarchy.body, hierarchy.variant.error)}>Error Text</span>
+    <span css={css(hierarchy.body, hierarchy.variant.error)}>Error Text</span>
     <br />
-    <a href="#" className={css(hierarchy.body, hierarchy.variant.link)}>
+    <a href="#" css={css(hierarchy.body, hierarchy.variant.link)}>
       Link Text
     </a>
     <br />
-    <span className={css(hierarchy.body, hierarchy.variant.inverse, inverseStyle)}>
-      Inverse Text
-    </span>
+    <span css={css(hierarchy.body, hierarchy.variant.inverse, inverseStyle)}>Inverse Text</span>
     <br />
-    <span className={css(hierarchy.body, hierarchy.variant.mono)}>Mono Text</span>
+    <span css={css(hierarchy.body, hierarchy.variant.mono)}>Mono Text</span>
   </div>
 );
 

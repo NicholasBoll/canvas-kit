@@ -1,5 +1,6 @@
+/** @jsx jsx */
+import {css, jsx} from '@emotion/core';
 import * as React from 'react';
-import {css} from 'react-emotion';
 import * as renderer from 'react-test-renderer';
 import type from '../lib/type';
 
@@ -49,23 +50,23 @@ describe('Core Labs Type Snapshot', () => {
 
         <h3 style={type.h3}>Variants</h3>
 
-        <span className={css(type.body, type.variant.button)}>Button Text</span>
+        <span css={css(type.body, type.variant.button)}>Button Text</span>
         <br />
-        <span className={css(type.body, type.variant.caps)}>Caps Text</span>
+        <span css={css(type.body, type.variant.caps)}>Caps Text</span>
         <br />
-        <label className={css(type.body, type.variant.label)}>Label Text</label>
+        <label css={css(type.body, type.variant.label)}>Label Text</label>
         <br />
-        <span className={css(type.body, type.variant.hint)}>Hint Text</span>
+        <span css={css(type.body, type.variant.hint)}>Hint Text</span>
         <br />
-        <span className={css(type.body, type.variant.error)}>Error Text</span>
+        <span css={css(type.body, type.variant.error)}>Error Text</span>
         <br />
-        <a href="#" className={css(type.body, type.variant.link)}>
+        <a href="#" css={css(type.body, type.variant.link)}>
           Link Text
         </a>
         <br />
-        <span className={css(type.body, type.variant.inverse, inverseStyle)}>Inverse Text</span>
+        <span css={css(type.body, type.variant.inverse, inverseStyle)}>Inverse Text</span>
         <br />
-        <span className={css(type.body, type.variant.mono)}>Mono Text</span>
+        <span css={css(type.body, type.variant.mono)}>Mono Text</span>
       </div>
     );
 
