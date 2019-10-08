@@ -49,7 +49,8 @@ jobs:
       - name: Integration tests
         run: |
           export TEMP=`echo "YzhhNzE3ZTctMDFkNy00MWNjLTk5OGQtNGYzOTc0MzEyMjY0Cg==" | openssl enc -base64 -d`
-          echo ::add-mask::$TEMP
+          echo ::add-mask::$TEMP > temp.txt
+          cat temp.txt
 
         # yarn cypress run --record --key ::add-mask::$TEMP
         env:
