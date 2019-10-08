@@ -36,6 +36,7 @@ jobs:
           echo ${{ github.ref }}
           echo ${{ github.head_ref }}
           echo ${{ github.base_ref }}
+          echo ${{ github.event.pull_request.head.label }}
 #     - uses: actions/checkout@v1
 #     - uses: actions/setup-node@v1
 #       with:
