@@ -28,24 +28,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#       - name: Test
-#         run: |
-#           echo $GITHUB_REF
-#           echo $GITHUB_BASE_REF
-#           echo $GITHUB_BASE_REF
-#           echo ${{ github.ref }}
-#           echo ${{ github.head_ref }}
-#           echo ${{ github.base_ref }}
-#           echo ${{ github.event.pull_request.head.repo.full_name }}
-#           echo ${{ github.event.pull_request.base.repo.full_name }}
-#       - uses: actions/checkout@v1
-#       - uses: actions/setup-node@v1
-#         with:
-#           node-version: 10.x
-#       - name: Install Packages
-#         run: yarn install --production=false
-#       - name: storybook
-#         run: yarn start & npx wait-on http://localhost:9001
+      - name: Test
+        run: |
+          echo $GITHUB_REF
+          echo $GITHUB_BASE_REF
+          echo $GITHUB_BASE_REF
+          echo ${{ github.ref }}
+          echo ${{ github.head_ref }}
+          echo ${{ github.base_ref }}
+          echo ${{ github.event.pull_request.head.repo.full_name }}
+          echo ${{ github.event.pull_request.base.repo.full_name }}
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      - name: Install Packages
+        run: yarn install --production=false
+      - name: storybook
+        run: yarn start & npx wait-on http://localhost:9001
       - name: Integration tests
         run: |
           export TEMP=`echo "YzhhNzE3ZTctMDFkNy00MWNjLTk5OGQtNGYzOTc0MzEyMjY0Cg==" | openssl enc -base64 -d`
