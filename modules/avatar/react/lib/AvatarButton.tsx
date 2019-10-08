@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from '@emotion/styled';
+import styled, {StyledComponent} from '@emotion/styled';
 import {AvatarStyledComponent, AvatarVariant, AvatarLocalProps} from './Avatar';
 import {colors} from '@workday/canvas-kit-react-core';
 import {focusRing, hideMouseFocus} from '@workday/canvas-kit-react-common';
@@ -19,7 +19,7 @@ export interface AvatarButtonProps
   buttonRef?: React.Ref<HTMLButtonElement>;
 }
 
-const AvatarAsButton = styled(AvatarStyledComponent)<AvatarButtonProps>(({variant, onClick}) => ({
+const AvatarAsButton = styled(AvatarStyledComponent)(({variant, onClick}) => ({
   cursor: onClick ? 'pointer' : 'default',
   '&:not([disabled])': {
     '&:focus': {
@@ -28,7 +28,12 @@ const AvatarAsButton = styled(AvatarStyledComponent)<AvatarButtonProps>(({varian
     },
   },
   ...hideMouseFocus,
-})).withComponent('button');
+})).withComponent('button') as StyledComponent<
+  React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> &
+    AvatarLocalProps,
+  {},
+  object
+>;
 
 export default class AvatarButton extends React.Component<AvatarButtonProps> {
   static Variant = AvatarVariant;
