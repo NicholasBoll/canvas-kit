@@ -31,6 +31,7 @@ jobs:
       - name: Test
         run: |
           echo $GITHUB_REF
+          echo $GITHUB_BASE_REF
           echo $GITHUB_HEAD_REF
 #     - uses: actions/checkout@v1
 #     - uses: actions/setup-node@v1
