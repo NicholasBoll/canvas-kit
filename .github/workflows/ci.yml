@@ -49,10 +49,7 @@ jobs:
       - name: Integration tests
         run: |
           export TEMP=`echo "YzhhNzE3ZTctMDFkNy00MWNjLTk5OGQtNGYzOTc0MzEyMjY0Cg==" | openssl enc -base64 -d`
-          echo ::add-mask::$TEMP > temp.txt
-          cat temp.txt
-
-        # yarn cypress run --record --key ::add-mask::$TEMP
+          yarn cypress run --record --key ::add-mask::$TEMP
         env:
           # Cypress gathers info about a commit and PR to show in the dashboard. Github Actions isn't officially supported as a CI provider, so we'll help it along
           TRAVIS: true # Pretend to be Travis. More info: https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.js
