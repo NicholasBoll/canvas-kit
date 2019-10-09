@@ -23,4 +23,4 @@ jobs:
     - name: ChromaticQA
       run: yarn chromatic
       env:
-        CHROMATIC_APP_CODE: ${{ CHROMATIC_APP_CODE }}
+        CHROMATIC_APP_CODE: ${{ secrets.CHROMATIC_APP_CODE }}
