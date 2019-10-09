@@ -40,7 +40,7 @@ jobs:
           echo ${{ github.event.pull_request.base.repo.full_name }}
       - uses: actions/checkout@v1
         with:
-          ref: refs/pull/${{ github.event.pull_request.number}}/merge
+          ref: refs/pull/${{ github.event.pull_request.number}}/head
       - name: SHA
         run: git rev-parse HEAD 
 #       - uses: actions/setup-node@v1
