@@ -20,7 +20,7 @@ jobs:
         node-version: 10.x
     - name: Install Packages
       run: yarn install
-    - uses: chromaui/actions@v1
+    - uses: chromaui/actions@release/v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         appCode: ${{ secrets.CHROMATIC_APP_CODE }}
