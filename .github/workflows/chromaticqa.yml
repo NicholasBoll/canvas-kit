@@ -1,7 +1,7 @@
 name: ChromaticQA
 
 on:
-  push:
+  pull_request:
 
 jobs:
   visual_regression:
@@ -12,10 +12,10 @@ jobs:
       run: |
         echo github '${{ toJson(github) }}'
         echo job '${{ toJson(job) }}'
-        echo job '${{ toJson(steps) }}'
-        echo job '${{ toJson(runner) }}'
-        echo job '${{ toJson(strategy) }}'
-        echo job '${{ toJson(matrix) }}'
+        echo steps '${{ toJson(steps) }}'
+        echo runner '${{ toJson(runner) }}'
+        echo strategy '${{ toJson(strategy) }}'
+        echo matrix '${{ toJson(matrix) }}'
     # - uses: actions/checkout@v1
     # - uses: actions/setup-node@v1
     #   with:
