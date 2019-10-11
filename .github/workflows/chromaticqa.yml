@@ -14,7 +14,7 @@ jobs:
         echo sha ${{ github.sha }}
         echo ref ${{ github.ref }}
         echo head_ref ${{ github.head_ref }}
-        echo base_ref ${{ github.base_ref}}
+        echo base_ref ${{ github.base_ref }}
         echo event ${{ toJson(github.event) }}
         echo job ${{ toJson(github.job) }}
     - uses: actions/checkout@v1
