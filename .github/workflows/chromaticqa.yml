@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      name: Variables
+    - name: Variables
       run: |
         echo event_name ${{ github.event_name }}
         echo sha ${{ github.sha }}
