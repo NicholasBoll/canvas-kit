@@ -3,7 +3,7 @@ name: ChromaticQA
 on:
   push:
     branches:
-      - pull/*/head
+      - '**/pull/**/head'
 
 jobs:
   visual_regression:
