@@ -8,7 +8,7 @@ export type PopperOptions = PopperJS.PopperOptions;
 export interface PopperProps extends React.HTMLAttributes<HTMLDivElement> {
   anchorElement: Element | null;
   children: React.ReactNode;
-  containerElement?: Element;
+  containerElement?: Element | null;
   open: boolean;
   placement: Placement;
   popperOptions?: PopperOptions;
@@ -25,6 +25,7 @@ export class Popper extends React.PureComponent<PopperProps> {
   };
 
   public componentWillUnmount() {
+    console.log('destroy popper');
     if (this.popper) {
       this.popper.destroy();
       this.popper = null;

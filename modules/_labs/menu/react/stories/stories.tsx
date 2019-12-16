@@ -5,9 +5,8 @@ import {action} from '@storybook/addon-actions';
 import withReadme from 'storybook-readme/with-readme';
 import uuid from 'uuid/v4';
 import {setupIcon, uploadCloudIcon, userIcon, extLinkIcon} from '@workday/canvas-system-icons-web';
-import Popper from '@material-ui/core/Popper';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import {Button, ButtonProps} from '@workday/canvas-kit-react-button';
+import {Popper} from '@workday/canvas-kit-react-common';
 
 import Menu from '../lib/Menu';
 import MenuItem, {MenuItemProps} from '../lib/MenuItem';
@@ -97,40 +96,32 @@ class ControlledMenu extends React.Component<{}, ControlledMenuState> {
   public render() {
     const {anchorEl, isOpen, selectedItemIndex} = this.state;
     return (
-      <ClickAwayListener onClickAway={this.handleClose}>
-        <div>
-          <FocusableButton
-            onClick={this.handleClick}
-            onKeyDown={this.handleKeyDown}
-            aria-expanded={!!isOpen}
-            aria-haspopup={true}
-            aria-controls={this.menuId}
-            id={this.controlButtonId}
-            ref={this.buttonRef}
-          >
-            Open Menu
-          </FocusableButton>
-          <Popper
-            transition={true}
-            keepMounted={true}
-            placement={'bottom-start'}
-            open={isOpen}
-            anchorEl={anchorEl}
-          >
-            <div style={{opacity: isOpen ? 1 : 0, display: isOpen ? `initial` : `none`}}>
-              <Menu
-                initialSelectedItem={selectedItemIndex}
-                isOpen={isOpen}
-                onClose={this.handleClose}
-                id={this.menuId}
-                labeledBy={this.controlButtonId}
-              >
-                {createMenuItems().map(buildItem)}
-              </Menu>
-            </div>
-          </Popper>
-        </div>
-      </ClickAwayListener>
+      <div>
+        <FocusableButton
+          onClick={this.handleClick}
+          onKeyDown={this.handleKeyDown}
+          aria-expanded={!!isOpen}
+          aria-haspopup={true}
+          aria-controls={this.menuId}
+          id={this.controlButtonId}
+          ref={this.buttonRef}
+        >
+          Open Menu
+        </FocusableButton>
+        <Popper placement={'bottom-start'} open={isOpen} anchorElement={anchorEl}>
+          <div style={{opacity: isOpen ? 1 : 0, display: isOpen ? `initial` : `none`}}>
+            <Menu
+              initialSelectedItem={selectedItemIndex}
+              isOpen={isOpen}
+              onClose={this.handleClose}
+              id={this.menuId}
+              labeledBy={this.controlButtonId}
+            >
+              {createMenuItems().map(buildItem)}
+            </Menu>
+          </div>
+        </Popper>
+      </div>
     );
   }
   private handleClick = (event: React.SyntheticEvent<HTMLButtonElement>) => {
