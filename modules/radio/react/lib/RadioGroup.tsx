@@ -1,38 +1,40 @@
 import * as React from 'react';
-import styled from '@emotion/styled';
+import {styled, Themeable} from '@workday/canvas-kit-labs-react-core';
 import Radio, {RadioProps} from './Radio';
-import {borderRadius, spacing, inputColors, colors} from '@workday/canvas-kit-react-core';
-import {ErrorType, GrowthBehavior} from '@workday/canvas-kit-react-common';
+import {borderRadius, spacing} from '@workday/canvas-kit-react-core';
+import {ErrorType, GrowthBehavior, getErrorColors} from '@workday/canvas-kit-react-common';
 
-export interface RadioGroupProps extends GrowthBehavior {
+export interface RadioGroupProps extends Themeable, GrowthBehavior {
   /**
-   * React children must be of type Radio and have at least two.
+   * The Radio button children of the RadioGroup (must be at least two).
    */
   children: React.ReactElement<RadioProps>[];
-
   /**
-   * The value or index of the Radio that should be toggled on.
-   * If a string is passed, the Radio with the corresponding value will be selected.
-   * If a number is passed, ihe Radio with the corresponding index will be selected.
+   * The selected value of the RadioGroup. If a string is provided, the Radio button with the corresponding value will be selected. If a number is provided, the Radio button with the corresponding index will be selected.
+   * @default 0
    */
   value?: string | number;
-
-  name?: string;
-
-  error?: ErrorType;
-
   /**
-   * Callback function when a button is selected, optional.
-   * If the selected button has a value, it will be returned.
-   * Otherwise, the index of the button in the group will be returned.
+   * The common `name` passed to all Radio button children of the RadioGroup. This enables you to avoid specifying the `name` for each child.
+   */
+  name?: string;
+  /**
+   * The type of error associated with the RadioGroup (if applicable).
+   */
+  error?: ErrorType;
+  /**
+   * The function called when the RadioGroup state changes. The value passed to the callback function will be the value of the selected Radio button if it has one; otherwise, the index of the selected Radio button will be passed in.
    */
   onChange?: (value: string | number) => void;
 }
 
-const Container = styled('div')<Pick<RadioGroupProps, 'error' | 'grow'>>(
+const Container = styled('div')<Pick<RadioGroupProps, 'error' | 'grow' | 'theme'>>(
   {
     display: 'inline-block',
     boxSizing: 'border-box',
+    borderRadius: borderRadius.m,
+    padding: `${spacing.xxxs} ${spacing.xs}`,
+    margin: `-${spacing.xxxs} -${spacing.xs}`,
     '& > div': {
       margin: `${spacing.xxs} ${spacing.zero}`,
       '&:first-child': {
@@ -44,26 +46,14 @@ const Container = styled('div')<Pick<RadioGroupProps, 'error' | 'grow'>>(
     },
   },
   ({grow}) => grow && {width: '100%'},
-  ({error}) => {
-    let errorBorderColor;
-    let errorRingColor;
-
-    if (error === ErrorType.Error) {
-      errorRingColor = inputColors.error.border;
-    } else if (error === ErrorType.Alert) {
-      errorRingColor = inputColors.warning.border;
-      errorBorderColor = colors.cantaloupe600;
-    } else {
-      return {};
-    }
+  ({error, theme}) => {
+    const errorColors = getErrorColors(error, theme);
     return {
-      borderRadius: borderRadius.m,
       transition: '100ms box-shadow',
-      boxShadow: errorBorderColor
-        ? `inset 0 0 0 1px ${errorBorderColor}, inset 0 0 0 3px ${errorRingColor}`
-        : `inset 0 0 0 2px ${errorRingColor}`,
-      padding: `${spacing.xxxs} ${spacing.xs}`,
-      margin: `-${spacing.xxxs} -${spacing.xs}`,
+      boxShadow:
+        errorColors.outer !== errorColors.inner
+          ? `inset 0 0 0 1px ${errorColors.outer}, inset 0 0 0 3px ${errorColors.inner}`
+          : `inset 0 0 0 2px ${errorColors.inner}`,
     };
   }
 );

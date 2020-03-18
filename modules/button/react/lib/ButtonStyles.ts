@@ -1,16 +1,17 @@
-import canvas, {borderRadius} from '@workday/canvas-kit-react-core';
-import {GenericStyle} from '@workday/canvas-kit-react-common';
 import {CSSObject} from '@emotion/core';
+import {GenericStyle} from '@workday/canvas-kit-react-common';
+import canvas, {borderRadius} from '@workday/canvas-kit-react-core';
+
 import {
-  DeprecatedButtonVariant,
-  ButtonSize,
-  IconPosition,
   AllButtonVariants,
-  TextButtonVariant,
+  ButtonSize,
   ButtonVariant,
+  DeprecatedButtonVariant,
   IconButtonVariant,
+  IconPosition,
+  TextButtonVariant,
 } from './types';
-import {getButtonStateStyle} from './utils';
+import {getButtonStateStyle, getIconButtonStateStyle} from './utils';
 
 export const CANVAS_BUTTON_HEIGHT_LARGE: number = 40;
 export const CANVAS_BUTTON_HEIGHT_MEDIUM: number = 24;
@@ -142,7 +143,8 @@ export const deprecatedButtonStyles: ButtonGenericStyle = {
     position: 'relative',
     cursor: 'pointer',
     outline: 'none',
-    transition: 'all 120ms linear',
+    transition:
+      'box-shadow 120ms linear, border 120ms linear, background-color 120ms linear, color 120ms linear',
     '&:hover:active': {transitionDuration: '40ms'}, // Makes the "down" state of the button happens faster than the hover state, so it animates in correctly.
     '&:disabled, &:disabled:active': {cursor: 'default', boxShadow: 'none'},
   },
@@ -311,7 +313,8 @@ export const iconButtonStyles: ButtonGenericStyle = {
   variants: {
     sizes: {
       [ButtonSize.Small]: {
-        width: canvas.spacing.l,
+        minWidth: canvas.spacing.l, // min-width is set so buttons don't collapse in IE11
+        width: 'auto',
         height: canvas.spacing.l,
         'span svg': {
           width: '20px',
@@ -319,6 +322,7 @@ export const iconButtonStyles: ButtonGenericStyle = {
         },
       },
       [ButtonSize.Medium]: {
+        minWidth: canvas.spacing.xl,
         width: canvas.spacing.xl,
         height: canvas.spacing.xl,
       },
@@ -326,30 +330,32 @@ export const iconButtonStyles: ButtonGenericStyle = {
     types: {
       [IconButtonVariant.Square]: {
         borderRadius: borderRadius.m,
+        minWidth: canvas.spacing.l,
         width: canvas.spacing.l,
         height: canvas.spacing.l,
-        ...getButtonStateStyle(IconButtonVariant.Square),
+        ...getIconButtonStateStyle(IconButtonVariant.Square),
       },
       [IconButtonVariant.SquareFilled]: {
         borderRadius: borderRadius.m,
+        minWidth: canvas.spacing.l,
         width: canvas.spacing.l,
         height: canvas.spacing.l,
-        ...getButtonStateStyle(IconButtonVariant.SquareFilled),
+        ...getIconButtonStateStyle(IconButtonVariant.SquareFilled),
       },
       [IconButtonVariant.Plain]: {
-        ...getButtonStateStyle(IconButtonVariant.Plain),
+        ...getIconButtonStateStyle(IconButtonVariant.Plain),
       },
       [IconButtonVariant.Circle]: {
-        ...getButtonStateStyle(IconButtonVariant.Circle),
+        ...getIconButtonStateStyle(IconButtonVariant.Circle),
       },
       [IconButtonVariant.CircleFilled]: {
-        ...getButtonStateStyle(IconButtonVariant.CircleFilled),
+        ...getIconButtonStateStyle(IconButtonVariant.CircleFilled),
       },
       [IconButtonVariant.Inverse]: {
-        ...getButtonStateStyle(IconButtonVariant.Inverse),
+        ...getIconButtonStateStyle(IconButtonVariant.Inverse),
       },
       [IconButtonVariant.InverseFilled]: {
-        ...getButtonStateStyle(IconButtonVariant.InverseFilled),
+        ...getIconButtonStateStyle(IconButtonVariant.InverseFilled),
       },
     },
   },

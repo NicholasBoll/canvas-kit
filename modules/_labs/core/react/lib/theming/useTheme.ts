@@ -1,16 +1,7 @@
 import * as React from 'react';
+import {ThemeContext} from '@emotion/core';
 import {CanvasTheme} from './types';
-import {ThemeContext, defaultCanvasTheme} from './theme';
-
-declare global {
-  interface Window {
-    workday: {
-      canvas: {
-        theme?: CanvasTheme;
-      };
-    };
-  }
-}
+import {defaultCanvasTheme} from './theme';
 
 /**
  * Hook function to get the correct theme object.
@@ -25,21 +16,23 @@ declare global {
  * ThemeProvider or context exists.
  * Tracked on https://github.com/emotion-js/emotion/issues/1193.
  */
-export default function useTheme(theme?: Object): CanvasTheme {
-  if (theme && Object.entries(theme).length !== 0) {
+export function useTheme(theme?: Object): CanvasTheme {
+  if (theme && Object.keys(theme).length !== 0) {
     return theme as CanvasTheme;
   }
 
   try {
     const context = React.useContext(ThemeContext);
-    if (context) {
+    if (context && Object.keys(context).length !== 0) {
       return context as CanvasTheme;
     }
   } catch (e) {
     // Context not supported or invalid (probably called from within a class component)
   }
 
+  // @ts-ignore
   if (window.workday && window.workday.canvas && window.workday.canvas.theme) {
+    // @ts-ignore
     return window.workday.canvas.theme;
   }
 

@@ -23,11 +23,10 @@ import {
 import README from '../README.md';
 import {IconButtonProps} from '../lib/IconButton';
 
-const blueBackground: CSSObject = {
+const iconButtonLayout: CSSObject = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundColor: '#0875e1',
   margin: '0 10px',
   padding: '24px',
   maxWidth: 'max-content',
@@ -35,6 +34,11 @@ const blueBackground: CSSObject = {
   button: {
     margin: '0 12px',
   },
+};
+
+const blueBackground: CSSObject = {
+  ...iconButtonLayout,
+  backgroundColor: '#0875e1',
 };
 
 const commonIconButtonProps: Pick<IconButtonProps, 'aria-label' | 'title' | 'icon'> = {

@@ -6,9 +6,15 @@ import {keyframes} from '@emotion/core';
 import uuid from 'uuid/v4';
 
 export interface TooltipProps {
-  /** Configure how the tooltip animates in */
+  /**
+   * The origin from which the Tooltip will animate.
+   * @default {horizontal: 'center', vertical: 'top'}
+   */
   transformOrigin: TransformOrigin;
-  /** HTML id of the tooltip container - useful for accessibility. Should link the tooltip container to a `aria-describedby` on the target */
+  /**
+   * HTML id of the tooltip container - useful for accessibility.
+   * Should link the tooltip container to a `aria-describedby` on the target
+   */
   id?: string;
 }
 

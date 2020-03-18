@@ -1,11 +1,8 @@
-import {configure, addDecorator, addParameters, forceReRender} from '@storybook/react';
+import {configure, addDecorator, addParameters} from '@storybook/react';
 import {DocsPage, DocsContainer} from '@storybook/addon-docs/blocks';
 import {withKnobs} from '@storybook/addon-knobs/react';
-import {create} from '@storybook/theming';
-import addons from '@storybook/addons';
-import Events from '@storybook/core-events';
-import {toId} from '@storybook/router';
-import ReactDOM from 'react-dom';
+import {create, themes} from '@storybook/theming';
+import 'cypress-storybook/react';
 
 import {commonColors, typeColors, fontFamily} from '../modules/core/react';
 import {CanvasProviderDecorator, FontsDecorator} from '../utils/storybook';
@@ -35,25 +32,33 @@ addDecorator(FontsDecorator);
 addDecorator(CanvasProviderDecorator);
 
 /** If the string contains a phrase, prefix it. This is useful for making ordering sections */
-const prefix = (phrase, prefix) => value => (value.indexOf(phrase) > -1 ? prefix + value : value);
+const prefix = (phrase, prefix) => (/** @type {string} */ value) => {
+  const index = value.indexOf(phrase);
+  return index > -1 ? value.substr(0, index) + prefix + value.substr(index) : value;
+};
 const pipe = (...fns) => value => fns.reduce((result, fn) => fn(result), value);
 
 function storySort(a, b) {
   const prefixFn = pipe(
     prefix('welcome-', '0'),
-    prefix('getting-started', '0'),
+    prefix('getting-started', 'a'),
     prefix('tokens-', '1'),
     prefix('components-', '2'),
-    prefix('labs-', '3')
+    prefix('labs-', '3'),
+    prefix('default', 'aa'),
+    prefix('visual-testing', 'zz')
   );
+
   const left = prefixFn(a[0]);
   const right = prefixFn(b[0]);
+
   return left === right ? 0 : left.localeCompare(right);
 }
 
 addParameters({
   options: {
     theme: create({
+      ...themes.light, // Overrides a user's preferred color scheme (e.g. Dark Mode), will need to flesh this out later when CK is compatible with a dark mode
       brandTitle: 'Canvas Kit',
       mainTextColor: typeColors.body,
       mainTextFace: fontFamily,
@@ -68,21 +73,9 @@ addParameters({
   readme: {
     codeTheme: 'github',
   },
+  chromatic: {
+    disable: true,
+  },
 });
 
 configure(loadStories, module);
-
-function setCurrentStory(categorization, story) {
-  clearCurrentStory();
-  addons.getChannel().emit(Events.SET_CURRENT_STORY, {
-    storyId: toId(categorization, story),
-  });
-  forceReRender();
-}
-
-function clearCurrentStory() {
-  var root = document.querySelector('#root');
-  ReactDOM.unmountComponentAtNode(root);
-}
-
-window.setCurrentStory = setCurrentStory;

@@ -1,4 +1,6 @@
 import * as React from 'react';
+// @ts-ignore
+import elementClosestPolyfill from 'element-closest';
 
 export interface InputProviderProps {
   provideIntent?: boolean;
@@ -187,6 +189,9 @@ export default class InputProvider extends React.Component<InputProviderProps, I
   provideIntent = this.props.provideIntent;
 
   componentDidMount() {
+    // For IE11 and under, we'll need to polyfill element.closest
+    elementClosestPolyfill(window);
+
     if (
       this.ref.current &&
       this.ref.current.parentElement &&
@@ -234,7 +239,9 @@ export default class InputProvider extends React.Component<InputProviderProps, I
     // `pointermove`, `MSPointerMove`, `mousemove` and mouse wheel event binding
     // can only demonstrate potential, but not actual, interaction
     // and are treated separately
-    const options = this.state.supportsPassive ? {passive: true} : false;
+    const options = this.state.supportsPassive
+      ? ({passive: true} as AddEventListenerOptions) // fixes Type '{ passive: boolean; }' has no properties in common with type 'EventListenerOptions'.  TS2345
+      : false;
 
     const fn = enable ? window.addEventListener : window.removeEventListener;
 

@@ -1,16 +1,23 @@
 import * as React from 'react';
-import styled from '@emotion/styled';
+import {styled, Themeable} from '@workday/canvas-kit-labs-react-core';
 import {GrowthBehavior, ErrorType, errorRing} from '@workday/canvas-kit-react-common';
 import {borderRadius, inputColors, spacingNumbers, type} from '@workday/canvas-kit-react-core';
 
 export interface TextInputProps
-  extends GrowthBehavior,
+  extends Themeable,
+    GrowthBehavior,
     React.InputHTMLAttributes<HTMLInputElement> {
+  /**
+   * The type of error associated with the TextInput (if applicable).
+   */
   error?: ErrorType;
+  /**
+   * The ref to the inner text input element.
+   */
   inputRef?: React.Ref<HTMLInputElement>;
 }
 
-const Input = styled('input')<Pick<TextInputProps, 'error' | 'grow'>>(
+const Input = styled('input')<Pick<TextInputProps, 'error' | 'grow' | 'width' | 'theme'>>(
   {
     ...type.body,
     border: `1px solid ${inputColors.border}`,
@@ -19,7 +26,6 @@ const Input = styled('input')<Pick<TextInputProps, 'error' | 'grow'>>(
     borderRadius: borderRadius.m,
     boxSizing: 'border-box',
     height: 40,
-    minWidth: 280,
     transition: '0.2s box-shadow, 0.2s border-color',
     padding: spacingNumbers.xxs, // Compensate for border
     margin: 0, // Fix Safari
@@ -42,14 +48,28 @@ const Input = styled('input')<Pick<TextInputProps, 'error' | 'grow'>>(
         color: inputColors.disabled.text,
       },
     },
+    '::-ms-clear': {
+      display: 'none',
+    },
   },
-  ({error}) => ({
-    ...errorRing(error),
+  ({width}) => ({
+    minWidth: width || 280,
+    width,
   }),
   ({grow}) =>
     grow && {
       width: '100%',
-    }
+    },
+  ({theme, error}) => {
+    return {
+      '&:focus:not([disabled])': {
+        borderColor: theme.palette.common.focusOutline,
+        boxShadow: `inset 0 0 0 1px ${theme.palette.common.focusOutline}`,
+        outline: 'none',
+      },
+      ...errorRing(error, theme),
+    };
+  }
 );
 
 export default class TextInput extends React.Component<TextInputProps> {

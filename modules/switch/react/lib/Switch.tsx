@@ -1,16 +1,44 @@
 import * as React from 'react';
-import styled from '@emotion/styled';
+import {styled, Themeable} from '@workday/canvas-kit-labs-react-core';
 import uuid from 'uuid/v4';
-import {ErrorType, focusRing, mouseFocusBehavior} from '@workday/canvas-kit-react-common';
-import {borderRadius, colors, inputColors, depth, spacing} from '@workday/canvas-kit-react-core';
+import {
+  ErrorType,
+  themedFocusRing,
+  mouseFocusBehavior,
+  getErrorColors,
+} from '@workday/canvas-kit-react-common';
+import {borderRadius, colors, depth, spacing} from '@workday/canvas-kit-react-core';
 
-export interface SwitchProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface SwitchProps extends Themeable, React.InputHTMLAttributes<HTMLInputElement> {
+  /**
+   * If true, set the Switch to the on state.
+   * @default false
+   */
   checked: boolean;
+  /**
+   * If true, set the Switch to the disabled state.
+   * @default false
+   */
   disabled?: boolean;
+  /**
+   * The HTML `id` of the underlying checkbox input element.
+   */
   id?: string;
+  /**
+   * The function called when the Switch state changes.
+   */
   onChange?: (e: React.SyntheticEvent) => void;
+  /**
+   * The value of the Switch.
+   */
   value?: string;
+  /**
+   * The ref to the underlying checkbox input element. Use this to imperatively switch or focus the Switch.
+   */
   inputRef?: React.Ref<HTMLInputElement>;
+  /**
+   * The type of error associated with the Switch (if applicable).
+   */
   error?: ErrorType;
 }
 
@@ -35,46 +63,32 @@ const SwitchInput = styled('input')<SwitchProps>(
     marginLeft: spacing.xxxs,
     borderRadius: borderRadius.circle,
     opacity: 0,
-    '&:focus, &:active': {
-      outline: 'none',
-      '& ~ div:first-of-type': {
-        ...focusRing(2, 2, false),
-      },
-    },
-    ...mouseFocusBehavior({
-      '&:focus, &:active': {
-        '& ~ div:first-of-type': {
-          ...focusRing(0, 0),
-          animation: 'none',
-        },
-      },
-    }),
   },
   ({disabled}) => ({
     cursor: disabled ? 'not-allowed' : 'pointer',
   }),
-  ({error}) => {
-    let errorRingColor;
-    let errorRingBorderColor = 'transparent';
+  ({error, theme}) => {
+    const errorColors = getErrorColors(error, theme);
 
-    if (error === ErrorType.Error) {
-      errorRingColor = inputColors.error.border;
-    } else if (error === ErrorType.Alert) {
-      errorRingColor = inputColors.warning.border;
-      errorRingBorderColor = colors.cantaloupe600;
-    } else {
-      return;
+    if (errorColors.outer === errorColors.inner) {
+      errorColors.outer = 'transparent';
     }
 
     const styles = {
+      '&:focus': {
+        outline: 'none',
+        '& ~ div:first-of-type': {
+          ...themedFocusRing(theme, {separation: 2, animate: false}),
+        },
+      },
       '& ~ div:first-of-type': {
         boxShadow: `
           0 0 0 2px ${colors.frenchVanilla100},
-          0 0 0 4px ${errorRingColor},
-          0 0 0 5px ${errorRingBorderColor}`,
+          0 0 0 4px ${errorColors.inner},
+          0 0 0 5px ${errorColors.outer}`,
       },
       '&:focus ~ div:first-of-type': {
-        ...focusRing(2, 2, false),
+        ...themedFocusRing(theme, {separation: 2, animate: false}),
       },
     };
     return {
@@ -85,8 +99,8 @@ const SwitchInput = styled('input')<SwitchProps>(
         '&:focus ~ div:first-of-type, &:active ~ div:first-of-type': {
           boxShadow: `
             0 0 0 2px ${colors.frenchVanilla100},
-            0 0 0 4px ${errorRingColor},
-            0 0 0 5px ${errorRingBorderColor}`,
+            0 0 0 4px ${errorColors.inner},
+            0 0 0 5px ${errorColors.outer}`,
         },
       }),
     };
@@ -107,9 +121,17 @@ const SwitchBackground = styled('div')<Pick<SwitchProps, 'checked' | 'disabled'>
     padding: '0px 2px',
     transition: 'background-color 200ms ease',
   },
-  ({checked, disabled}) => ({
-    backgroundColor: disabled ? colors.soap400 : checked ? colors.blueberry500 : colors.licorice200,
-  })
+  ({checked, disabled, theme}) => {
+    if (checked) {
+      return {
+        backgroundColor: disabled ? theme.palette.primary.light : theme.palette.primary.main,
+      };
+    } else {
+      return {
+        backgroundColor: disabled ? colors.soap400 : colors.licorice200,
+      };
+    }
+  }
 );
 
 const SwitchCircle = styled('div')<Pick<SwitchProps, 'checked'>>(({checked}) => ({
@@ -124,6 +146,8 @@ const SwitchCircle = styled('div')<Pick<SwitchProps, 'checked'>>(({checked}) => 
 }));
 
 export default class Switch extends React.Component<SwitchProps> {
+  static ErrorType = ErrorType;
+
   public static defaultProps = {
     checked: false,
   };
