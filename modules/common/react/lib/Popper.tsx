@@ -49,7 +49,6 @@ export class Popper extends React.PureComponent<PopperProps> {
   };
 
   public componentWillUnmount() {
-    console.log('destroy popper');
     if (this.popper) {
       this.popper.destroy();
       this.popper = null;

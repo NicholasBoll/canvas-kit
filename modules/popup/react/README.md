@@ -2,7 +2,8 @@
 
 A Popup component that allows you to render content above another.
 
-Note: This popup does not include a positioning engined. In our example we use our Popper
+Note: This popup does not include a positioning engine. In our example we use our Popper component
+to wrap our Popup component and position it, which is a wrapper to Popper.js.
 
 ## Installation
 
