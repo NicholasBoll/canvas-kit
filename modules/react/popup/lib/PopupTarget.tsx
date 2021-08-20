@@ -21,7 +21,21 @@ export const PopupTarget = createComponent(SecondaryButton)({
     const localModel = useModelContext(PopupModelContext, model);
 
     const props = usePopupTarget(localModel, elemProps, ref);
+    type foo = typeof props['ref'];
+    console.log('ref', props.ref);
 
     return <Element {...props}>{children}</Element>;
   },
 });
+
+type NoteDeleteButtonProps = {
+  isRTL: boolean;
+};
+
+export const NoteDeleteButton = React.forwardRef(
+  (props: NoteDeleteButtonProps & PopupTargetProps, _ref: React.Ref<HTMLButtonElement>) => {
+    return null;
+  }
+);
+
+// const temp = <PopupTarget as={NoteDeleteButton} />;

@@ -716,6 +716,8 @@ return (
 
 The full code can be found here: https://codesandbox.io/s/disclosure-composable-model-behavior-hooks-iwzl8
 
+> **Note:** There is a problem with `mergeProps` when it comes to React `ref` objects. A React `ref` is a special prop, similar to `key` where it is passed to a component or element as a prop, but is not accessible inside that component as a prop. All Canvas Kit compound components should forward the `ref` to the underlying DOM element. A behavior hook may or may not need access to a ref. `createHook` was created to normalize `ref` handling and remove the need to deal with `elemProps` directly.
+
 ## Composing Compound Components
 
 Having composable models, behaviors, and components means we can reuse parts of other compound components. For example, let's make a simple tooltip component that has a target and content, similar to the disclosure component, but behaves differently. A tooltip shows and hides based on mouse and focus events.

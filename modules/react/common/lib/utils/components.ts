@@ -17,26 +17,61 @@ export type StyledType = {
  * - `undefined` => `never`
  * - `'button'` => `React.Ref<HTMLButtonElement>`
  * - `ElementComponent<'button', ButtonProps>` => `React.Ref<HTMLButtonElement>`
+ * - `React.forwardRef<HTMLButtonElement, {}>(..)` => `React.Ref<HTMLButtonElement>`
  */
-type ExtractRef<T> = T extends undefined // test if T was even passed in
-  ? never // T not passed in, we'll set the ref to `never`
-  : React.Ref<
-      T extends keyof ElementTagNameMap // test if T is an element string like 'button' or 'div'
-        ? ElementTagNameMap[T] // if yes, the ref should be the element interface. `'button' => HTMLButtonElement`
-        : T extends ElementComponent<infer U, any> // if no, check if we can infer the the element type from an `ElementComponent` interface
-        ? U extends keyof ElementTagNameMap // test inferred U to see if it extends an element string
-          ? ElementTagNameMap[U] // if yes, use the inferred U and convert to an element interface. `'button' => HTMLButtonElement`
-          : U // if no, fall back to inferred U. Hopefully it is already an element interface
-        : T // if no, fall back to T. Hopefully it is already an element interface
-    >;
+export type ExtractRef<TComponent> = TComponent extends undefined // test if `TComponent` is `undefined`. Without this check, `undefined` matches `React.JSXElementConstructor` for some reason and the return is `unknown` (failed infer of `R`)
+  ? never // if yes, return `never` // : TComponent extends BaseElementComponent<infer E, any> // ? {1: E} // React.Ref<ExtractHTMLElement<E>>
+  : TComponent extends React.JSXElementConstructor<infer Props> // test if `TComponent` is a `JSXElementConstructor` (anything matching `(props: P) => React.ReactElement | null`) while inferring `Props`
+  ? Props extends {ref?: infer R} // test if `Props` has a `ref` while inferring the ref
+    ? R // if yes, return the inferred ref `R`
+    : never // if no, there should be no ref, return `never`
+  : TComponent extends keyof ElementTagNameMap // test if `TComponent` is an element string like 'button' or 'div'
+  ? React.Ref<ElementTagNameMap[TComponent]> // if yes, the ref should be the element interface. `'button' => HTMLButtonElement`
+  : never; // nothing matched, return `never`
+
+type BaseElementComponent<E extends React.ElementType, P> = {
+  __type: 'ElementComponent'; // used internally to distinguish between `ElementComponent` and `Component`
+  (props: Props<P, E>): JSX.Element;
+  // <ElementType extends React.ElementType>(props: AsProps<P, ElementType>): JSX.Element;
+  displayName?: string;
+};
+
+type ExtractHTMLElement<E> = E extends keyof JSX.IntrinsicElements
+  ? ExtractHTMLAttributes<JSX.IntrinsicElements[E]>
+  : never;
+
+export type ExtractAsProps<
+  P,
+  TComponent extends keyof JSX.IntrinsicElements | React.ComponentType
+> = TComponent extends keyof JSX.IntrinsicElements // test if `TComponent` extends `keyof JSX.IntrinsicElements`
+  ? P & ExtractHTMLAttributes<JSX.IntrinsicElements[TComponent]> // if yes, return original props `P` and the HTML attribute interface of element `E`
+  : TComponent extends BaseElementComponent<infer E, infer P2> // if no, test if `TComponent` is another `ElementComponent`
+  ? P & P2 & ExtractHTMLElement<E> // if `TComponent` is a `ElementComponent`, return props a merge of parent component props, `ElementComponent` props, and the child `ElementComponent` element HTML attribute interface
+  : TComponent extends (props: infer P2) => React.ReactElement | null
+  ? Omit<P2, 'as'> //{element: P2}
+  : Omit<ExtractHTMLAttributes<React.ComponentProps<TComponent>>, keyof P>; // Trying to figure out a better way than with `Omit` since `Omit` complicates type errors, but extracting information using `ElementComponent` causes circular references
+// : Omit<ExtractHTMLAttributes<React.ComponentProps<E>>, keyof P> & { // : E extends ElementComponent<any, any> // ? ExtractProps<E>
+
+export type AsProps<
+  P,
+  ElementType extends keyof JSX.IntrinsicElements | React.ComponentType
+> = ExtractAsProps<P, ElementType> & {
+  /**
+   * Optional ref. If the component represents an element, this ref will be a reference to the
+   * real DOM element of the component. If `as` is set to an element, it will be that element.
+   * If `as` is a component, the reference will be to that component (or element if the component
+   * uses `React.forwardRef`).
+   */
+  ref?: ExtractRef<ElementType>;
+} & As<ElementType>;
 
 /**
  * Generic component props with "as" prop
  * @template P Additional props
  * @template ElementType React component or string element
  */
-export type PropsWithAs<P, ElementType extends React.ElementType> = P &
-  Omit<React.ComponentProps<ElementType>, 'as' | 'state' | keyof P> & {
+export type Props<P, ElementType extends React.ElementType> = P &
+  ExtractHTMLAttributes<React.ComponentProps<ElementType>> & {
     /**
      * Optional ref. If the component represents an element, this ref will be a reference to the
      * real DOM element of the component. If `as` is set to an element, it will be that element.
@@ -54,7 +89,7 @@ export type PropsWithAs<P, ElementType extends React.ElementType> = P &
  * JSX.IntrinsicElements['button'] // React.ClassAttributes<HTMLButtonElement> & React.ButtonHTMLAttributes<HTMLButtonElement>
  * ExtractHTMLAttributes<JSX.IntrinsicElements['button']> // React.HTMLButtonAttributes<HTMLButtonElement>
  */
-type ExtractHTMLAttributes<
+export type ExtractHTMLAttributes<
   T extends React.DetailedHTMLProps<any, any>
 > = T extends React.DetailedHTMLProps<infer P, any> ? P : T;
 
@@ -114,24 +149,33 @@ type ExtractPropsFromComponent<TComponent> = TComponent extends ElementComponent
   ? P // it was a `React.ComponentType`, return inferred props `P`
   : {}; // We don't know what `TComponent` was, return an empty object
 
+type As<E> = {
+  /**
+   * Optional override of the default element used by the component. Any valid tag or Component.
+   * If you provided a Component, this component should forward the ref using `React.forwardRef`
+   * and spread extra props to a root element.
+   */
+  as: E;
+};
+
 /**
  * Component type that allows for `as` to change the element or component type.
  * Passing `as` will correctly change the allowed interface of the JSX element
  */
-export type ElementComponent<T extends React.ElementType, P> = {
+export interface ElementComponent<E extends React.ElementType, P> {
   __type: 'ElementComponent'; // used internally to distinguish between `ElementComponent` and `Component`
-  <ElementType extends React.ElementType>(
-    props: PropsWithAs<P, ElementType> & {
-      /**
-       * Optional override of the default element used by the component. Any valid tag or Component.
-       * If you provided a Component, this component should forward the ref using `React.forwardRef`
-       * and spread extra props to a root element.
-       */
-      as: ElementType;
-    }
-  ): JSX.Element;
-  (props: PropsWithAs<P, T>): JSX.Element;
+  <ElementType extends React.ElementType>(props: AsProps<P, ElementType>): JSX.Element;
+  (props: Props<P, E>): JSX.Element;
   displayName?: string;
+}
+
+/**
+ * Type for testing purposes. It should be kept the same as `ElementComponent`, except the return
+ * type is the same as the accepted props to verify the type output.
+ */
+export type TestElementComponent<E extends React.ElementType, P> = {
+  <ElementType extends React.ElementType>(props: AsProps<P, ElementType>): AsProps<P, ElementType>;
+  (props: Props<P, E>): Props<P, E>;
 };
 
 export type Component<P> = {
@@ -278,10 +322,42 @@ export const createHook = <M extends Model<any, any>, PO extends {}, PI extends 
 ): BehaviorHook<M, PO> => {
   return (model, elemProps, ref) => {
     const props = mergeProps(fn(model, ref, elemProps || ({} as any)), elemProps || ({} as any));
-    if (!props.hasOwnProperty('ref')) {
-      // This is the weird "incoming ref isn't in props, but outgoing ref is in props" thing
-      props.ref = ref;
+    // capture a ref to forward to the element, either one returned by the `fn` or by the passed in `ref`
+    let elementRef = props.ref || ref;
+
+    // Development only to test proper forwarding
+    if (process.env.NODE_ENV !== 'production') {
+      const testProp = '__test_prop_forwarding';
+      props[testProp] = 'true';
+      // fork ref to track it
+      const refs = useLocalRef(elementRef);
+      elementRef = refs.elementRef;
+      React.useEffect(() => {
+        console.log('ref', props.ref, ref, refs);
+        const url =
+          'https://workday.github.io/canvas-kit/?path=/story/welcome-dev-docs-compound-components--page#configuring-components';
+        if (!refs.localRef.current) {
+          console.warn(
+            'Components passed via the `as` prop must forward a ref to an element. See ' + url
+          );
+        } else {
+          if (!refs.localRef.current!.getAttribute(testProp)) {
+            console.warn(
+              'Components passed via the `as` prop must forward additional props to an element. See ' +
+                url
+            );
+          } else {
+            refs.localRef.current!.removeAttribute(testProp);
+          }
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
     }
+
+    // This is the weird "incoming ref isn't in props, but outgoing ref is in props" thing
+    props.ref = elementRef;
+
     return props;
   };
 };

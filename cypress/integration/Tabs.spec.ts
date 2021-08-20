@@ -1,5 +1,7 @@
 import * as h from '../helpers';
 
+type foo = typeof Cypress.$;
+
 describe('Tabs', () => {
   before(() => {
     h.stories.visit();

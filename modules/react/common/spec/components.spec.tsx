@@ -13,6 +13,7 @@ import {
   Model,
   BehaviorHook,
 } from '@workday/canvas-kit-react/common';
+import {act} from 'react-dom/test-utils';
 
 describe('createComponent', () => {
   it('should assign an element-base component as an ElementComponent', () => {
@@ -107,6 +108,14 @@ describe('createComponent', () => {
 });
 
 describe('createHook', () => {
+  const env = process.env.NODE_ENV;
+  beforeEach(() => {
+    process.env.NODE_ENV = 'production';
+  });
+  afterEach(() => {
+    process.env.NODE_ENV = env;
+  });
+
   const emptyModel = {state: {}, events: {}};
   it('should return a BehaviorHook type', () => {
     const useMyHook = createHook((model: typeof emptyModel) => {
@@ -144,12 +153,61 @@ describe('createHook', () => {
 
     expect(props).toEqual({foo: 'baz'});
   });
+
+  it('should warn if a ref is not forwarded', () => {
+    process.env.NODE_ENV = 'development';
+    const useHook = createHook(() => {
+      return {
+        foo: 'bar',
+      };
+    });
+
+    const Component = () => {
+      const model = {state: {}, events: {}};
+      const props = useHook(model);
+
+      return <div />;
+    };
+
+    const spy = jest.spyOn(console, 'warn');
+
+    render(<Component />);
+    expect(spy).toBeCalledWith(
+      expect.stringMatching(/Components passed via the `as` prop must forward a ref to an element/)
+    );
+  });
+
+  it('should warn if props are not forwarded', () => {
+    process.env.NODE_ENV = 'development';
+    const useHook = createHook(() => {
+      return {
+        foo: 'bar',
+      };
+    });
+
+    const Component = React.forwardRef<HTMLDivElement, {}>((_, ref) => {
+      const model = {state: {}, events: {}};
+      const props = useHook(model, {}, ref);
+
+      return <div ref={props.ref} />;
+    });
+
+    const spy = jest.spyOn(console, 'warn');
+
+    render(<Component />);
+    screen.debug(); //?
+    expect(spy).toBeCalledWith(
+      expect.stringMatching(
+        /Components passed via the `as` prop must forward additional props to an element/
+      )
+    );
+  });
 });
 
 describe('useForkRef', () => {
   it('should set the current value of the second ref if the first ref is undefined', () => {
     const ref1 = undefined;
-    const ref2 = {current: null};
+    const ref2 = {current: ''};
 
     const ref = useForkRef(ref1, ref2);
 
@@ -159,7 +217,7 @@ describe('useForkRef', () => {
   });
 
   it('should set the current value of the first ref if the second ref is undefined', () => {
-    const ref1 = {current: null};
+    const ref1 = {current: ''};
     const ref2 = undefined;
 
     const ref = useForkRef(ref1, ref2);
@@ -170,8 +228,8 @@ describe('useForkRef', () => {
   });
 
   it('should set the current value of both refs if both refs are RefObjects', () => {
-    const ref1 = {current: null};
-    const ref2 = {current: null};
+    const ref1 = {current: ''};
+    const ref2 = {current: ''};
 
     const ref = useForkRef(ref1, ref2);
 

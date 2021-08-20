@@ -1,13 +1,209 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React from 'react';
-import {expectTypeOf} from 'expect-type';
+import {expectTypeOf, ExpectTypeOf} from 'expect-type';
 
-import {createComponent, ElementComponent, ExtractProps} from '../lib/utils/components';
+import {
+  createComponent,
+  ElementComponent,
+  TestElementComponent,
+  ExtractProps,
+  ExtractRef,
+  AsProps,
+  ExtractAsProps,
+} from '../lib/utils/components';
 
 // expect-type is a very cool library, but failures can be extremely difficult to understand. To
 // combat the non-helpful failure messages, try to assign a value or type to a variable instead of
 // inlining. This way the variable can be moused over for the tooltip to help determine what went
 // wrong. When a test failed, observe the expected value vs the actual type or the Expected type vs
 // actual type.
+
+describe('ExtractRef', () => {
+  it('should extract a ref from an element string', () => {
+    type Expected = ExtractRef<'div'>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
+  });
+
+  it('should extract a ref from an ElementComponent', () => {
+    type Expected = ExtractRef<ElementComponent<'div', {}>>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
+  });
+
+  it('should extract a ref from a React.ForwardExoticComponent', () => {
+    const Component = React.forwardRef<HTMLDivElement, {foo: string}>(() => null);
+    type Expected = ExtractRef<typeof Component>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
+  });
+
+  it('should return never for a React.FC', () => {
+    type Expected = ExtractRef<React.FC>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<never>();
+  });
+
+  it('should return never for undefined', () => {
+    type Expected = ExtractRef<undefined>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<never>();
+  });
+
+  it('should extract a ref for nested ElementComponents', () => {
+    type Expected = ExtractRef<ElementComponent<ElementComponent<'div', {}>, {}>>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
+  });
+});
+
+describe('ElementComponent', () => {
+  it('should return the correct interface with no "as"', () => {
+    type Props1 = {foo: string};
+    const Component: TestElementComponent<'div', Props1> = null;
+
+    expectTypeOf(Component({foo: 'bar', onClick: e => null})).toEqualTypeOf<
+      Props1 & {ref?: React.Ref<HTMLDivElement>} & React.HTMLAttributes<HTMLDivElement>
+    >();
+  });
+
+  it('should return the correct interface with an element "as"', () => {
+    type Props1 = {foo: string};
+    const Component: TestElementComponent<'div', Props1> = null;
+
+    expectTypeOf(Component({foo: 'bar', as: 'button', onClick: e => null})).toEqualTypeOf<
+      Props1 & {ref?: React.Ref<HTMLButtonElement>} & {as: 'button'} & React.ButtonHTMLAttributes<
+          HTMLButtonElement
+        >
+    >();
+  });
+
+  it('should return the correct interface with a React.FC "as"', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: TestElementComponent<'div', Props1> = null;
+    const AsComponent: React.FC<Props1 & Props2> = null;
+    type temp = React.ComponentProps<typeof AsComponent>;
+
+    type Ref = ExtractRef<typeof AsComponent>;
+    type asprops = AsProps<Props1, React.FC<Props1 & Props2>>;
+
+    type props = ExtractAsProps<Props1, typeof AsComponent>;
+
+    expectTypeOf(Component({foo: 'bar', bar: 'baz', as: AsComponent})).toEqualTypeOf<
+      Props1 & {ref?: never} & {as: typeof AsComponent} & Props2 & {children?: React.ReactNode}
+    >();
+  });
+
+  it('should return the correct interface with a ElementComponent "as"', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: TestElementComponent<'div', Props1> = null;
+    const AsComponent: ElementComponent<'button', Props2> = null;
+    type temp = React.ComponentProps<typeof AsComponent>;
+    type temp2 = ElementTagNameMap['button'];
+
+    expectTypeOf(
+      Component({foo: 'bar', bar: 'baz', as: AsComponent, onClick: e => null})
+    ).toEqualTypeOf<
+      Props1 &
+        Props2 & {ref?: React.Ref<HTMLButtonElement>} & {
+          as: typeof AsComponent;
+        } & React.ButtonHTMLAttributes<HTMLButtonElement>
+    >();
+  });
+
+  it('should return the correct interface with a React.ForwardComponent "as"', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: TestElementComponent<'div', Props1> = null;
+    const AsComponent = React.forwardRef<HTMLButtonElement, Props1 & Props2>(() => null);
+
+    type Ref = ExtractRef<typeof AsComponent>;
+    type temp1 = React.ComponentProps<ElementComponent<'div', Props1>>;
+    type temp2 = React.ComponentProps<React.FC<Props1>>;
+    type temp3 = React.ComponentProps<typeof AsComponent>;
+
+    type props = ExtractAsProps<Props1, typeof AsComponent>;
+
+    expectTypeOf(Component({foo: 'bar', bar: 'baz', as: AsComponent})).toEqualTypeOf<
+      Props1 & React.RefAttributes<HTMLButtonElement> & {as: typeof AsComponent} & Props2
+    >();
+  });
+
+  it('should allow extra props to be spread to the prop interface of an "as" React.FC', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: ElementComponent<'div', Props1> = null;
+    const AsComponent: React.FC<Props1 & Props2 & React.ComponentProps<'button'>> = null;
+
+    type temp = React.ComponentProps<typeof AsComponent>;
+
+    <Component foobar="baz" />;
+    // @ts-expect-error
+    <Component as={AsComponent} foo="bar" />; // error, missing `bar` prop
+    <Component as={AsComponent} foo="bar" bar="baz" />; // no error
+    <Component as={AsComponent} onClick={e => null} foo="bar" bar="baz" />; // no error
+  });
+
+  it('should allow extra props to be spread to the prop interface of an "as" React.ForwardRefExoticComponent', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: ElementComponent<'div', Props1> = null;
+    const AsComponent = React.forwardRef<HTMLDivElement, Props2 & React.ComponentProps<'button'>>(
+      () => null
+    );
+
+    type temp = React.ComponentProps<typeof AsComponent>;
+
+    // @ts-expect-error
+    <Component as={AsComponent} foo="bar" />; // error, missing `bar` props
+    // @ts-expect-error
+    <Component as={AsComponent} foo="bar" onClick={e => null} />; // error, missing `bar` props. `onClick` should be known
+    <Component as={AsComponent} foo="bar" bar="baz" onClick={e => null} />; // no error
+  });
+
+  it('should allow extra props to be spread to the prop interface of an "as" ElementComponent', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: ElementComponent<'div', Props1> = null;
+    const AsComponent: ElementComponent<'button', Props2> = null;
+
+    // @ts-expect-error
+    <Component as={AsComponent} foo="bar" />; // error, missing `bar` props
+    <Component as={AsComponent} foo="bar" bar="baz" />; // no error
+    <Component as={AsComponent} key="foo" foo="bar" bar="baz" onClick={e => null} />; // no error, `onClick` should be known
+  });
+
+  it('should merge the props of an ElementComponent and the "as" React.FC', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: ElementComponent<'div', Props1> = null;
+    const AsComponent: React.FC<Props2> = null;
+
+    // @ts-expect-error
+    <Component as={AsComponent} foo="bar" />; // error, missing `bar`
+    <Component as={AsComponent} foo="bar" />; // error, missing `bar`
+  });
+
+  it('should merge the props of an ElementComponent and the "as" React.ForwardRefExoticComponent', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: ElementComponent<'div', Props1> = null;
+    const AsComponent = React.forwardRef<HTMLDivElement, Props2>(() => null);
+
+    <Component as={AsComponent} foo="bar" />;
+  });
+
+  it('should merge the props of an ElementComponent and the "as" ElementComponent', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: ElementComponent<'div', Props1> = null;
+    const AsComponent: ElementComponent<'div', Props2> = null;
+
+    <Component as={AsComponent} foo="bar" />;
+  });
+});
 
 describe('createComponent', () => {
   it('should assign an element-base component as an ElementComponent', () => {

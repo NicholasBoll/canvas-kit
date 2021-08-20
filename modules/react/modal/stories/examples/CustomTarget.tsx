@@ -6,9 +6,13 @@ interface MyTargetProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
 }
 
-const MyTarget = ({label, ...props}: MyTargetProps) => {
-  return <button {...props}>{label}</button>;
-};
+const MyTarget = React.forwardRef<HTMLButtonElement, MyTargetProps>(({label, ...props}, ref) => {
+  return (
+    <button {...props} ref={ref}>
+      {label}
+    </button>
+  );
+});
 
 export const CustomTarget = () => {
   return (

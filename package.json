@@ -126,6 +126,7 @@
     "storybook-readme": "^5.0.9",
     "string-replace-loader": "2.3.0",
     "style-loader": "^1.0.0",
+    "testing-library-jquery": "^1.0.0",
     "ts-loader": "^6.2.0",
     "typescript": "^3.8.3",
     "yargs": "^16.2.0"

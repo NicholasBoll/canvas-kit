@@ -10,7 +10,7 @@
     "preserveConstEnums": true,
     "allowUnreachableCode": false,
     "noImplicitAny": false,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "noUnusedLocals": false,
     "types": ["jest"],
     "incremental": false
