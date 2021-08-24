@@ -10,10 +10,311 @@ import {
   ElementComponent,
   mergeProps,
   createHook,
-  Model,
   BehaviorHook,
+  ExtractRef,
+  Props,
+  AsProps,
+  TestElementComponent,
+  ExtractProps,
 } from '@workday/canvas-kit-react/common';
-import {act} from 'react-dom/test-utils';
+
+// expect-type is a very cool library, but failures can be extremely difficult to understand. To
+// combat the non-helpful failure messages, try to assign a value or type to a variable instead of
+// inlining. This way the variable can be moused over for the tooltip to help determine what went
+// wrong. When a test failed, observe the expected value vs the actual type or the Expected type vs
+// actual type.
+
+describe('ExtractRef', () => {
+  it('should extract a ref from an element string', () => {
+    type Expected = ExtractRef<'div'>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
+  });
+
+  it('should extract a ref from an ElementComponent', () => {
+    type Expected = ExtractRef<ElementComponent<'div', {}>>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
+  });
+
+  it('should extract a ref from a React.ForwardExoticComponent', () => {
+    const Component = React.forwardRef<HTMLDivElement, {foo: string}>(() => null);
+    type Expected = ExtractRef<typeof Component>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
+  });
+
+  it('should return never for a React.FC', () => {
+    type Expected = ExtractRef<React.FC>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<never>();
+  });
+
+  it('should return never for undefined', () => {
+    type Expected = ExtractRef<undefined>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<never>();
+  });
+
+  it('should extract a ref for nested ElementComponents', () => {
+    type Expected = ExtractRef<ElementComponent<ElementComponent<'div', {}>, {}>>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
+  });
+});
+
+describe('ExtractProps', () => {
+  interface Props {
+    foo: string;
+  }
+  const ElementComponent = createComponent('div')({
+    Component: (props: Props) => null,
+  });
+
+  it('should return the props and HTMLDivElement interface when no element is provided on an `ElementComponent`', () => {
+    type Expected = ExtractProps<typeof ElementComponent>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<Props & React.HTMLAttributes<HTMLDivElement>>();
+  });
+
+  it('should return the props and HTMLButtonElement when a `button` element is provided on an `ElementComponent`', () => {
+    type Expected = ExtractProps<typeof ElementComponent, 'button'>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<Props & React.ButtonHTMLAttributes<HTMLButtonElement>>();
+  });
+
+  it('should return only the props when `never` is provided on an `ElementComponent', () => {
+    type Expected = ExtractProps<typeof ElementComponent, never>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<Props>();
+  });
+
+  it('should return only props on a `Component`', () => {
+    const Component = createComponent()({Component: (props: Props) => null});
+    type Expected = ExtractProps<typeof Component>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<Props>();
+  });
+
+  it('should return props of a class component', () => {
+    class Component extends React.Component<Props> {}
+    type Expected = ExtractProps<typeof Component>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<Props>();
+  });
+
+  it('should return props of a functional component', () => {
+    const Component = (props: Props) => null;
+    type Expected = ExtractProps<typeof Component>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<Props>();
+  });
+
+  describe('nested ElementComponent', () => {
+    interface Props2 {
+      bar: string;
+    }
+
+    it('should return the combined interface of all components and HTML attributes when no element override is provided to ExtractProps', () => {
+      const Component1 = createComponent('button')({Component: (props: Props) => null});
+      const Component2 = createComponent(Component1)({Component: (props: Props2) => null});
+      type Expected = ExtractProps<typeof Component2>;
+
+      expectTypeOf<Expected>().toEqualTypeOf<
+        Props & Props2 & React.ButtonHTMLAttributes<HTMLButtonElement>
+      >();
+    });
+
+    it('should return only the outer component props when `never` is supplied to ExtractProps', () => {
+      const Component1 = createComponent('button')({Component: (props: Props) => null});
+      const Component2 = createComponent(Component1)({Component: (props: Props2) => null});
+      type Expected = ExtractProps<typeof Component2, never>;
+
+      expectTypeOf<Expected>().toEqualTypeOf<Props2>();
+    });
+
+    it('should return the combined interface of all components when an ElementComponent override is provided to ExtractProps', () => {
+      const Component1 = createComponent('aside')({Component: (props: Props) => null});
+      const Component2 = createComponent('button')({Component: (props: Props2) => null});
+      type Expected = ExtractProps<typeof Component1, typeof Component2>;
+
+      expectTypeOf<Expected>().toEqualTypeOf<
+        Props & Props2 & React.ButtonHTMLAttributes<HTMLButtonElement>
+      >();
+    });
+
+    it('should return the combined interface of all components when a React.Component override is provided to ExtractProps', () => {
+      const Component1 = createComponent('aside')({Component: (props: Props) => null});
+      const Component2 = (props: Props2) => null;
+      type Expected = ExtractProps<typeof Component1, typeof Component2>;
+
+      expectTypeOf<Expected>().toEqualTypeOf<Props & Props2>();
+
+      type Foo = ExtractProps<ElementComponent<'div', Props>>;
+    });
+  });
+});
+
+// `Props` is an internal interface used by the overloaded `ElementComponent` interface. `Props` is
+// used when no `as` is passed: `<MyComponent />`. The general idea is it should merge props from
+// the passed `TProps` interface and any interface from the element (an HTMLElement or
+// `ElementComponent`)
+describe('Props', () => {
+  it('should return an interface of props merged with the HTML attributes when passed an element', () => {
+    type Props1 = {foo: string};
+
+    // This happens with a `createComponent('div)`
+    type Expected = Props<Props1, 'div'>;
+    expectTypeOf<Expected>().toEqualTypeOf<
+      Props1 & {ref?: React.Ref<HTMLDivElement>} & React.HTMLAttributes<HTMLDivElement>
+    >();
+  });
+
+  it('should return the merged interface of props from parent and child component when passed an ElementComponent', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+
+    // This happens with a `createComponent(ElementComponent)`
+    type Expected = Props<Props1, ElementComponent<'div', Props2>>;
+    expectTypeOf<Expected>().toEqualTypeOf<
+      Props1 & Props2 & {ref?: React.Ref<HTMLDivElement>} & React.HTMLAttributes<HTMLDivElement>
+    >();
+  });
+});
+
+// `AsProps` is an internal interface used by the overloaded `ElementComponent` interface
+describe('AsProps', () => {
+  it('should return an interface of props merged with the HTML attributes when passed an element', () => {
+    type Props1 = {foo: string};
+
+    type Expected = AsProps<Props1, 'div'>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<
+      Props1 & {ref?: React.Ref<HTMLDivElement>} & {as: 'div'} & React.HTMLAttributes<
+          HTMLDivElement
+        >
+    >();
+  });
+
+  it('should return an interface of props merged with the props of a `React.FC`', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+
+    type Expected = AsProps<Props1, React.FC<Props2>>;
+    expectTypeOf<Expected>().toEqualTypeOf<
+      Props1 & Props2 & {ref?: never} & {as: React.FC<Props2>} & {children?: React.ReactNode}
+    >();
+  });
+
+  it('should return an interface of props merged with the props of a `React.ForwardExoticRefComponent`', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+
+    // use const instead of type - Using `React.forwardRef` is about intent and the type contains a
+    // lot of implementation detail
+    const AsComponent = React.forwardRef<HTMLDivElement, Props2>(p => null);
+
+    type Expected = AsProps<Props1, typeof AsComponent>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<
+      Props1 & Props2 & {as: typeof AsComponent} & React.RefAttributes<HTMLDivElement>
+    >();
+  });
+
+  it('should return an interface of props merged with the props of an `ElementComponent`', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    type AsComponent = ElementComponent<'div', Props2>;
+
+    type Expected = AsProps<Props1, AsComponent>;
+
+    expectTypeOf<Expected>().toEqualTypeOf<
+      Props1 &
+        Props2 & {ref?: React.Ref<HTMLDivElement>} & {as: AsComponent} & React.HTMLAttributes<
+          HTMLDivElement
+        >
+    >();
+  });
+});
+
+// ElementComponent type is odd to test. We use `TestElementComponent` which is the same as
+// `ElementComponent` except in return type. While `ElementComponent` as a function always returns
+// `JSX.Element`, `TestElementComponent` returns the `props` parameter of the function for testing.
+describe('ElementComponent', () => {
+  const emptyComponent = (() => null) as any;
+  it('should return the correct interface with no "as"', () => {
+    type Props1 = {foo: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const expected = Component({foo: 'bar', onClick: e => null});
+
+    expectTypeOf(expected).toEqualTypeOf<Props<Props1, 'div'>>();
+  });
+
+  // interface ElementComponent<E extends React.ElementType, P> {
+  //   __type: 'ElementComponent'; // used internally to distinguish between `ElementComponent` and `Component`
+  //   <TComponent extends React.ElementType>(props: AsProps<P, TComponent>): JSX.Element;
+  //   displayName?: string;
+  // }
+
+  it('should return the correct interface with an element "as"', () => {
+    type Props1 = {foo: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const expected = Component({foo: 'bar', as: 'button', onClick: e => null});
+
+    expectTypeOf(expected).toEqualTypeOf<AsProps<Props1, 'button'>>();
+
+    type Props2 = {bar: string};
+    const Section = React.forwardRef<
+      HTMLButtonElement,
+      Props2 & React.ButtonHTMLAttributes<HTMLButtonElement>
+    >(() => null);
+
+    const OriginalComponent = createComponent('div')({Component: (props: Props1) => null});
+    const MyComponent = OriginalComponent.as('section');
+
+    const foo = MyComponent({
+      onClick(e) {
+        return null;
+      },
+    });
+
+    const temp1 = <MyComponent foo="string" bar="baz" onClick={e => null} />;
+    const temp2 = <OriginalComponent as="section" bar="baz" onClick={e => null} />;
+  });
+
+  it('should return the correct interface with a React.FC "as"', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const AsComponent: React.FC<Props2> = emptyComponent;
+
+    expectTypeOf(Component({foo: 'bar', bar: 'baz', as: AsComponent})).toEqualTypeOf<
+      AsProps<Props1, typeof AsComponent>
+    >();
+  });
+
+  it('should return the correct interface with a React.ForwardComponent "as"', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const AsComponent = React.forwardRef<HTMLButtonElement, Props2>(() => null);
+
+    expectTypeOf(Component({foo: 'bar', bar: 'baz', as: AsComponent})).toEqualTypeOf<
+      AsProps<Props1, typeof AsComponent>
+    >();
+  });
+
+  it('should return the correct interface with a ElementComponent "as"', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const AsComponent: ElementComponent<'button', Props2> = emptyComponent;
+
+    expectTypeOf(
+      Component({foo: 'bar', bar: 'baz', as: AsComponent, onClick: e => null})
+    ).toEqualTypeOf<AsProps<Props1, typeof AsComponent>>();
+  });
+});
 
 describe('createComponent', () => {
   it('should assign an element-base component as an ElementComponent', () => {
@@ -152,55 +453,6 @@ describe('createHook', () => {
     const props = createHook((model: any) => ({foo: 'bar'}))(emptyModel, {foo: 'baz'});
 
     expect(props).toEqual({foo: 'baz'});
-  });
-
-  it('should warn if a ref is not forwarded', () => {
-    process.env.NODE_ENV = 'development';
-    const useHook = createHook(() => {
-      return {
-        foo: 'bar',
-      };
-    });
-
-    const Component = () => {
-      const model = {state: {}, events: {}};
-      const props = useHook(model);
-
-      return <div />;
-    };
-
-    const spy = jest.spyOn(console, 'warn');
-
-    render(<Component />);
-    expect(spy).toBeCalledWith(
-      expect.stringMatching(/Components passed via the `as` prop must forward a ref to an element/)
-    );
-  });
-
-  it('should warn if props are not forwarded', () => {
-    process.env.NODE_ENV = 'development';
-    const useHook = createHook(() => {
-      return {
-        foo: 'bar',
-      };
-    });
-
-    const Component = React.forwardRef<HTMLDivElement, {}>((_, ref) => {
-      const model = {state: {}, events: {}};
-      const props = useHook(model, {}, ref);
-
-      return <div ref={props.ref} />;
-    });
-
-    const spy = jest.spyOn(console, 'warn');
-
-    render(<Component />);
-    screen.debug(); //?
-    expect(spy).toBeCalledWith(
-      expect.stringMatching(
-        /Components passed via the `as` prop must forward additional props to an element/
-      )
-    );
   });
 });
 
