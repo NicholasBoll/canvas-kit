@@ -11,6 +11,39 @@ export type StyledType = {
 };
 
 /**
+ * Attempt to extract a ref type from a named element like `'div'` or `'button'`. This will try HTML
+ * elements first, falling back to SVG elements, then falling back to returning `never`.
+ *
+ * - `'div'` => `React.Ref<HTMLDivElement>`
+ * - `'button'` => `React.Ref<HTMLButtonElement>`
+ * - `'g'` => `React.Ref<SVGGElement>`
+ */
+type ExtractElementRef<TComponent> = TComponent extends keyof HTMLElementTagNameMap // test if `TComponent` is an element string like 'button' or 'div'
+  ? React.Ref<HTMLElementTagNameMap[TComponent]> // if yes, the ref should be the element interface. `'button' => HTMLButtonElement`
+  : TComponent extends keyof SVGElementTagNameMap // test if `TComponent` is an SVG element string like 'group' or 'text'
+  ? React.Ref<SVGElementTagNameMap[TComponent]> // if yes, the ref should be the SVG element interface
+  : never; // nothing matched, return `never`
+
+/**
+ * Extract a Ref from T if it exists
+ * This will return the following:
+ *
+ * - `undefined` => `never`
+ * - `'button'` => `React.Ref<HTMLButtonElement>`
+ * - `ElementComponent<'button', ButtonProps>` => `React.Ref<HTMLButtonElement>`
+ * - `React.forwardRef<HTMLButtonElement, {}>(..)` => `React.Ref<HTMLButtonElement>`
+ */
+export type NewExtractRef<TComponent> = TComponent extends undefined // test if `TComponent` is `undefined`. Without this check, `undefined` matches `React.JSXElementConstructor` for some reason and the return is `unknown` (failed infer of `R`)
+  ? never // if yes, return `never`
+  : TComponent extends NewBaseElementComponent<infer C, any> // test if `TComponent` is an `ElementComponent`, inferring the component type used
+  ? ExtractElementRef<C> // return the extracted ref of a string literal element like `'div'` or `'button'`
+  : TComponent extends React.JSXElementConstructor<infer Props> // test if `TComponent` is a `JSXElementConstructor` (anything matching `(props: P) => React.ReactElement | null`) while inferring `Props`
+  ? Props extends {ref?: infer R} // test if `Props` has a `ref` while inferring the ref
+    ? R // if yes, return the inferred ref `R`
+    : never // if no, there should be no ref, return `never`
+  : ExtractElementRef<TComponent>; // fall back to extracting a ref from a named element
+
+/**
  * Extract a Ref from T if it exists
  * This will return the following:
  *
@@ -31,6 +64,16 @@ export type ExtractRef<TComponent> = TComponent extends undefined // test if `TC
   ? React.Ref<SVGElementTagNameMap[TComponent]> // if yes, the ref should be the SVG element interface
   : never; // nothing matched, return `never`
 
+// export so that Typescript will preserve the name `As`
+type NewAs<TComponent> = {
+  /**
+   * Optional override of the default element used by the component. Any valid tag or Component.
+   * If you provided a Component, this component should forward the ref using `React.forwardRef`
+   * and spread extra props to a root element.
+   */
+  as?: TComponent;
+};
+
 type As<TComponent> = {
   /**
    * Optional override of the default element used by the component. Any valid tag or Component.
@@ -38,6 +81,16 @@ type As<TComponent> = {
    * and spread extra props to a root element.
    */
   as: TComponent;
+};
+
+type NewRef<TComponent> = {
+  /**
+   * Optional ref. If the component represents an element, this ref will be a reference to the
+   * real DOM element of the component. If `as` is set to an element, it will be that element.
+   * If `as` is a component, the reference will be to that component (or element if the component
+   * uses `React.forwardRef`).
+   */
+  ref?: NewExtractRef<TComponent>;
 };
 
 type Ref<TComponent> = {
@@ -77,6 +130,25 @@ type ExtractAsProps<
   : TComponent extends (props: infer P2) => React.ReactElement | null
   ? TProps & Omit<P2, 'as'> // Removing `as` is important, otherwise any `ElementComponent` will match the `as` overload... Is there a better way to get rid of `Omit`?
   : never; //Omit<ExtractHTMLAttributes<React.ComponentProps<TComponent>>, keyof P>; // Trying to figure out a better way than with `Omit` since `Omit` complicates type errors
+
+/**
+ * Internal interface used in the overloaded function interface of `ElementComponent`. If an
+ * `ElementComponent` is passed `as`, this interface should be returned. Example: `<MyComponent
+ * as="aside" />`. It should return a merging of props `TProps` along with props from the overriding
+ * component `TComponent`.
+ * @template TProps The props from the `ElementComponent`
+ * @template TComponent The component passed to the `ElementComponent` via the `as` prop. Could be a
+ * `string`, `React.FC`, `React.ForwardExoticRefComponent`, or another `ElementComponent`
+ */
+export type NewAsProps<TProps, TComponent extends React.ElementType> = TProps &
+  (TComponent extends keyof JSX.IntrinsicElements
+    ? ExtractHTMLAttributes<JSX.IntrinsicElements[TComponent]>
+    : TComponent extends NewBaseElementComponent<infer E, infer P>
+    ? P & ExtractJSXElement<E> // Omit<P, keyof TProps> & ExtractHTMLAttributes<E>
+    : Omit<React.ComponentProps<TComponent>, keyof TProps>) & {
+    ref?: NewExtractRef<TComponent>;
+    as?: TComponent;
+  };
 
 /**
  * Internal interface used in the overloaded function interface of `ElementComponent`. If an
@@ -192,7 +264,7 @@ export interface ElementComponent<E extends React.ElementType, P> {
    */
   as: <TComponent extends React.ElementType>(
     override: TComponent
-  ) => (props: Props<P, TComponent>) => JSX.Element;
+  ) => (props: Props<P, TComponent> & {as?: any}) => JSX.Element;
 }
 
 /**
@@ -204,11 +276,45 @@ export type TestElementComponent<E extends React.ElementType, P> = {
   (props: Props<P, E>): Props<P, E>;
 };
 
+// This `BaseElementComponent` is used to store generics for use in other utility types that infer
+// them without resorting to complicated measures to avoid recursion or the expensive calculation
+// Typescript would use to resolve inference. For example, `(props: AsProps<infer TProps, infer
+// TComponent>) => JSX.Element` which goes through a complicated step of mapping and extracting With
+// this base type, the inference of `TComponent` and `TProps` is `{ __component: TComponent,
+// __props: TProps}` which is faster for Typescript and avoids the need for 4.1's addition of
+// recursive types
+interface NewBaseElementComponent<TComponent extends React.ElementType, TProps> {
+  /** Used only by Typescript to store the component type */
+  __component: TComponent;
+  /** Used only by Typescript to store the component props */
+  __props: TProps;
+}
+
+/**
+ * Component type returned by `createComponent` that represents a DOM element and allows for `as` to
+ * change the element or component type. Passing `as` will correctly change the allowed interface of
+ * the JSX element.
+ */
+export interface NewElementComponent<TComponent extends React.ElementType, TProps>
+  extends NewBaseElementComponent<TComponent, TProps> {
+  <C extends React.ElementType = TComponent>(props: NewAsProps<TProps, C>): JSX.Element;
+  displayName?: string;
+}
+
+/**
+ * Type for testing purposes. It should be kept the same as `ElementComponent`, except the return
+ * type is the same as the accepted props to verify the type output.
+ */
+export interface NewTestElementComponent<TComponent extends React.ElementType, TProps>
+  extends NewBaseElementComponent<TComponent, TProps> {
+  <C extends React.ElementType = TComponent>(props: NewAsProps<TProps, C>): NewAsProps<TProps, C>;
+}
 /**
  * Component type returned by `createComponent` that does not represent a DOM element.
  */
 export type Component<TProps> = {
-  __type: 'Component'; // used internally to distinguish between `ElementComponent` and `Component`
+  /** Used only by Typescript to store the component props */
+  __props: TProps;
   (props: TProps): JSX.Element;
   displayName?: string;
 };

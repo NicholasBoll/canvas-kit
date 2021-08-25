@@ -16,13 +16,69 @@ import {
   AsProps,
   TestElementComponent,
   ExtractProps,
+  NewElementComponent,
+  NewTestElementComponent,
+  NewExtractRef,
 } from '@workday/canvas-kit-react/common';
+import {NewAsProps} from '../lib/utils';
 
 // expect-type is a very cool library, but failures can be extremely difficult to understand. To
 // combat the non-helpful failure messages, try to assign a value or type to a variable instead of
 // inlining. This way the variable can be moused over for the tooltip to help determine what went
 // wrong. When a test failed, observe the expected value vs the actual type or the Expected type vs
 // actual type.
+
+type Props1 = {foo: string};
+type Props2 = {bar: string};
+const foo: NewElementComponent<'div', Props1> = null as any;
+const FC: React.FC<Props2> = null as any;
+const FRC: React.ForwardRefExoticComponent<Props2 &
+  React.RefAttributes<HTMLButtonElement>> = null as any;
+const EC: NewElementComponent<'button', Props2> = null as any;
+
+type props = NewAsProps<Props1, typeof EC>;
+type temp = NewExtractRef<typeof EC>;
+
+foo({
+  foo: 'bar',
+  ref: 'foo',
+  onClick: e => null,
+});
+
+foo({
+  as: 'button',
+  foo: 'bar',
+  ref: 'foo',
+  onClick: e => null,
+});
+
+foo({
+  as: FC,
+  foo: 'bar',
+  bar: 'baz',
+  ref: 'foo',
+});
+
+foo({
+  as: FRC,
+  foo: 'bar',
+  bar: 'baz',
+});
+
+foo({
+  as: EC,
+  foo: 'bar',
+  bar: 'baz',
+  ref: 'foo',
+  onClick: e => null,
+});
+
+type props = NewAsProps<Props1, typeof EC>;
+
+type temp1 = ExtractProps<typeof EC>;
+type temp2 = NewExtractRef<typeof FC>;
+type temp3 = NewExtractRef<typeof FRC>;
+type temp4 = NewExtractRef<typeof EC>;
 
 describe('ExtractRef', () => {
   it('should extract a ref from an element string', () => {
@@ -187,12 +243,10 @@ describe('AsProps', () => {
   it('should return an interface of props merged with the HTML attributes when passed an element', () => {
     type Props1 = {foo: string};
 
-    type Expected = AsProps<Props1, 'div'>;
+    type Expected = NewAsProps<Props1, 'div'>;
 
     expectTypeOf<Expected>().toEqualTypeOf<
-      Props1 & {ref?: React.Ref<HTMLDivElement>} & {as: 'div'} & React.HTMLAttributes<
-          HTMLDivElement
-        >
+      Props1 & {ref?: React.Ref<HTMLDivElement>; as?: 'div'} & React.HTMLAttributes<HTMLDivElement>
     >();
   });
 
@@ -200,9 +254,9 @@ describe('AsProps', () => {
     type Props1 = {foo: string};
     type Props2 = {bar: string};
 
-    type Expected = AsProps<Props1, React.FC<Props2>>;
+    type Expected = NewAsProps<Props1, React.FC<Props2>>;
     expectTypeOf<Expected>().toEqualTypeOf<
-      Props1 & Props2 & {ref?: never} & {as: React.FC<Props2>} & {children?: React.ReactNode}
+      Props1 & Props2 & {ref?: never; as?: React.FC<Props2>} & {children?: React.ReactNode}
     >();
   });
 
@@ -214,23 +268,23 @@ describe('AsProps', () => {
     // lot of implementation detail
     const AsComponent = React.forwardRef<HTMLDivElement, Props2>(p => null);
 
-    type Expected = AsProps<Props1, typeof AsComponent>;
+    type Expected = NewAsProps<Props1, typeof AsComponent>;
 
     expectTypeOf<Expected>().toEqualTypeOf<
-      Props1 & Props2 & {as: typeof AsComponent} & React.RefAttributes<HTMLDivElement>
+      Props1 & Props2 & {as?: typeof AsComponent} & React.RefAttributes<HTMLDivElement>
     >();
   });
 
   it('should return an interface of props merged with the props of an `ElementComponent`', () => {
     type Props1 = {foo: string};
     type Props2 = {bar: string};
-    type AsComponent = ElementComponent<'div', Props2>;
+    type AsComponent = NewElementComponent<'div', Props2>;
 
-    type Expected = AsProps<Props1, AsComponent>;
+    type Expected = NewAsProps<Props1, AsComponent>;
 
     expectTypeOf<Expected>().toEqualTypeOf<
       Props1 &
-        Props2 & {ref?: React.Ref<HTMLDivElement>} & {as: AsComponent} & React.HTMLAttributes<
+        Props2 & {ref?: React.Ref<HTMLDivElement>; as?: AsComponent} & React.HTMLAttributes<
           HTMLDivElement
         >
     >();
@@ -269,17 +323,17 @@ describe('ElementComponent', () => {
       Props2 & React.ButtonHTMLAttributes<HTMLButtonElement>
     >(() => null);
 
-    const OriginalComponent = createComponent('div')({Component: (props: Props1) => null});
-    const MyComponent = OriginalComponent.as('section');
+    const BeforeComponent = createComponent('div')({Component: (props: Props1) => null});
+    const AfterComponent = BeforeComponent.as('section');
 
-    const foo = MyComponent({
+    const foo = AfterComponent({
       onClick(e) {
         return null;
       },
     });
 
-    const temp1 = <MyComponent foo="string" bar="baz" onClick={e => null} />;
-    const temp2 = <OriginalComponent as="section" bar="baz" onClick={e => null} />;
+    const temp2 = <BeforeComponent as="section" foo="string" bar="baz" onClick={e => null} />;
+    const temp1 = <AfterComponent as="section" foo="string" bar="baz" onClick={e => null} />;
   });
 
   it('should return the correct interface with a React.FC "as"', () => {
