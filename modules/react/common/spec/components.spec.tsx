@@ -8,17 +8,18 @@ import {
   useForkRef,
   useLocalRef,
   ElementComponent,
+  NewElementComponent,
   mergeProps,
   createHook,
   BehaviorHook,
   ExtractRef,
+  NewExtractRef,
   Props,
   AsProps,
   TestElementComponent,
-  ExtractProps,
-  NewElementComponent,
   NewTestElementComponent,
-  NewExtractRef,
+  ExtractProps,
+  NewExtractProps,
 } from '@workday/canvas-kit-react/common';
 import {NewAsProps} from '../lib/utils';
 
@@ -28,92 +29,40 @@ import {NewAsProps} from '../lib/utils';
 // wrong. When a test failed, observe the expected value vs the actual type or the Expected type vs
 // actual type.
 
-type Props1 = {foo: string};
-type Props2 = {bar: string};
-const foo: NewElementComponent<'div', Props1> = null as any;
-const FC: React.FC<Props2> = null as any;
-const FRC: React.ForwardRefExoticComponent<Props2 &
-  React.RefAttributes<HTMLButtonElement>> = null as any;
-const EC: NewElementComponent<'button', Props2> = null as any;
-
-type props = NewAsProps<Props1, typeof EC>;
-type temp = NewExtractRef<typeof EC>;
-
-foo({
-  foo: 'bar',
-  ref: 'foo',
-  onClick: e => null,
-});
-
-foo({
-  as: 'button',
-  foo: 'bar',
-  ref: 'foo',
-  onClick: e => null,
-});
-
-foo({
-  as: FC,
-  foo: 'bar',
-  bar: 'baz',
-  ref: 'foo',
-});
-
-foo({
-  as: FRC,
-  foo: 'bar',
-  bar: 'baz',
-});
-
-foo({
-  as: EC,
-  foo: 'bar',
-  bar: 'baz',
-  ref: 'foo',
-  onClick: e => null,
-});
-
-type props = NewAsProps<Props1, typeof EC>;
-
-type temp1 = ExtractProps<typeof EC>;
-type temp2 = NewExtractRef<typeof FC>;
-type temp3 = NewExtractRef<typeof FRC>;
-type temp4 = NewExtractRef<typeof EC>;
-
 describe('ExtractRef', () => {
   it('should extract a ref from an element string', () => {
-    type Expected = ExtractRef<'div'>;
+    type Expected = NewExtractRef<'div'>;
 
     expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
   });
 
   it('should extract a ref from an ElementComponent', () => {
-    type Expected = ExtractRef<ElementComponent<'div', {}>>;
+    type Expected = NewExtractRef<NewElementComponent<'div', {}>>;
 
     expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
   });
 
   it('should extract a ref from a React.ForwardExoticComponent', () => {
     const Component = React.forwardRef<HTMLDivElement, {foo: string}>(() => null);
-    type Expected = ExtractRef<typeof Component>;
+    type Expected = NewExtractRef<typeof Component>;
 
     expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
   });
 
   it('should return never for a React.FC', () => {
-    type Expected = ExtractRef<React.FC>;
+    type Expected = NewExtractRef<React.FC>;
 
     expectTypeOf<Expected>().toEqualTypeOf<never>();
   });
 
   it('should return never for undefined', () => {
-    type Expected = ExtractRef<undefined>;
+    type Expected = NewExtractRef<undefined>;
 
     expectTypeOf<Expected>().toEqualTypeOf<never>();
   });
 
   it('should extract a ref for nested ElementComponents', () => {
-    type Expected = ExtractRef<ElementComponent<ElementComponent<'div', {}>, {}>>;
+    type Expected = NewExtractRef<NewElementComponent<NewElementComponent<'div', {}>, {}>>;
 
     expectTypeOf<Expected>().toEqualTypeOf<React.Ref<HTMLDivElement>>();
   });
@@ -123,45 +72,45 @@ describe('ExtractProps', () => {
   interface Props {
     foo: string;
   }
-  const ElementComponent = createComponent('div')({
+  const ElementComponent: NewElementComponent<'div', Props> = createComponent('div')({
     Component: (props: Props) => null,
   });
 
   it('should return the props and HTMLDivElement interface when no element is provided on an `ElementComponent`', () => {
-    type Expected = ExtractProps<typeof ElementComponent>;
+    type Expected = NewExtractProps<typeof ElementComponent>;
 
     expectTypeOf<Expected>().toEqualTypeOf<Props & React.HTMLAttributes<HTMLDivElement>>();
   });
 
   it('should return the props and HTMLButtonElement when a `button` element is provided on an `ElementComponent`', () => {
-    type Expected = ExtractProps<typeof ElementComponent, 'button'>;
+    type Expected = NewExtractProps<typeof ElementComponent, 'button'>;
 
     expectTypeOf<Expected>().toEqualTypeOf<Props & React.ButtonHTMLAttributes<HTMLButtonElement>>();
   });
 
   it('should return only the props when `never` is provided on an `ElementComponent', () => {
-    type Expected = ExtractProps<typeof ElementComponent, never>;
+    type Expected = NewExtractProps<typeof ElementComponent, never>;
 
     expectTypeOf<Expected>().toEqualTypeOf<Props>();
   });
 
   it('should return only props on a `Component`', () => {
     const Component = createComponent()({Component: (props: Props) => null});
-    type Expected = ExtractProps<typeof Component>;
+    type Expected = NewExtractProps<typeof Component>;
 
     expectTypeOf<Expected>().toEqualTypeOf<Props>();
   });
 
   it('should return props of a class component', () => {
     class Component extends React.Component<Props> {}
-    type Expected = ExtractProps<typeof Component>;
+    type Expected = NewExtractProps<typeof Component>;
 
     expectTypeOf<Expected>().toEqualTypeOf<Props>();
   });
 
   it('should return props of a functional component', () => {
     const Component = (props: Props) => null;
-    type Expected = ExtractProps<typeof Component>;
+    type Expected = NewExtractProps<typeof Component>;
 
     expectTypeOf<Expected>().toEqualTypeOf<Props>();
   });
@@ -172,9 +121,13 @@ describe('ExtractProps', () => {
     }
 
     it('should return the combined interface of all components and HTML attributes when no element override is provided to ExtractProps', () => {
-      const Component1 = createComponent('button')({Component: (props: Props) => null});
-      const Component2 = createComponent(Component1)({Component: (props: Props2) => null});
-      type Expected = ExtractProps<typeof Component2>;
+      const Component1: NewElementComponent<'button', Props> = createComponent('button')({
+        Component: (props: Props) => null,
+      });
+      const Component2: NewElementComponent<typeof Component1, Props2> = createComponent(
+        Component1
+      )({Component: (props: Props2) => null});
+      type Expected = NewExtractProps<typeof Component2>;
 
       expectTypeOf<Expected>().toEqualTypeOf<
         Props & Props2 & React.ButtonHTMLAttributes<HTMLButtonElement>
@@ -182,17 +135,25 @@ describe('ExtractProps', () => {
     });
 
     it('should return only the outer component props when `never` is supplied to ExtractProps', () => {
-      const Component1 = createComponent('button')({Component: (props: Props) => null});
-      const Component2 = createComponent(Component1)({Component: (props: Props2) => null});
-      type Expected = ExtractProps<typeof Component2, never>;
+      const Component1: NewElementComponent<'button', Props> = createComponent('button')({
+        Component: (props: Props) => null,
+      });
+      const Component2: NewElementComponent<typeof Component1, Props2> = createComponent(
+        Component1
+      )({Component: (props: Props2) => null});
+      type Expected = NewExtractProps<typeof Component2, never>;
 
       expectTypeOf<Expected>().toEqualTypeOf<Props2>();
     });
 
     it('should return the combined interface of all components when an ElementComponent override is provided to ExtractProps', () => {
-      const Component1 = createComponent('aside')({Component: (props: Props) => null});
-      const Component2 = createComponent('button')({Component: (props: Props2) => null});
-      type Expected = ExtractProps<typeof Component1, typeof Component2>;
+      const Component1: NewElementComponent<'aside', Props> = createComponent('aside')({
+        Component: (props: Props) => null,
+      });
+      const Component2: NewElementComponent<'button', Props2> = createComponent('button')({
+        Component: (props: Props2) => null,
+      });
+      type Expected = NewExtractProps<typeof Component1, typeof Component2>;
 
       expectTypeOf<Expected>().toEqualTypeOf<
         Props & Props2 & React.ButtonHTMLAttributes<HTMLButtonElement>
@@ -200,13 +161,13 @@ describe('ExtractProps', () => {
     });
 
     it('should return the combined interface of all components when a React.Component override is provided to ExtractProps', () => {
-      const Component1 = createComponent('aside')({Component: (props: Props) => null});
+      const Component1: NewElementComponent<'aside', Props> = createComponent('aside')({
+        Component: (props: Props) => null,
+      });
       const Component2 = (props: Props2) => null;
-      type Expected = ExtractProps<typeof Component1, typeof Component2>;
+      type Expected = NewExtractProps<typeof Component1, typeof Component2>;
 
       expectTypeOf<Expected>().toEqualTypeOf<Props & Props2>();
-
-      type Foo = ExtractProps<ElementComponent<'div', Props>>;
     });
   });
 });
@@ -298,10 +259,10 @@ describe('ElementComponent', () => {
   const emptyComponent = (() => null) as any;
   it('should return the correct interface with no "as"', () => {
     type Props1 = {foo: string};
-    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const Component: NewTestElementComponent<'div', Props1> = emptyComponent;
     const expected = Component({foo: 'bar', onClick: e => null});
 
-    expectTypeOf(expected).toEqualTypeOf<Props<Props1, 'div'>>();
+    expectTypeOf(expected).toEqualTypeOf<NewAsProps<Props1, 'div'>>();
   });
 
   // interface ElementComponent<E extends React.ElementType, P> {
@@ -312,61 +273,43 @@ describe('ElementComponent', () => {
 
   it('should return the correct interface with an element "as"', () => {
     type Props1 = {foo: string};
-    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const Component: NewTestElementComponent<'div', Props1> = emptyComponent;
     const expected = Component({foo: 'bar', as: 'button', onClick: e => null});
 
-    expectTypeOf(expected).toEqualTypeOf<AsProps<Props1, 'button'>>();
-
-    type Props2 = {bar: string};
-    const Section = React.forwardRef<
-      HTMLButtonElement,
-      Props2 & React.ButtonHTMLAttributes<HTMLButtonElement>
-    >(() => null);
-
-    const BeforeComponent = createComponent('div')({Component: (props: Props1) => null});
-    const AfterComponent = BeforeComponent.as('section');
-
-    const foo = AfterComponent({
-      onClick(e) {
-        return null;
-      },
-    });
-
-    const temp2 = <BeforeComponent as="section" foo="string" bar="baz" onClick={e => null} />;
-    const temp1 = <AfterComponent as="section" foo="string" bar="baz" onClick={e => null} />;
+    expectTypeOf(expected).toEqualTypeOf<NewAsProps<Props1, 'button'>>();
   });
 
   it('should return the correct interface with a React.FC "as"', () => {
     type Props1 = {foo: string};
     type Props2 = {bar: string};
-    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const Component: NewTestElementComponent<'div', Props1> = emptyComponent;
     const AsComponent: React.FC<Props2> = emptyComponent;
 
-    expectTypeOf(Component({foo: 'bar', bar: 'baz', as: AsComponent})).toEqualTypeOf<
-      AsProps<Props1, typeof AsComponent>
-    >();
+    const expected = Component({foo: 'bar', bar: 'baz', as: AsComponent});
+
+    expectTypeOf(expected).toEqualTypeOf<NewAsProps<Props1, typeof AsComponent>>();
   });
 
   it('should return the correct interface with a React.ForwardComponent "as"', () => {
     type Props1 = {foo: string};
     type Props2 = {bar: string};
-    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const Component: NewTestElementComponent<'div', Props1> = emptyComponent;
     const AsComponent = React.forwardRef<HTMLButtonElement, Props2>(() => null);
 
-    expectTypeOf(Component({foo: 'bar', bar: 'baz', as: AsComponent})).toEqualTypeOf<
-      AsProps<Props1, typeof AsComponent>
-    >();
+    const expected = Component({foo: 'bar', bar: 'baz', as: AsComponent});
+
+    expectTypeOf(expected).toEqualTypeOf<NewAsProps<Props1, typeof AsComponent>>();
   });
 
   it('should return the correct interface with a ElementComponent "as"', () => {
     type Props1 = {foo: string};
     type Props2 = {bar: string};
-    const Component: TestElementComponent<'div', Props1> = emptyComponent;
-    const AsComponent: ElementComponent<'button', Props2> = emptyComponent;
+    const Component: NewTestElementComponent<'div', Props1> = emptyComponent;
+    const AsComponent: NewElementComponent<'button', Props2> = emptyComponent;
 
-    expectTypeOf(
-      Component({foo: 'bar', bar: 'baz', as: AsComponent, onClick: e => null})
-    ).toEqualTypeOf<AsProps<Props1, typeof AsComponent>>();
+    const expected = Component({foo: 'bar', bar: 'baz', as: AsComponent, onClick: e => null});
+
+    expectTypeOf(expected).toEqualTypeOf<NewAsProps<Props1, typeof AsComponent>>();
   });
 });
 

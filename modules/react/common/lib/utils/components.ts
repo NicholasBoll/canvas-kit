@@ -10,6 +10,10 @@ export type StyledType = {
   as?: React.ElementType;
 };
 
+type ExtractComponentRef<TComponent> = TComponent extends NewBaseElementComponent<infer C, any>
+  ? ExtractElementRef<C>
+  : ExtractElementRef<TComponent>;
+
 /**
  * Attempt to extract a ref type from a named element like `'div'` or `'button'`. This will try HTML
  * elements first, falling back to SVG elements, then falling back to returning `never`.
@@ -36,7 +40,7 @@ type ExtractElementRef<TComponent> = TComponent extends keyof HTMLElementTagName
 export type NewExtractRef<TComponent> = TComponent extends undefined // test if `TComponent` is `undefined`. Without this check, `undefined` matches `React.JSXElementConstructor` for some reason and the return is `unknown` (failed infer of `R`)
   ? never // if yes, return `never`
   : TComponent extends NewBaseElementComponent<infer C, any> // test if `TComponent` is an `ElementComponent`, inferring the component type used
-  ? ExtractElementRef<C> // return the extracted ref of a string literal element like `'div'` or `'button'`
+  ? ExtractComponentRef<C> // return the extracted ref of a string literal element like `'div'` or `'button'`
   : TComponent extends React.JSXElementConstructor<infer Props> // test if `TComponent` is a `JSXElementConstructor` (anything matching `(props: P) => React.ReactElement | null`) while inferring `Props`
   ? Props extends {ref?: infer R} // test if `Props` has a `ref` while inferring the ref
     ? R // if yes, return the inferred ref `R`
@@ -117,6 +121,13 @@ type BaseElementComponent<E extends React.ElementType, P> = {
 // Used to simplify the `ExtractAsProps` type
 type ExtractJSXElement<E> = E extends keyof JSX.IntrinsicElements
   ? ExtractHTMLAttributes<JSX.IntrinsicElements[E]>
+  : never;
+
+// Used to simplify the `ExtractAsProps` type
+type ExtractComponentElement<E> = E extends keyof JSX.IntrinsicElements
+  ? ExtractJSXElement<E>
+  : E extends NewBaseElementComponent<infer C, any>
+  ? ExtractJSXElement<C>
   : never;
 
 // Used to simplify the `AsProps` type
@@ -226,6 +237,63 @@ export type ExtractProps<
     ? P & ExtractHTMLAttributes<JSX.IntrinsicElements[TElement]> // `TElement` is in `JSX.IntrinsicElements`, return inferred props `P` + HTML attributes of `TElement`
     : P & ExtractPropsFromComponent<TElement> // `TElement` is not in `JSX.IntrinsicElements`, return inferred props `P` + props extracted from component `TElement`. It would be nice to use `ExtractProps` again here, but that creates a circular dependency
   : ExtractPropsFromComponent<TComponent>; // `TComponent` does not extend `ElementComponent`. Return props extracted from component `TComponent`
+
+// Extract props from a component. This type is only necessary because `ExtractProps` cannot
+// reference itself, creating a circular dependency. Instead, we define this type to allow for at
+// least 1 level of nesting.
+type NewExtractPropsFromComponent<TComponent> = TComponent extends NewBaseElementComponent<
+  infer E,
+  infer P
+> // test if `TComponent` is an `ElementComponent`, while inferring both default element and props associated
+  ? E extends keyof JSX.IntrinsicElements // test if the inferred element `E` is in `JSX.IntrinsicElements`
+    ? P & ExtractHTMLAttributes<JSX.IntrinsicElements[E]> // return inferred props `P` + HTML attributes of inferred element `E`
+    : P // `E` wasn't a key of `JSX.IntrinsicElements`, so just return the inferred props `P`
+  : TComponent extends Component<infer P> // test if `TComponent` is a `Component`, while inferring props `P`
+  ? P // it was a `Component`, return inferred props `P`
+  : TComponent extends React.ComponentType<infer P> // test if `TComponent` is a `React.ComponentType` (class or functional component)
+  ? P // it was a `React.ComponentType`, return inferred props `P`
+  : {}; // We don't know what `TComponent` was, return an empty object
+
+/**
+ * Extract props from any component that was created using `createComponent`. It will return the
+ * HTML attribute interface of the default element used with `createComponent`. If you use `as`, the
+ * HTML attribute interface can change, so you can use an override to the element you wish to use.
+ * You can also disable the HTML attribute by passing `never`:
+ *
+ * - `ExtractProps<typeof Card>`: `CardProps & React.HTMLAttributes<HTMLDivElement>`
+ * - `ExtractProps<typeof Card, 'aside'>`: `CardProps & React.HTMLAttributes<HTMLElement>`
+ * - `ExtractProps<typeof Card, never>`: `CardProps`
+ *
+ * @template TComponent The component you wish to extract props from. Needs 'typeof` in front:
+ * `typeof Card`
+ * @template TElement An optional override of the element that will be used. Define this if you use
+ * an `as` on the component
+ *
+ * @example
+ * interface MyProps extends ExtractProps<typeof Card.Body> {}
+ *
+ * ExtractProps<typeof Card>; // CardProps & React.HTMLAttributes<HTMLDivElement>
+ * ExtractProps<typeof Card, 'aside'>; // CardProps & React.HTMLAttributes<HTMLElement>
+ * ExtractProps<typeof Card, never>; // CardProps
+ */
+export type NewExtractProps<
+  TComponent,
+  TElement extends
+    | keyof JSX.IntrinsicElements
+    | React.ComponentType<any>
+    | undefined
+    | never = undefined
+> = TComponent extends NewBaseElementComponent<infer E, infer P> // test if `TComponent` is an `ElementComponent`, while inferring both default element and props associated
+  ? [TElement] extends [never] // test if user passed `never` for the `TElement` override. We have to test `never` first, otherwise TS gets confused and `ExtractProps` will return `never`. https://github.com/microsoft/TypeScript/issues/23182
+    ? P // if `TElement` was `never`, return only the inferred props `P`
+    : TElement extends undefined // else test if TElement was defined
+    ? E extends keyof JSX.IntrinsicElements // test if the inferred element `E` is in `JSX.IntrinsicElements`
+      ? P & ExtractHTMLAttributes<JSX.IntrinsicElements[E]> // `TElement` wasn't explicitly defined, so let's fall back to the inferred element's HTML attribute interface + props `P`
+      : P & NewExtractPropsFromComponent<E> // E isn't in `JSX.IntrinsicElements`, return inferred props `P` + props extracted from component `E`. It would be nice to use `ExtractProps` again here, but that creates a circular dependency
+    : TElement extends keyof JSX.IntrinsicElements // `TElement` was defined, test if it is in `JSX.IntrinsicElements`
+    ? P & ExtractHTMLAttributes<JSX.IntrinsicElements[TElement]> // `TElement` is in `JSX.IntrinsicElements`, return inferred props `P` + HTML attributes of `TElement`
+    : P & NewExtractPropsFromComponent<TElement> // `TElement` is not in `JSX.IntrinsicElements`, return inferred props `P` + props extracted from component `TElement`. It would be nice to use `ExtractProps` again here, but that creates a circular dependency
+  : NewExtractPropsFromComponent<TComponent>; // `TComponent` does not extend `ElementComponent`. Return props extracted from component `TComponent`
 
 // Extract props from a component. This type is only necessary because `ExtractProps` cannot
 // reference itself, creating a circular dependency. Instead, we define this type to allow for at
