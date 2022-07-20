@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [v7.1.5](https://github.com/Workday/canvas-kit/releases/tag/v7.1.5) (2022-07-20)
+
+### Components
+
+- fix(button): Make icon-only tertiary button themeable ([#1677](https://github.com/Workday/canvas-kit/pull/1677)) ([@RayRedGoose](https://github.com/RayRedGoose))
+- fix(pagination): Remove aria-relevant attr ([#1659](https://github.com/Workday/canvas-kit/pull/1659)) ([@alanbsmith](https://github.com/alanbsmith))
+
+### Documentation
+
+- docs: Update ActionBar upgrade guide docs ([#1687](https://github.com/Workday/canvas-kit/pull/1687)) ([@alanbsmith](https://github.com/alanbsmith))
+
+
 ## [v6.8.10](https://github.com/Workday/canvas-kit/releases/tag/v6.8.10) (2022-07-13)
 ## [v7.1.4](https://github.com/Workday/canvas-kit/releases/tag/v7.1.4) (2022-07-12)
 
@@ -196,7 +208,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
       - `shouldUpdate(data, state)`
       - `onUpdate(data, prevState)`
 - [#1587](https://github.com/Workday/canvas-kit/pull/1587) Removed the data wrapper around the `event` in `show` and `hide` events. The arguments are not commonly used, however.
-  
+
   ```tsx
   // v6
   const model = usePopupModel({
@@ -204,7 +216,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
       console.log(event);
     }
   })
-  
+
   // v7
   const model = usePopupModel({
     onShow(event, prevState) {
@@ -212,7 +224,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
     }
   })
   ```
-  
+
   🤖 The codemod will update all inline guards and callbacks like in this example. If a guard or
   callback was defined outside the model config block, it will not be covered by the codemod.
 - [#1585](https://github.com/Workday/canvas-kit/pull/1585) This PR contains breaking changes because using new ActionBar requires restructure old version and adding ActionBar.List as sub-component of ActionBar. This changes are covered by codemod but using an overflow behavior requires manual implementation.
