@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [v7.2.0](https://github.com/NicholasBoll/canvas-kit/releases/tag/v7.2.0) (2022-07-20)
+
+### Infrastructure
+
+- ci: Add version override to manual release action ([@NicholasBoll](https://github.com/NicholasBoll))
+- ci: Resolve forward merge and release job interactions ([@NicholasBoll](https://github.com/NicholasBoll))
+
+
 ## [v7.1.5](https://github.com/Workday/canvas-kit/releases/tag/v7.1.5) (2022-07-20)
 
 ### Components
