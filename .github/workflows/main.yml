@@ -8,6 +8,7 @@ jobs:
   logLatestRelease:
     runs-on: ubuntu-latest
     steps:
+      - run: "echo '${{fromJSON(github.event.repository)}}'"
       - uses: octokit/graphql-action@v2.x
         id: get-linked-issue
         with:
@@ -24,7 +25,7 @@ jobs:
                 }
               }
             }
-          owner: ${{ fromJSON(github.event.repository) }}
+          owner: ${{ github.event.repository }}
           repo: ${{ github.event.repository.name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
