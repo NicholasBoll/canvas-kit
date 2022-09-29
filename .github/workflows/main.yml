@@ -8,7 +8,7 @@ jobs:
   logLatestRelease:
     runs-on: ubuntu-latest
     steps:
-      - run: "echo '${{github.event.repository}}'"
+      - run: "echo '${{toJSON(github.event.repository)}}'"
       - uses: octokit/graphql-action@v2.x
         id: get-linked-issue
         with:
