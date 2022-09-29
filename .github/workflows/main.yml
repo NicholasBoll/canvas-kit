@@ -25,8 +25,8 @@ jobs:
                 }
               }
             }
-          owner: ${{ github.event.repository }}
+          owner: ${{ github.event.repository.owner.login }} # Chante to owner.name for an organization
           repo: ${{ github.event.repository.name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo '${{ fromJSON(steps.get-linked-issue.outputs.data) }}'"
+      - run: "echo '${{ steps.get-linked-issue.outputs.data }}'"
