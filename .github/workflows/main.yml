@@ -1,0 +1,31 @@
+name: Close Linked Issue
+
+on:
+  pull_request_target:
+    types: [ edited, labeled, synchronize ]
+
+jobs:
+  logLatestRelease:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: octokit/graphql-action@v2.x
+        id: get-linked-issue
+        with:
+          query: |
+            query getLinkedIssues($owner:String!,$repo:String!) {
+              repository(owner:$owner, name:$repo) {
+                pullRequest(number: 1806) {
+                  closingIssuesReferences(first: 1) {
+                    nodes{
+                      title
+                      id
+                    }
+                  }
+                }
+              }
+            }
+          owner: ${{ github.event.repository.owner.name }}
+          repo: ${{ github.event.repository.name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: "echo '${{ fromJSON(steps.get-linked-issue.outputs.data) }}'"
