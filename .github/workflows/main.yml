@@ -30,4 +30,4 @@ jobs:
           number: ${{ github.event.number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo '${{ steps.get-linked-issue.outputs.data }}'"
+      - run: "echo '${{ fromJSON(steps.get-linked-issue.outputs.data).repository.pullRequest.closingIssuesReferences.nodes[0].id }}'"
