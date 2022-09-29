@@ -13,7 +13,7 @@ jobs:
         id: get-linked-issue
         with:
           query: |
-            query getLinkedIssues($owner:String!,$repo:String!,$number:Number!) {
+            query getLinkedIssues($owner:String!,$repo:String!,$number:String!) {
               repository(owner:$owner, name:$repo) {
                 pullRequest(number:$number) {
                   closingIssuesReferences(first: 1) {
