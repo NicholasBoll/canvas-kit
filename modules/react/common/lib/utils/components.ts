@@ -13,6 +13,19 @@ export type StyledType = {
 // For React class components
 type Constructor<T> = new (...args: any[]) => T;
 
+// recursively try to extract an element reference from `T`
+type ExtractElementRef<T> = T extends BaseElementComponent<infer E, any> // test if `T` extends `BaseElementComponent`, inferring `E`
+  ? ExtractElementRef<E> // if yes, recurse because compound components can extend other compound components
+  : T extends React.JSXElementConstructor<infer P> // if no, test if `T` extends a React component, inferring `P`
+  ? P extends {ref?: infer R} // if yes, extract the `ref` from `P`
+    ? R // return inferred ref `R`
+    : never // we should never get here
+  : T extends keyof HTMLElementTagNameMap // if `T` is not a JSXElementConstructor, test if `T` is an HTMLElement tag
+  ? React.Ref<HTMLElementTagNameMap[T]> // if yes, return the interface of the HTML Element tag
+  : T extends keyof SVGElementTagNameMap // if no, test if `T` is an SVG Element tag
+  ? React.Ref<SVGElementTagNameMap[T]> // if yes, return the interface of the SVG Element tag
+  : T; // we don't know what `T` is, return it. Hopefully it is already an element interface
+
 /**
  * Extract a Ref from T if it exists
  * This will return the following:
@@ -20,20 +33,13 @@ type Constructor<T> = new (...args: any[]) => T;
  * - `undefined` => `never`
  * - `'button'` => `React.Ref<HTMLButtonElement>`
  * - `ElementComponent<'button', ButtonProps>` => `React.Ref<HTMLButtonElement>`
+ * - `ElementComponent<ElementComponent<'button', any>, ButtonProps>` => `React.Ref<HTMLButtonElement>`
  */
-type ExtractRef<T> = T extends undefined // test if T was even passed in
+export type ExtractRef<T> = T extends undefined // test if T was even passed in
   ? never // T not passed in, we'll set the ref to `never`
-  : T extends Constructor<infer C>
-  ? React.LegacyRef<C>
-  : React.Ref<
-      T extends keyof ElementTagNameMap // test if T is an element string like 'button' or 'div'
-        ? ElementTagNameMap[T] // if yes, the ref should be the element interface. `'button' => HTMLButtonElement`
-        : T extends ElementComponent<infer U, any> // if no, check if we can infer the the element type from an `ElementComponent` interface
-        ? U extends keyof ElementTagNameMap // test inferred U to see if it extends an element string
-          ? ElementTagNameMap[U] // if yes, use the inferred U and convert to an element interface. `'button' => HTMLButtonElement`
-          : U // if no, fall back to inferred U. Hopefully it is already an element interface
-        : T // if no, fall back to T. Hopefully it is already an element interface
-    >;
+  : T extends Constructor<infer C> // test if T is a class component
+  ? React.LegacyRef<C> // if yes, the ref is a `React.LegacyRef` and the `ref` will point to the class instance
+  : ExtractElementRef<T>; // if no, extract the element ref
 
 /**
  * Generic component props with "as" prop
@@ -96,7 +102,7 @@ export type ExtractProps<
     | never = undefined
 > = ExtractMaybeModel<
   TComponent,
-  TComponent extends {__element: infer E; __props: infer P} //ElementComponent<infer E, infer P> // test if `TComponent` is an `ElementComponent`, while inferring both default element and props associated
+  TComponent extends BaseElementComponent<infer E, infer P> // BaseElementComponent<infer E, infer P> // test if `TComponent` is an `ElementComponent`, while inferring both default element and props associated. We use `BaseElementComponent` instead of `ElementComponent` for faster Typescript inference
     ? [TElement] extends [never] // test if user passed `never` for the `TElement` override. We have to test `never` first, otherwise TS gets confused and `ExtractProps` will return `never`. https://github.com/microsoft/TypeScript/issues/23182
       ? P // else attach only inferred props `P`
       : TElement extends undefined // else test if TElement was defined
@@ -114,7 +120,7 @@ export type ExtractProps<
 >;
 
 // If the component has a model, be sure to add it to the prop interface
-type ExtractMaybeModel<TComponent, P> = TComponent extends {__model: infer M} // test if a model is used
+type ExtractMaybeModel<TComponent, P> = TComponent extends BaseModelComponent<infer M> // test if a model is used
   ? P & PropsWithModel<M>
   : P;
 
@@ -135,11 +141,27 @@ export type PropsWithModel<TModel = never> = {
   elemPropsHook?: <TProps>(model: TModel, elemProps: TProps) => any;
 };
 
+export interface BaseComponent<P> {
+  /** @private Only used internally to hold the element type for extraction */
+  __props: P;
+}
+
+export interface BaseElementComponent<E, P> extends BaseComponent<P> {
+  /** @private Only used internally to hold the element type for extraction */
+  __element: E;
+}
+
+export interface BaseModelComponent<M> {
+  /** @private Only used internally to hold the element type for extraction */
+  __model: M;
+}
+
 /**
  * Component type that allows for `as` to change the element or component type.
  * Passing `as` will correctly change the allowed interface of the JSX element
  */
-export type ElementComponent<E extends React.ElementType, P> = {
+export interface ElementComponent<E extends React.ElementType, P>
+  extends BaseElementComponent<E, P> {
   displayName?: string;
   <ElementType extends React.ElementType>(
     props: PropsWithoutAs<P, ElementType> & {
@@ -153,18 +175,16 @@ export type ElementComponent<E extends React.ElementType, P> = {
   ): JSX.Element;
   (props: PropsWithoutAs<P, E>): JSX.Element;
   as<E extends React.ElementType>(as: E): ElementComponent<E, P>;
-  /** @private Only used internally to hold the element type for extraction */
-  __element: E;
-  /** @private Only used internally to hold the element type for extraction */
-  __props: P;
-};
+}
 
 /**
  * Component type that allows for `as` to change the element or component type.
  * Passing `as` will correctly change the allowed interface of the JSX element.
  * Same as `ElementComponent`, but adds a model to the interface.
  */
-export type ElementComponentM<E extends React.ElementType, P, TModel> = {
+export interface ElementComponentM<E extends React.ElementType, P, TModel>
+  extends BaseElementComponent<E, P>,
+    BaseModelComponent<TModel> {
   displayName?: string;
   <ElementType extends React.ElementType>(
     props: PropsWithoutAs<P, ElementType> &
@@ -179,29 +199,17 @@ export type ElementComponentM<E extends React.ElementType, P, TModel> = {
   ): JSX.Element;
   (props: PropsWithoutAs<P, E> & PropsWithModel<TModel>): JSX.Element;
   as<E extends React.ElementType>(as: E): ElementComponentM<E, P, TModel>;
-  /** @private Only used internally to hold the element type for extraction */
-  __element: E;
-  /** @private Only used internally to hold the element type for extraction */
-  __props: P;
-  /** @private Only used internally to hold the element type for extraction */
-  __model: TModel;
-};
+}
 
-export type ComponentM<P, TModel> = {
+export interface ComponentM<P, TModel> extends BaseComponent<P>, BaseModelComponent<TModel> {
   displayName?: string;
   (props: P & PropsWithModel<TModel>): JSX.Element;
-  /** @private Only used internally to hold the element type for extraction */
-  __props: P;
-  /** @private Only used internally to hold the element type for extraction */
-  __model: TModel;
-};
+}
 
-export type Component<P> = {
+export interface Component<P> extends BaseComponent<P> {
   displayName?: string;
   (props: P): JSX.Element;
-  /** @private Only used internally to hold the element type for extraction */
-  __props: P;
-};
+}
 
 interface RefForwardingComponent<T, P = {}> {
   (
