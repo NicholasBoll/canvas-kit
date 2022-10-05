@@ -24,7 +24,7 @@ type ExtractElementRef<T> = T extends BaseElementComponent<infer E, any> // test
   ? React.Ref<HTMLElementTagNameMap[T]> // if yes, return the interface of the HTML Element tag
   : T extends keyof SVGElementTagNameMap // if no, test if `T` is an SVG Element tag
   ? React.Ref<SVGElementTagNameMap[T]> // if yes, return the interface of the SVG Element tag
-  : T; // we don't know what `T` is, return it. Hopefully it is already an element interface
+  : never; // we don't know what `T` is, return `never`. This prevents Typescript from giving up in the `AsProps` interface. If we returned `T` instead, this would fail: `<MyComponent ref={ref} />`. Typescript would say `T` is `unknown` instead of the default generic assignment: `ElementType = E`. The `= E` would be ignored and `ElementType` would fall back to `React.ElementType`
 
 /**
  * Extract a Ref from T if it exists
@@ -47,15 +47,7 @@ export type ExtractRef<T> = T extends undefined // test if T was even passed in
  * @template ElementType React component or string element
  */
 export type PropsWithoutAs<P, ElementType extends React.ElementType> = P &
-  Omit<React.ComponentProps<ElementType>, 'as' | keyof P> & {
-    /**
-     * Optional ref. If the component represents an element, this ref will be a reference to the
-     * real DOM element of the component. If `as` is set to an element, it will be that element.
-     * If `as` is a component, the reference will be to that component (or element if the component
-     * uses `React.forwardRef`).
-     */
-    ref?: ExtractRef<ElementType>;
-  };
+  Omit<React.ComponentProps<ElementType>, 'as' | 'ref' | keyof P>;
 
 /**
  * Extracts only the HTML attribute interface from `JSX.IntrinsicElements[E]`. This effectively removes `ref` and `key`
@@ -163,17 +155,39 @@ export interface BaseModelComponent<M> {
 export interface ElementComponent<E extends React.ElementType, P>
   extends BaseElementComponent<E, P> {
   displayName?: string;
-  <ElementType extends React.ElementType>(
-    props: PropsWithoutAs<P, ElementType> & {
-      /**
-       * Optional override of the default element used by the component. Any valid tag or Component.
-       * If you provided a Component, this component should forward the ref using `React.forwardRef`
-       * and spread extra props to a root element.
-       */
-      as: ElementType;
-    }
-  ): JSX.Element;
-  (props: PropsWithoutAs<P, E>): JSX.Element;
+  <ElementType extends React.ElementType = E>(props: AsProps<P, ElementType>): JSX.Element;
+  as<E extends React.ElementType>(as: E): ElementComponent<E, P>;
+}
+
+export type AsProps<
+  TProps,
+  TComponent extends keyof JSX.IntrinsicElements | React.ComponentType<any>
+> = PropsWithoutAs<TProps, TComponent> & {
+  /**
+   * Optional override of the default element used by the component. Any valid tag or Component.
+   * If you provided a Component, this component should forward the ref using `React.forwardRef`
+   * and spread extra props to a root element.
+   */
+  as?: TComponent;
+  /**
+   * Optional ref. If the component represents an element, this ref will be a reference to the
+   * real DOM element of the component. If `as` is set to an element, it will be that element.
+   * If `as` is a component, the reference will be to that component (or element if the component
+   * uses `React.forwardRef`).
+   */
+  ref?: ExtractRef<TComponent>;
+};
+
+/**
+ * DO NOT USE THIS TYPE! It is for testing purposes only
+ */
+export interface TestElementComponent<E extends React.ElementType, P>
+  extends BaseElementComponent<E, P> {
+  displayName?: string;
+  <ElementType extends React.ElementType = E>(props: AsProps<P, ElementType>): AsProps<
+    P,
+    ElementType
+  >;
   as<E extends React.ElementType>(as: E): ElementComponent<E, P>;
 }
 
@@ -186,18 +200,9 @@ export interface ElementComponentM<E extends React.ElementType, P, TModel>
   extends BaseElementComponent<E, P>,
     BaseModelComponent<TModel> {
   displayName?: string;
-  <ElementType extends React.ElementType>(
-    props: PropsWithoutAs<P, ElementType> &
-      PropsWithModel<TModel> & {
-        /**
-         * Optional override of the default element used by the component. Any valid tag or Component.
-         * If you provided a Component, this component should forward the ref using `React.forwardRef`
-         * and spread extra props to a root element.
-         */
-        as: ElementType;
-      }
+  <ElementType extends React.ElementType = E>(
+    props: AsProps<P, ElementType> & PropsWithModel<TModel>
   ): JSX.Element;
-  (props: PropsWithoutAs<P, E> & PropsWithModel<TModel>): JSX.Element;
   as<E extends React.ElementType>(as: E): ElementComponentM<E, P, TModel>;
 }
 
@@ -315,6 +320,17 @@ export const createContainer = <
     ReturnedComponent.displayName = displayName;
     (ReturnedComponent as any).Context = Context;
 
+    // The `any`s are here because `ElementComponentM` takes care of the `as` type and the
+    // `ReturnComponent` type is overridden
+    (ReturnedComponent as any).as = (as: any) =>
+      createContainer(as)({
+        displayName,
+        modelHook,
+        elemPropsHook,
+        defaultContext,
+        subComponents,
+      })(Component);
+
     // Cast as `any`. We have already specified the return type. Be careful making changes to this
     // file due to this `any` `ReturnedComponent` is a `React.ForwardRefExoticComponent`, but we want
     // it to be either an `Component` or `ElementComponent`
@@ -407,6 +423,16 @@ export const createSubcomponent = <
       (ReturnedComponent as Record<string, any>)[key] = (subComponents as Record<string, any>)[key];
     });
     ReturnedComponent.displayName = displayName;
+
+    // The `any`s are here because `ElementComponentM` takes care of the `as` type and the
+    // `ReturnComponent` type is overridden
+    (ReturnedComponent as any).as = (as: any) =>
+      createSubcomponent(as)({
+        displayName,
+        modelHook,
+        elemPropsHook,
+        subComponents,
+      })(Component);
 
     // Cast as `any`. We have already specified the return type. Be careful making changes to this
     // file due to this `any` `ReturnedComponent` is a `React.ForwardRefExoticComponent`, but we want

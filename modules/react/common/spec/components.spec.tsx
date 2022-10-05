@@ -17,6 +17,8 @@ import {
   createContainer,
   createModelHook,
   createSubcomponent,
+  TestElementComponent,
+  AsProps,
 } from '@workday/canvas-kit-react/common';
 
 // expect-type is a very cool library, but failures can be extremely difficult to understand. To
@@ -120,22 +122,33 @@ describe('createComponent', () => {
     const temp = <Component ref={ref} />;
   });
 
-  it('should accept a forward ref component', () => {
-    const ForwardedRefComponent = React.forwardRef<HTMLButtonElement>((props, ref) => {
-      return <button {...props} />;
-    });
+  it('should error when extra props are supplied', () => {
+    const Component = createComponent('button')({Component: (props: {}) => null});
 
-    const MyRefForwardedComponent = createComponent(ForwardedRefComponent)({
-      Component(props: React.ButtonHTMLAttributes<HTMLButtonElement>, ref, Element) {
-        return <ForwardedRefComponent ref={ref} {...props} />;
-      },
-    });
+    // @ts-expect-error
+    const temp = <Component foo="bar" />;
+  });
 
-    const ref = React.useRef<HTMLButtonElement>(null);
-    type Temp = ExtractProps<typeof ForwardedRefComponent>;
+  it('should error when extra props are supplied when `as` is present', () => {
+    const Component = createComponent('button')({Component: (props: {}) => null});
 
-    // No expectation, but the next line will fail if the ref signature isn't valid and `id` was missing from the prop list
-    const temp = <MyRefForwardedComponent ref={ref} id="foo" />;
+    // @ts-expect-error
+    const temp = <Component as="div" foo="bar" />;
+  });
+
+  it('should not error when a valid `ref` is present', () => {
+    const Component = createComponent('button')({Component: (props: {}) => null});
+    const ref: React.RefObject<HTMLButtonElement> = {current: null};
+
+    const temp = <Component ref={ref} />;
+  });
+
+  it('should error when extra props are supplied when `ref` is present', () => {
+    const Component = createComponent('button')({Component: (props: {}) => null});
+    const ref: React.RefObject<HTMLButtonElement> = {current: null};
+
+    // @ts-expect-error foo is not a prop. Only foo should be underlined
+    const temp = <Component ref={ref} foo="bar" />;
   });
 
   it('should allow an `as` referencing a forward ref component', () => {
@@ -152,7 +165,7 @@ describe('createComponent', () => {
       return <button {...props} />;
     });
 
-    const ref = React.useRef<HTMLButtonElement>(null);
+    const ref: React.RefObject<HTMLButtonElement> = {current: null};
 
     // no expectation, but there would be an error if `as` didn't allow for the correct `ref` and the `id` prop
     const temp = <MyComponent as={ForwardedRefComponent} ref={ref} id="foo" />;
@@ -201,6 +214,121 @@ describe('createComponent', () => {
     render(<Component as="button" />);
 
     expect(screen.getByTestId('test')).toHaveProperty('tagName', 'BUTTON');
+  });
+
+  it('should error if the ref is incompatible', () => {
+    type Props1 = {foo: string};
+    const MyComponent = createComponent('div')({
+      Component(props: Props1, ref, Element) {
+        return <Element />;
+      },
+    });
+    const ref: React.RefObject<HTMLDivElement> = {current: null};
+
+    //@ts-expect-error ref is incompatible
+    const temp = <MyComponent as="button" ref={ref} />;
+  });
+
+  it('should error if a prop is missing', () => {
+    const MyComponent = createComponent('button')({
+      Component(props: {bar: string}, ref, Element) {
+        return <Element ref={ref} {...props} />;
+      },
+    });
+
+    // @ts-expect-error foo is missing. only "MyComponent" should be underlined
+    const temp = <MyComponent id="foo" />;
+  });
+
+  it('should accept a forward ref component in the "as" prop', () => {
+    const ForwardedRefComponent = React.forwardRef<
+      HTMLButtonElement,
+      React.ButtonHTMLAttributes<HTMLButtonElement>
+    >((props, ref) => {
+      return <button {...props} />;
+    });
+
+    const MyComponent = createComponent('button')({
+      Component(props: {}, ref, Element) {
+        return <Element ref={ref} {...props} />;
+      },
+    });
+
+    // No expectation, `id` is a valid prop from ForwardedRefComponent
+    const temp = <MyComponent as={ForwardedRefComponent} id="foo" />;
+  });
+});
+
+// ElementComponent type is odd to test. We use `TestElementComponent` which is the same as
+// `ElementComponent` except in return type. While `ElementComponent` as a function always returns
+// `JSX.Element`, `TestElementComponent` returns the `props` parameter of the function for testing.
+describe('ElementComponent', () => {
+  const emptyComponent = (() => null) as any;
+  it('should return the correct interface with no "as"', () => {
+    type Props1 = {foo: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const expected = Component({foo: 'bar', onClick: e => null});
+
+    expectTypeOf(expected).toEqualTypeOf<AsProps<Props1, 'div'>>();
+  });
+
+  it('should return the correct interface with no "as" with a ref', () => {
+    type Props1 = {foo: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const ref: React.RefObject<HTMLDivElement> = {current: null};
+    const expected = Component({foo: 'bar', ref, onClick: e => null});
+
+    expectTypeOf(expected).toEqualTypeOf<AsProps<Props1, 'div'>>();
+  });
+
+  it('should return the correct interface with "as" and a ref', () => {
+    type Props1 = {foo: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const ref: React.RefObject<HTMLButtonElement> = {current: null};
+    const expected = Component({foo: 'bar', as: 'button', ref, onClick: e => null});
+
+    expectTypeOf(expected).toEqualTypeOf<AsProps<Props1, 'button'>>();
+  });
+
+  it('should return the correct interface with an element "as"', () => {
+    type Props1 = {foo: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const expected = Component({foo: 'bar', as: 'button', onClick: e => null});
+
+    expectTypeOf(expected).toEqualTypeOf<AsProps<Props1, 'button'>>();
+  });
+
+  it('should return the correct interface with a React.FC "as"', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const AsComponent: React.FC<Props2> = emptyComponent;
+
+    const expected = Component({foo: 'bar', bar: 'baz', as: AsComponent});
+
+    expectTypeOf(expected).toEqualTypeOf<AsProps<Props1, typeof AsComponent>>();
+  });
+
+  it('should return the correct interface with a React.ForwardComponent "as"', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const AsComponent = React.forwardRef<HTMLButtonElement, Props2>(() => null);
+
+    const expected = Component({foo: 'bar', bar: 'baz', as: AsComponent});
+
+    expectTypeOf(expected).toEqualTypeOf<AsProps<Props1, typeof AsComponent>>();
+  });
+
+  it('should return the correct interface with a ElementComponent "as"', () => {
+    type Props1 = {foo: string};
+    type Props2 = {bar: string};
+    const Component: TestElementComponent<'div', Props1> = emptyComponent;
+    const AsComponent: ElementComponent<'button', Props2> = emptyComponent;
+
+    const expected = Component({foo: 'bar', bar: 'baz', as: AsComponent, onClick: e => null});
+
+    expectTypeOf(expected).toEqualTypeOf<AsProps<Props1, typeof AsComponent>>();
   });
 });
 
