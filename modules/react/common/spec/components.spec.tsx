@@ -120,6 +120,44 @@ describe('createComponent', () => {
     const temp = <Component ref={ref} />;
   });
 
+  it('should accept a forward ref component', () => {
+    const ForwardedRefComponent = React.forwardRef<HTMLButtonElement>((props, ref) => {
+      return <button {...props} />;
+    });
+
+    const MyRefForwardedComponent = createComponent(ForwardedRefComponent)({
+      Component(props: React.ButtonHTMLAttributes<HTMLButtonElement>, ref, Element) {
+        return <ForwardedRefComponent ref={ref} {...props} />;
+      },
+    });
+
+    const ref = React.useRef<HTMLButtonElement>(null);
+    type Temp = ExtractProps<typeof ForwardedRefComponent>;
+
+    // No expectation, but the next line will fail if the ref signature isn't valid and `id` was missing from the prop list
+    const temp = <MyRefForwardedComponent ref={ref} id="foo" />;
+  });
+
+  it('should allow an `as` referencing a forward ref component', () => {
+    const MyComponent = createComponent('button')({
+      Component(props: {}, ref, Element) {
+        return <Element ref={ref} {...props} />;
+      },
+    });
+
+    const ForwardedRefComponent = React.forwardRef<
+      HTMLButtonElement,
+      React.ButtonHTMLAttributes<HTMLButtonElement>
+    >((props, ref) => {
+      return <button {...props} />;
+    });
+
+    const ref = React.useRef<HTMLButtonElement>(null);
+
+    // no expectation, but there would be an error if `as` didn't allow for the correct `ref` and the `id` prop
+    const temp = <MyComponent as={ForwardedRefComponent} ref={ref} id="foo" />;
+  });
+
   it('create assign a displayName', () => {
     const Component = createComponent('div')({
       displayName: 'Test',
@@ -542,7 +580,6 @@ describe('ExtractProps', () => {
     it('should return only the outer component props when `never` is supplied to ExtractProps', () => {
       const Component1 = createComponent('button')({Component: (props: Props) => null});
       const Component2 = createComponent(Component1)({Component: (props: Props2) => null});
-      const Component3 = createComponent(Component2)({Component: (props: {test: number}) => null});
       type Expected = ExtractProps<typeof Component2, never>;
 
       expectTypeOf<Expected>().toEqualTypeOf<Props2>();
@@ -564,8 +601,6 @@ describe('ExtractProps', () => {
       type Expected = ExtractProps<typeof Component1, typeof Component2>;
 
       expectTypeOf<Expected>().toEqualTypeOf<Props & Props2>();
-
-      type Foo = ExtractProps<ElementComponent<'div', Props>>;
     });
   });
 
