@@ -8,7 +8,7 @@ on:
       - prerelease/minor
 
 jobs:
-  verify-merge:
+  test-ff-only:
     # Only run if:
     # - branch is support/master AND the last commit was a release commit
     # - branch is prerelease/*
@@ -29,92 +29,45 @@ jobs:
       next-branch: ${{steps.extract-next-branch.outputs.branch}}
 
     steps:
+      ## `github.ref` is in the form of `refs/head/{name}`. This step extracts `{name}` and saves it
+      ## as an output for later use
+      - name: Extract branch name
+        id: extract-branch
+        run: |
+          echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_OUTPUT"
+          echo ${{steps.extract-branch.outputs.branch}}
+
+      - name: Extract next branch name
+        id: extract-next-branch
+        uses: Workday/canvas-kit-actions/get-next-branch@v1
+        with:
+          branch: ${{github.ref_name}}
+
+      - name: Echo branches
+        run: |
+          echo ${{steps.extract-branch.outputs.branch}}
+          echo ${{steps.extract-next-branch.outputs.branch}}
+
       ## First, we'll checkout the repository. We don't persist credentials because we need a
       ## Personal Access Token to push on a branch that is protected. See
       ## https://github.com/cycjimmy/semantic-release-action#basic-usage
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
+          ref: ${{steps.extract-next-branch.outputs.branch}} # checkout the next branch
           fetch-depth: 0 # Needed to do merges
 
-      ## `github.ref` is in the form of `refs/head/{name}`. This step extracts `{name}` and saves it
-      ## as an output for later use
-      - name: Extract branch name
-        id: extract-branch
-        run: |
-          echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
-          echo ${{steps.extract-branch.outputs.branch}}
+      - name: Test ff-only merge
+        run: git merge origin/${{ steps.extract-branch.outputs.branch }} --ff-only
 
-      - name: Extract next branch name
-        id: extract-next-branch
-        run: |
-          echo "::set-output name=branch::$(node utils/get-forward-merge-branch.js)"
-          echo ${{steps.extract-next-branch.outputs.branch}}
-
-      - uses: Workday/canvas-kit-actions/install@v1
-        with:
-          node_version: 16.x
-
-      ## A `yarn bump` will create a commit and a tag. We need to set up the git user to do this.
-      ## We'll make that user be the github-actions user.
-      - name: Config git user
-        run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git config --global pull.rebase false
-
-      ## Create a merge branch
-      - name: Forward merge
-        run: node utils/forward-merge.js
-
-      - name: Git Log
-        run: git log
-
-      # Keep steps separate for Github Actions annotation matching: https://github.com/actions/setup-node/blob/83c9f7a7df54d6b57455f7c57ac414f2ae5fb8de/src/setup-node.ts#L26-L33
-      - name: Lint
-        run: yarn lint
-
-      - name: Dependency Check
-        run: yarn depcheck
-
-      - name: Type Check
-        run: yarn typecheck
-
-      - name: Unit tests
-        run: yarn test
-
-      - name: Build Storybook
-        run: yarn build-storybook --quiet
-
-      - name: Cache Build
-        id: build-cache
-        uses: actions/cache/@v2
-        with:
-          path: docs
-          key: ${{ runner.os }}-build-${{ github.sha }}
-
-      - name: Visual Tests
-        uses: chromaui/action@main
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          appCode: dlpro96xybh
-          storybookBuildDir: docs
-          exitOnceUploaded: false
-          exitZeroOnChanges: false
-          ignoreLastBuildOnBranch: ${{ steps.extract-next-branch.outputs.branch }}
-          debug: true
-
-      - name: Start Server
-        run: npx http-server docs -p 9001 & npx wait-on http://localhost:9001
-
-      - name: Integration tests
-        run: yarn cypress run --record --parallel --env skip_storybook_test=true # skip the Storybook test during forward merges
-        env:
-          # Github Actions doesn't support encryption on forks
-          # If these keys become compromised, we will rotate and disable these features
-          # on forked PRs until a suitable workaround is found
-          CYPRESS_RECORD_KEY: 3a9347b6-36ab-4a36-823d-709f4078b148
-          CYPRESS_CACHE_FOLDER: .cache/cypress
+      # ## A `yarn bump` will create a commit and a tag. We need to set up the git user to do this.
+      # ## We'll make that user be the github-actions user.
+      # - name: Config git user
+      #   run: |
+      #     git config --global user.name "${{ github.actor }}"
+      #     git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+      #     git config --global pull.rebase false
+      # ## Test if forward-merge can be done ff-only to avoid unnecessary merge commits and CI time
 
       ## Push both the commit and tag created by Lerna's version command using a PAT
       - name: Push changes
@@ -123,60 +76,133 @@ jobs:
           github_token: ${{ secrets.GH_RW_TOKEN }}
           branch: refs/heads/${{ steps.extract-next-branch.outputs.branch }}
 
-  make-pull-request:
+  verify-merge:
     runs-on: ubuntu-latest
     if: failure()
-    needs: ['verify-merge']
+    needs: ['test-ff-only']
     steps:
-      ## If we've failed any previous step, we'll need to create a PR instead
-      - uses: NicholasBoll/action-forward-merge-pr@main
-        with:
-          token: ${{secrets.GH_RW_TOKEN}} # use PAT to force GH Actions to run the PR verify. The regular token will not
-          branches: support+master,master+prerelease/minor,prerelease/minor+prerelease/major
-          prefix: 'chore: '
-          body: |
-            This pull request was automatically created by an automated [forward-merge job](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}). The automated job failed automated checks and must be resolved manually.
+      # ## First, we'll checkout the repository. We don't persist credentials because we need a
+      # ## Personal Access Token to push on a branch that is protected. See
+      # ## https://github.com/cycjimmy/semantic-release-action#basic-usage
+      # - uses: actions/checkout@v3
+      #   with:
+      #     persist-credentials: false
+      #     fetch-depth: 0 # Needed to do merges
 
-            Reasons for failure may include:
-            - Merge conflicts that cannot be automatically resolved
-            - A merge resulted in check failures
-              - Lint or type errors
-              - Test failures
-              - Unexpected visual changes
+      ## `github.ref` is in the form of `refs/head/{name}`. This step extracts `{name}` and saves it
+      ## as an output for later use
+      - name: Echo Branch Name
+        run: |
+          echo ${{needs.test-ff-only.outputs.branch}}
 
-            The pull request should inform you of merge conflicts before you start if any.
-
-            1. Run the following commands in your terminal. If this succeeds, skip step 2. The last command will run a script that tries to merge and resolve conflicts automatically.
-
-                ```
-                git branch -D merge/${{needs.verify-merge.outputs.branch}}-into-${{ needs.verify-merge.outputs.next-branch }} || true
-                git fetch upstream
-                git checkout merge/${{needs.verify-merge.outputs.branch}}-into-${{ needs.verify-merge.outputs.next-branch }}
-                git pull upstream merge/${{needs.verify-merge.outputs.branch}}-into-${{ needs.verify-merge.outputs.next-branch }} -f
-                node utils/forward-merge.js
-                ```
-
-            2. If the previous step succeeded, skip to step 3. Resolve conflicts manually. Then run the following.
-
-                ```
-                git add .
-                git commit -m "chore: Merge ${{needs.verify-merge.outputs.branch}} into ${{ needs.verify-merge.outputs.next-branch }}"
-                ```
-
-            3. Push the merge commit back to the pull request
-
-                ```
-                git push upstream merge/${{needs.verify-merge.outputs.branch}}-into-${{ needs.verify-merge.outputs.next-branch }}
-                ```
-
-            If there were no merge conflicts, the forward-merge job failed because of a test failure. You can wait for the pull request to give errors, or you can check the logs for failures. You'll have to update code to fix errors.
-
-            This pull request will be merged using the `merge` strategy instead of the `squash` strategy. This means any commit in the log will show in the branch's history. Any commit you make should amend the merge commit. Use the following command:
-
-            ```
-            git commit --amend --no-edit
-            ```
-
-            You must then force-push the branch and the CI will rerun verification.
-
-            Use the `automerge` label like normal and the CI will pick the correct merge strategy.
+      - name: Echo next branch name
+        run: |
+          echo ${{needs.test-ff-only.outputs.next-branch}}
+  #     - uses: Workday/canvas-kit-actions/install@v1
+  #       with:
+  #         node_version: 16.x
+  #     ## A `yarn bump` will create a commit and a tag. We need to set up the git user to do this.
+  #     ## We'll make that user be the github-actions user.
+  #     - name: Config git user
+  #       run: |
+  #         git config --global user.name "${{ github.actor }}"
+  #         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+  #         git config --global pull.rebase false
+  #     ## Test if forward-merge can be done ff-only to avoid unnecessary merge commits and CI time
+  #     - name: Test fast-forward
+  #       id: test-fast-forward
+  #       run: |
+  #         echo "::set-output name=ff::$(node utils/test-fast-forward.js)"
+  #     ## Create a merge branch
+  #     - name: Forward merge
+  #       if: steps.test-fast-forward.outputs.ff == 'false'
+  #       run: node utils/forward-merge.js
+  #     - name: Git Log
+  #       run: git log
+  #     # Keep steps separate for Github Actions annotation matching: https://github.com/actions/setup-node/blob/83c9f7a7df54d6b57455f7c57ac414f2ae5fb8de/src/setup-node.ts#L26-L33
+  #     - name: Lint
+  #       run: yarn lint
+  #     - name: Dependency Check
+  #       run: yarn depcheck
+  #     - name: Type Check
+  #       run: yarn typecheck
+  #     - name: Unit tests
+  #       run: yarn test
+  #     - name: Build Storybook
+  #       run: yarn build-storybook --quiet
+  #     - name: Cache Build
+  #       id: build-cache
+  #       uses: actions/cache/@v2
+  #       with:
+  #         path: docs
+  #         key: ${{ runner.os }}-build-${{ github.sha }}
+  #     - name: Visual Tests
+  #       uses: chromaui/action@main
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         appCode: dlpro96xybh
+  #         storybookBuildDir: docs
+  #         exitOnceUploaded: false
+  #         exitZeroOnChanges: false
+  #         ignoreLastBuildOnBranch: ${{ steps.extract-next-branch.outputs.branch }}
+  #         debug: true
+  #     - name: Start Server
+  #       run: npx http-server docs -p 9001 & npx wait-on http://localhost:9001
+  #     - name: Integration tests
+  #       run: yarn cypress run --record --parallel --env skip_storybook_test=true # skip the Storybook test during forward merges
+  #       env:
+  #         # Github Actions doesn't support encryption on forks
+  #         # If these keys become compromised, we will rotate and disable these features
+  #         # on forked PRs until a suitable workaround is found
+  #         CYPRESS_RECORD_KEY: 3a9347b6-36ab-4a36-823d-709f4078b148
+  #         CYPRESS_CACHE_FOLDER: .cache/cypress
+  #     ## Push both the commit and tag created by Lerna's version command using a PAT
+  #     - name: Push changes
+  #       uses: ad-m/github-push-action@master
+  #       with:
+  #         github_token: ${{ secrets.GH_RW_TOKEN }}
+  #         branch: refs/heads/${{ steps.extract-next-branch.outputs.branch }}
+  # make-pull-request:
+  #   runs-on: ubuntu-latest
+  #   if: failure()
+  #   needs: ['verify-merge']
+  #   steps:
+  #     ## If we've failed any previous step, we'll need to create a PR instead
+  #     - uses: NicholasBoll/action-forward-merge-pr@main
+  #       with:
+  #         token: ${{secrets.GH_RW_TOKEN}} # use PAT to force GH Actions to run the PR verify. The regular token will not
+  #         branches: support+master,master+prerelease/minor,prerelease/minor+prerelease/major
+  #         prefix: 'chore: '
+  #         body: |
+  #           This pull request was automatically created by an automated [forward-merge job](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}). The automated job failed automated checks and must be resolved manually.
+  #           Reasons for failure may include:
+  #           - Merge conflicts that cannot be automatically resolved
+  #           - A merge resulted in check failures
+  #             - Lint or type errors
+  #             - Test failures
+  #             - Unexpected visual changes
+  #           The pull request should inform you of merge conflicts before you start if any.
+  #           1. Run the following commands in your terminal. If this succeeds, skip step 2. The last command will run a script that tries to merge and resolve conflicts automatically.
+  #               ```
+  #               git branch -D merge/${{needs.verify-merge.outputs.branch}}-into-${{ needs.verify-merge.outputs.next-branch }} || true
+  #               git fetch upstream
+  #               git checkout merge/${{needs.verify-merge.outputs.branch}}-into-${{ needs.verify-merge.outputs.next-branch }}
+  #               git pull upstream merge/${{needs.verify-merge.outputs.branch}}-into-${{ needs.verify-merge.outputs.next-branch }} -f
+  #               node utils/forward-merge.js
+  #               ```
+  #           2. If the previous step succeeded, skip to step 3. Resolve conflicts manually. Then run the following.
+  #               ```
+  #               git add .
+  #               git commit -m "chore: Merge ${{needs.verify-merge.outputs.branch}} into ${{ needs.verify-merge.outputs.next-branch }}"
+  #               ```
+  #           3. Push the merge commit back to the pull request
+  #               ```
+  #               git push upstream merge/${{needs.verify-merge.outputs.branch}}-into-${{ needs.verify-merge.outputs.next-branch }}
+  #               ```
+  #           If there were no merge conflicts, the forward-merge job failed because of a test failure. You can wait for the pull request to give errors, or you can check the logs for failures. You'll have to update code to fix errors.
+  #           This pull request will be merged using the `merge` strategy instead of the `squash` strategy. This means any commit in the log will show in the branch's history. Any commit you make should amend the merge commit. Use the following command:
+  #           ```
+  #           git commit --amend --no-edit
+  #           ```
+  #           You must then force-push the branch and the CI will rerun verification.
+  #           Use the `automerge` label like normal and the CI will pick the correct merge strategy.
