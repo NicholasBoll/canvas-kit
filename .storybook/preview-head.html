@@ -64,4 +64,355 @@
     src: local('Roboto Mono'), local('RobotoMono-Regular'),
       url(RobotoMono-Regular.ttf) format('truetype');
   }
+
+  .cnvs-base-button {
+    font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
+    font-size: 0.875rem;
+    line-height: normal;
+    letter-spacing: 0.015rem;
+    font-weight: bold;
+    background-color: var(--cnvs-button-default-background, transparent);
+    color: var(
+      --cnvs-button-default-label-emotion-safe,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+    border-width: 1px;
+    border-style: solid;
+    gap: var(--cnvs-sys-space-x2, calc(0.25rem * 2));
+    border-color: var(--cnvs-button-default-border, transparent);
+    cursor: pointer;
+    display: inline-flex;
+    box-shadow: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    outline: 2px transparent;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    border-radius: var(
+      --cnvs-button-default-borderRadius,
+      var(--cnvs-sys-shape-round, calc(0.25rem * 250))
+    );
+    position: relative;
+    vertical-align: middle;
+    overflow: hidden;
+    transition: box-shadow 120ms linear, border 120ms linear, background-color 120ms linear,
+      color 120ms linear;
+  }
+  .cnvs-base-button:disabled,
+  .cnvs-base-button:disabled:active,
+  .cnvs-base-button.disabled {
+    cursor: default;
+    box-shadow: none;
+    opacity: var(--cnvs-button-disabled-opacity, 1);
+  }
+  .cnvs-base-button span .wd-icon-fill {
+    transition-duration: 40ms;
+    fill: var(
+      --cnvs-button-default-icon,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+  }
+  .cnvs-base-button .wd-icon-background ~ .wd-icon-accent,
+  .cnvs-base-button .wd-icon-background ~ .wd-icon-accent2 {
+    fill: var(
+      --cnvs-button-default-icon,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+  }
+  .cnvs-base-button:focus-visible,
+  .cnvs-base-button.focus {
+    background-color: var(--cnvs-button-focus-background, transparent);
+    border-color: var(--cnvs-button-focus-border, transparent);
+    color: var(
+      --cnvs-button-focus-label-emotion-safe,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+    box-shadow: 0 0 0 2px
+        var(
+          --cnvs-button-focus-boxShadowInner,
+          var(--cnvs-base-palette-french-vanilla-100, rgba(255, 255, 255, 1))
+        ),
+      0 0 0 calc(2px + 2px)
+        var(
+          --cnvs-button-focus-boxShadowOuter,
+          var(--cnvs-brand-primary-base, rgba(8, 117, 225, 1))
+        );
+  }
+  .cnvs-base-button:focus-visible span .wd-icon-fill,
+  .cnvs-base-button.focus span .wd-icon-fill {
+    fill: var(
+      --cnvs-button-focus-icon,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+  }
+  .cnvs-base-button:focus-visible .wd-icon-background ~ .wd-icon-accent,
+  .cnvs-base-button.focus .wd-icon-background ~ .wd-icon-accent,
+  .cnvs-base-button:focus-visible .wd-icon-background ~ .wd-icon-accent2,
+  .cnvs-base-button.focus .wd-icon-background ~ .wd-icon-accent2 {
+    fill: var(
+      --cnvs-button-focus-icon,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+  }
+  .cnvs-base-button:hover,
+  .cnvs-base-button.hover {
+    background-color: var(
+      --cnvs-button-hover-background,
+      var(--cnvs-base-palette-black-pepper-500, rgba(30, 30, 30, 1))
+    );
+    border-color: var(--cnvs-button-hover-border, transparent);
+    color: var(
+      --cnvs-button-hover-label-emotion-safe,
+      var(--cnvs-base-palette-black-pepper-500, rgba(30, 30, 30, 1))
+    );
+  }
+  .cnvs-base-button:hover span .wd-icon-fill,
+  .cnvs-base-button.hover span .wd-icon-fill {
+    fill: var(
+      --cnvs-button-hover-icon,
+      var(--cnvs-base-palette-black-pepper-500, rgba(30, 30, 30, 1))
+    );
+  }
+  .cnvs-base-button:hover .wd-icon-background ~ .wd-icon-accent,
+  .cnvs-base-button.hover .wd-icon-background ~ .wd-icon-accent,
+  .cnvs-base-button:hover .wd-icon-background ~ .wd-icon-accent2,
+  .cnvs-base-button.hover .wd-icon-background ~ .wd-icon-accent2 {
+    fill: var(
+      --cnvs-button-hover-icon,
+      var(--cnvs-base-palette-black-pepper-500, rgba(30, 30, 30, 1))
+    );
+  }
+  .cnvs-base-button:hover:active {
+    transition-duration: 40ms;
+  }
+  .cnvs-base-button:active,
+  .cnvs-base-button.active {
+    background-color: var(--cnvs-button-active-background, transparent);
+    border-color: var(--cnvs-button-active-border, transparent);
+    color: var(
+      --cnvs-button-active-label-emotion-safe,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+  }
+  .cnvs-base-button:active span .wd-icon-fill,
+  .cnvs-base-button.active span .wd-icon-fill {
+    fill: var(
+      --cnvs-button-active-icon,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+  }
+  .cnvs-base-button:active .wd-icon-background ~ .wd-icon-accent,
+  .cnvs-base-button.active .wd-icon-background ~ .wd-icon-accent,
+  .cnvs-base-button:active .wd-icon-background ~ .wd-icon-accent2,
+  .cnvs-base-button.active .wd-icon-background ~ .wd-icon-accent2 {
+    fill: var(
+      --cnvs-button-active-icon,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+  }
+  .cnvs-base-button:disabled,
+  .cnvs-base-button.disabled {
+    background-color: var(--cnvs-button-disabled-background, transparent);
+    border-color: var(--cnvs-button-disabled-border, transparent);
+    color: var(
+      --cnvs-button-disabled-label-emotion-safe,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+  }
+  .cnvs-base-button:disabled span .wd-icon-fill,
+  .cnvs-base-button.disabled span .wd-icon-fill {
+    fill: var(
+      --cnvs-button-disabled-icon,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+  }
+  .cnvs-base-button:disabled .wd-icon-background ~ .wd-icon-accent,
+  .cnvs-base-button.disabled .wd-icon-background ~ .wd-icon-accent,
+  .cnvs-base-button:disabled .wd-icon-background ~ .wd-icon-accent2,
+  .cnvs-base-button.disabled .wd-icon-background ~ .wd-icon-accent2 {
+    fill: var(
+      --cnvs-button-disabled-icon,
+      var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1))
+    );
+  }
+  .cnvs-button---size-large {
+    font-size: var(--cnvs-sys-space-x4, calc(0.25rem * 4));
+    line-height: var(--cnvs-sys-space-x6, calc(0.25rem * 6));
+    letter-spacing: 0.01rem;
+    height: 48px;
+    padding-inline: var(--cnvs-sys-space-x8, calc(0.25rem * 8));
+    min-width: 112px;
+  }
+  .cnvs-button---size-medium {
+    font-size: 0.875rem;
+    letter-spacing: 0.015rem;
+    min-width: 96px;
+    padding-inline: var(--cnvs-sys-space-x6, calc(0.25rem * 6));
+    height: var(--cnvs-sys-space-x10, calc(0.25rem * 10));
+  }
+  .cnvs-button---size-small {
+    font-size: 0.875rem;
+    letter-spacing: 0.015rem;
+    height: var(--cnvs-sys-space-x8, calc(0.25rem * 8));
+    min-width: var(--cnvs-sys-space-x20, calc(0.25rem * 20));
+    padding-inline: var(--cnvs-sys-space-x4, calc(0.25rem * 4));
+    gap: var(--cnvs-sys-space-x1, 0.25rem);
+  }
+  .cnvs-button---size-extra-small {
+    font-size: 0.75rem;
+    line-height: var(--cnvs-sys-space-x4, calc(0.25rem * 4));
+    letter-spacing: 0.02rem;
+    height: var(--cnvs-sys-space-x6, calc(0.25rem * 6));
+    min-width: auto;
+    padding-inline: var(--cnvs-sys-space-x3, calc(0.25rem * 3));
+    gap: var(--cnvs-sys-space-x1, 0.25rem);
+  }
+  .cnvs-button---icon-position-large-only {
+    padding: 0;
+    min-width: calc(var(--cnvs-sys-space-x4, calc(0.25rem * 4)) * 3);
+  }
+  .cnvs-button---icon-position-large-start {
+    padding-inline-start: var(--cnvs-sys-space-x6, calc(0.25rem * 6));
+    padding-inline-end: var(--cnvs-sys-space-x8, calc(0.25rem * 8));
+  }
+  .cnvs-button---icon-position-large-end {
+    padding-inline-start: var(--cnvs-sys-space-x8, calc(0.25rem * 8));
+    padding-inline-end: var(--cnvs-sys-space-x6, calc(0.25rem * 6));
+  }
+  .cnvs-button---icon-position-medium-only {
+    padding: 0;
+    min-width: var(--cnvs-sys-space-x10, calc(0.25rem * 10));
+  }
+  .cnvs-button---icon-position-medium-start {
+    padding-inline-start: calc(var(--cnvs-sys-space-x1, 0.25rem) * 5);
+    padding-inline-end: var(--cnvs-sys-space-x6, calc(0.25rem * 6));
+  }
+  .cnvs-button---icon-position-medium-end {
+    padding-inline-start: var(--cnvs-sys-space-x6, calc(0.25rem * 6));
+    padding-inline-end: calc(var(--cnvs-sys-space-x1, 0.25rem) * 5);
+  }
+  .cnvs-button---icon-position-small-only {
+    padding: 0;
+    min-width: var(--cnvs-sys-space-x8, calc(0.25rem * 8));
+  }
+  .cnvs-button---icon-position-small-start {
+    padding-inline-start: var(--cnvs-sys-space-x3, calc(0.25rem * 3));
+    padding-inline-end: var(--cnvs-sys-space-x4, calc(0.25rem * 4));
+  }
+  .cnvs-button---icon-position-small-end {
+    padding-inline-start: var(--cnvs-sys-space-x4, calc(0.25rem * 4));
+    padding-inline-end: var(--cnvs-sys-space-x3, calc(0.25rem * 3));
+  }
+  .cnvs-button---icon-position-extra-small-only {
+    padding: 0;
+    min-width: var(--cnvs-sys-space-x6, calc(0.25rem * 6));
+  }
+  .cnvs-button---icon-position-extra-small-start {
+    padding-inline-start: var(--cnvs-sys-space-x2, calc(0.25rem * 2));
+    padding-inline-end: var(--cnvs-sys-space-x3, calc(0.25rem * 3));
+  }
+  .cnvs-button---icon-position-extra-small-end {
+    padding-inline-start: var(--cnvs-sys-space-x3, calc(0.25rem * 3));
+    padding-inline-end: var(--cnvs-sys-space-x2, calc(0.25rem * 2));
+  }
+
+  .cnvs-primary {
+    --cnvs-button-default-background: var(--cnvs-brand-primary-base, rgba(8, 117, 225, 1));
+    --cnvs-button-default-border: transparent;
+    --cnvs-button-default-borderRadius: var(--cnvs-sys-shape-round, calc(0.25rem * 250));
+    --cnvs-button-default-label-emotion-safe: var(
+      --cnvs-brand-primary-accent,
+      rgba(255, 255, 255, 1)
+    );
+    --cnvs-button-default-icon: var(--cnvs-brand-primary-accent, rgba(255, 255, 255, 1));
+    --cnvs-button-hover-background: var(--cnvs-brand-primary-dark, rgba(0, 92, 185, 1));
+    --cnvs-button-hover-border: transparent;
+    --cnvs-button-hover-label-emotion-safe: var(
+      --cnvs-brand-primary-accent,
+      rgba(255, 255, 255, 1)
+    );
+    --cnvs-button-hover-icon: var(--cnvs-brand-primary-accent, rgba(255, 255, 255, 1));
+    --cnvs-button-focus-background: var(--cnvs-brand-primary-base, rgba(8, 117, 225, 1));
+    --cnvs-button-focus-border: transparent;
+    --cnvs-button-focus-label-emotion-safe: var(
+      --cnvs-brand-primary-accent,
+      rgba(255, 255, 255, 1)
+    );
+    --cnvs-button-focus-icon: var(--cnvs-brand-primary-accent, rgba(255, 255, 255, 1));
+    --cnvs-button-focus-boxShadowInner: var(
+      --cnvs-base-palette-french-vanilla-100,
+      rgba(255, 255, 255, 1)
+    );
+    --cnvs-button-focus-boxShadowOuter: var(
+      --cnvs-brand-common-focus-outline,
+      rgba(8, 117, 225, 1)
+    );
+    --cnvs-button-active-background: var(--cnvs-brand-primary-darkest, rgba(0, 67, 135, 1));
+    --cnvs-button-active-border: transparent;
+    --cnvs-button-active-label-emotion-safe: var(
+      --cnvs-brand-primary-accent,
+      rgba(255, 255, 255, 1)
+    );
+    --cnvs-button-active-icon: var(--cnvs-brand-primary-accent, rgba(255, 255, 255, 1));
+    --cnvs-button-disabled-background: var(--cnvs-brand-primary-base, rgba(8, 117, 225, 1));
+    --cnvs-button-disabled-border: transparent;
+    --cnvs-button-disabled-label-emotion-safe: var(
+      --cnvs-brand-primary-accent,
+      rgba(255, 255, 255, 1)
+    );
+    --cnvs-button-disabled-opacity: 0.4;
+    --cnvs-button-disabled-icon: var(--cnvs-brand-primary-accent, rgba(255, 255, 255, 1));
+  }
+  .cnvs-primary-button---variant-inverse {
+    --cnvs-button-default-background: var(
+      --cnvs-base-palette-french-vanilla-100,
+      rgba(255, 255, 255, 1)
+    );
+    --cnvs-button-default-borderRadius: var(--cnvs-sys-shape-round, calc(0.25rem * 250));
+    --cnvs-button-default-label-emotion-safe: var(
+      --cnvs-base-palette-black-pepper-400,
+      rgba(51, 51, 51, 1)
+    );
+    --cnvs-button-default-icon: var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1));
+    --cnvs-button-hover-background: var(--cnvs-base-palette-soap-300, rgba(232, 235, 237, 1));
+    --cnvs-button-hover-label-emotion-safe: var(
+      --cnvs-base-palette-black-pepper-500,
+      rgba(30, 30, 30, 1)
+    );
+    --cnvs-button-hover-icon: var(--cnvs-base-palette-black-pepper-500, rgba(30, 30, 30, 1));
+    --cnvs-button-focus-background: var(
+      --cnvs-base-palette-french-vanilla-100,
+      rgba(255, 255, 255, 1)
+    );
+    --cnvs-button-focus-label-emotion-safe: var(
+      --cnvs-base-palette-black-pepper-400,
+      rgba(51, 51, 51, 1)
+    );
+    --cnvs-button-focus-icon: var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1));
+    --cnvs-button-focus-boxShadowInner: var(
+      --cnvs-base-palette-black-pepper-400,
+      rgba(51, 51, 51, 1)
+    );
+    --cnvs-button-focus-boxShadowOuter: var(
+      --cnvs-base-palette-french-vanilla-100,
+      rgba(255, 255, 255, 1)
+    );
+    --cnvs-button-active-background: var(--cnvs-base-palette-soap-400, rgba(223, 226, 230, 1));
+    --cnvs-button-active-label-emotion-safe: var(
+      --cnvs-base-palette-black-pepper-500,
+      rgba(30, 30, 30, 1)
+    );
+    --cnvs-button-active-icon: var(--cnvs-base-palette-black-pepper-500, rgba(30, 30, 30, 1));
+    --cnvs-button-disabled-background: var(
+      --cnvs-base-palette-french-vanilla-100,
+      rgba(255, 255, 255, 1)
+    );
+    --cnvs-button-disabled-label-emotion-safe: var(
+      --cnvs-base-palette-black-pepper-400,
+      rgba(51, 51, 51, 1)
+    );
+    --cnvs-button-disabled-icon: var(--cnvs-base-palette-black-pepper-400, rgba(51, 51, 51, 1));
+  }
 </style>

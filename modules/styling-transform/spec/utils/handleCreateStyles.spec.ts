@@ -629,4 +629,26 @@ describe('createStyles', () => {
     expect(() => transform(program, 'test.ts')).toThrow(/Unknown type at: "color"/);
     expect(() => transform(program, 'test.ts')).toThrow(/File: test.ts:6:19/);
   });
+
+  it.only('should collect styles into a styles object', () => {
+    global.document = undefined;
+    const program = createProgramFromSource(`
+      import {createStyles} from '@workday/canvas-kit-styling';
+
+      const myComponentStyles = createStyles({
+        backgroundColor: 'red',
+        '&:hover': {
+          background: 'blue'
+        }
+      })
+    `);
+
+    const styles = {};
+    const result = transform(program, 'test.ts', {styles: styles});
+    global.document; //?
+    global.document === document; //?
+    document; //?
+
+    styles; //?
+  });
 });

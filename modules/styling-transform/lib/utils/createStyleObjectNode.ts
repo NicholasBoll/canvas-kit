@@ -1,9 +1,11 @@
 import ts from 'typescript';
 import {serializeStyles} from '@emotion/serialize';
+import {serialize, compile, stringify} from 'stylis';
 
 import {generateUniqueId} from '@workday/canvas-kit-styling';
 
 import {NestedStyleObject} from './parseObjectToStaticValue';
+import {StylesOutput} from './types';
 
 /**
  * Creates an AST node representation of the passed in `styleObj`, but in the format of `{name:
@@ -11,10 +13,22 @@ import {NestedStyleObject} from './parseObjectToStaticValue';
  * and client-side style injection. This results in a stable style key for Emotion while also
  * optimizing style serialization.
  */
-export function createStyleObjectNode(styleObj: NestedStyleObject) {
+export function createStyleObjectNode(
+  styleObj: NestedStyleObject,
+  className: string,
+  fileName: string,
+  styles: StylesOutput
+) {
   const serialized = serializeStyles([styleObj]);
-  const styleText = serialized.styles;
-  const styleExpression = ts.factory.createStringLiteral(styleText);
+  console.log('found', className);
+  const styleOutput = serialize(compile(`.${className}{${serialized.styles}}`), stringify); //?
+  serialized.name; //?
+  fileName; //?
+  serialized; //?
+  styles[fileName] = styles[fileName] || [];
+  styles[fileName].push(styleOutput);
+
+  const styleExpression = ts.factory.createStringLiteral(serialized.styles);
 
   // create an emotion-optimized object: https://github.com/emotion-js/emotion/blob/f3b268f7c52103979402da919c9c0dd3f9e0e189/packages/serialize/src/index.js#L315-L322
   // Looks like: `{name: $hash, styles: $styleText }`

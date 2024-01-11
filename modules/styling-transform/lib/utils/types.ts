@@ -11,5 +11,19 @@ export type NodeTransformer = (
   node: ts.Node,
   checker: ts.TypeChecker,
   prefix: string,
-  variables: Record<string, string>
+  variables: Record<string, string>,
+  styles: StylesOutput
 ) => ts.Node | void;
+
+/**
+ * Used to collect styles. The format will be:
+ *
+ * ```js
+ * {
+ *   '/absolute/file/name': [
+ *     '.styles-1 { ... }'
+ *   ]
+ * }
+ * ```
+ */
+export type StylesOutput = Record<string, string[]>;

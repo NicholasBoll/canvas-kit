@@ -17,7 +17,8 @@ export const handleCreateStencil: NodeTransformer = (
   node,
   checker,
   prefix = 'css',
-  variables = {}
+  variables = {},
+  styles = {}
 ) => {
   /**
    * This will match whenever a `createStencil()` call expression is encountered. It will loop

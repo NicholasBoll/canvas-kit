@@ -18,5 +18,11 @@ export const Primary = () => (
       Primary
     </PrimaryButton>
     <PrimaryButton icon={relatedActionsVerticalIcon} />
+
+    <br />
+    <br />
+    <button type="button" className="cnvs-base-button cnvs-button---size-medium cnvs-primary">
+      <span className="css-1q3aben">Primary</span>
+    </button>
   </Flex>
 );

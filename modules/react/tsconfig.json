@@ -5,7 +5,7 @@
     "plugins": [
       {
         "transform": "../styling-transform/lib/styleTransform.ts",
-        "prefix": "css",
+        "prefix": "cnvs",
         "fallbackFiles": [
           "@workday/canvas-tokens-web/css/base/_variables.css",
           "@workday/canvas-tokens-web/css/brand/_variables.css",

@@ -10,17 +10,19 @@ import {handleCalc} from './utils/handleCalc';
 import {handlePx2Rem} from './utils/handlePx2Rem';
 import {handleFocusRing} from './utils/handleFocusRing';
 import {handleCssVar} from './utils/handleCssVar';
-import {NodeTransformer} from './utils/types';
+import {NodeTransformer, StylesOutput} from './utils/types';
 
 export type NestedStyleObject = {[key: string]: string | NestedStyleObject};
 
 export interface StyleTransformerOptions {
   prefix: string;
   variables: Record<string, string>;
+  styles: StylesOutput;
   fallbackFiles?: string[];
   transformers?: NodeTransformer[];
 }
 
+let styles: StylesOutput = {};
 let vars: Record<string, string> = {};
 let loadedFallbacks = false;
 
@@ -29,6 +31,7 @@ let loadedFallbacks = false;
  */
 export function _reset() {
   vars = {};
+  styles = {};
   loadedFallbacks = false;
 }
 
@@ -50,11 +53,13 @@ export default function styleTransformer(
   {
     prefix = 'css',
     variables = {},
+    styles = {},
     fallbackFiles = [],
     transformers = defaultTransformers,
   }: Partial<StyleTransformerOptions> = {
     prefix: 'css',
     variables: {},
+    styles: {},
     transformers: defaultTransformers,
   }
 ): ts.TransformerFactory<ts.SourceFile> {
@@ -84,7 +89,16 @@ export default function styleTransformer(
       // eslint-disable-next-line no-param-reassign
       node = ts.visitEachChild(node, visit, context);
 
-      return handleTransformers(node, checker, prefix, vars)(transformers);
+      if (ts.isSourceFile(node) && node.fileName !== 'test.ts' && styles[node.fileName]) {
+        console.log('sourceFile:', node.fileName);
+        ts.sys.writeFile(
+          node.fileName.replace('tsx', 'css'),
+          (styles[node.fileName] || []).join('\n')
+        );
+        program.getCurrentDirectory(); //?
+      }
+
+      return handleTransformers(node, checker, prefix, vars, styles)(transformers);
     };
 
     return node => ts.visitNode(node, visit);
@@ -97,7 +111,7 @@ export default function styleTransformer(
  */
 export function transform(
   program: ts.Program,
-  fileName: string,
+  fileName = 'test.ts',
   options?: Partial<StyleTransformerOptions>,
   transformers?: NodeTransformer[]
 ) {
@@ -114,13 +128,20 @@ export function transform(
 }
 
 const handleTransformers =
-  (node: ts.Node, checker: ts.TypeChecker, prefix: string, variables: Record<string, string>) =>
+  (
+    node: ts.Node,
+    checker: ts.TypeChecker,
+    prefix: string,
+    variables: Record<string, string>,
+    styles: StylesOutput
+  ) =>
   (
     transformers: ((
       node: ts.Node,
       checker: ts.TypeChecker,
       prefix: string,
-      variables: Record<string, string>
+      variables: Record<string, string>,
+      styles: StylesOutput
     ) => ts.Node | void)[]
   ) => {
     return (
@@ -128,7 +149,7 @@ const handleTransformers =
         if (result) {
           return result;
         }
-        return transformer(node, checker, prefix, variables);
+        return transformer(node, checker, prefix, variables, styles);
       }, undefined as ts.Node | void) || node
     );
   };

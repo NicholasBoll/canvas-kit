@@ -4,8 +4,10 @@ import {parseObjectToStaticValue, parseStyleObjFromType} from './parseObjectToSt
 import {createStyleObjectNode} from './createStyleObjectNode';
 import {NodeTransformer} from './types';
 import {isImportedFromStyling} from './isImportedFromStyling';
+import {getVarName} from './getVarName';
+import {slugify} from '@workday/canvas-kit-styling';
 
-export const handleCreateStyles: NodeTransformer = (node, checker, prefix, variables) => {
+export const handleCreateStyles: NodeTransformer = (node, checker, prefix, variables, styles) => {
   /**
    * Check if the node is a call expression that looks like:
    *
@@ -45,13 +47,18 @@ export const handleCreateStyles: NodeTransformer = (node, checker, prefix, varia
     isImportedFromStyling(node.expression, checker) &&
     node.arguments.length > 0
   ) {
+    const cssClassName = `${prefix}-${slugify(getVarName(node.expression))
+      .replace('-styles', '')
+      .replace('-modifiers', '--')
+      .replace('-true', '')}`; //?
     const newArguments = [...node.arguments].map(arg => {
+      const fileName = node.expression.getSourceFile()?.fileName || 'wtf.ts';
       // An `ObjectLiteralExpression` is an object like `{foo:'bar'}`:
       // https://ts-ast-viewer.com/#code/MYewdgzgLgBFCmBbADjAvDA3gKBjAZiCAFwwDkARgIYBOZ2AvkA
       if (ts.isObjectLiteralExpression(arg)) {
         const styleObj = parseObjectToStaticValue(arg, checker, prefix, variables);
 
-        return createStyleObjectNode(styleObj);
+        return createStyleObjectNode(styleObj, cssClassName, fileName, styles);
       }
       // An Identifier is a variable. It could come from anywhere - imports, earlier
       // assignments, etc. The easiest thing to do is to ask the TypeScript type checker what
@@ -67,7 +74,7 @@ export const handleCreateStyles: NodeTransformer = (node, checker, prefix, varia
         // The type must be a object
         const styleObj = parseStyleObjFromType(type, checker, prefix, variables);
 
-        return createStyleObjectNode(styleObj);
+        return createStyleObjectNode(styleObj, cssClassName, fileName, styles);
       }
       return arg;
     });
