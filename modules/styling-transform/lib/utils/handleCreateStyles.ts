@@ -7,7 +7,8 @@ import {isImportedFromStyling} from './isImportedFromStyling';
 import {getVarName} from './getVarName';
 import {slugify} from '@workday/canvas-kit-styling';
 
-export const handleCreateStyles: NodeTransformer = (node, checker, prefix, variables, styles) => {
+export const handleCreateStyles: NodeTransformer = (node, context) => {
+  const {checker, prefix, styles} = context;
   /**
    * Check if the node is a call expression that looks like:
    *
@@ -56,7 +57,7 @@ export const handleCreateStyles: NodeTransformer = (node, checker, prefix, varia
       // An `ObjectLiteralExpression` is an object like `{foo:'bar'}`:
       // https://ts-ast-viewer.com/#code/MYewdgzgLgBFCmBbADjAvDA3gKBjAZiCAFwwDkARgIYBOZ2AvkA
       if (ts.isObjectLiteralExpression(arg)) {
-        const styleObj = parseObjectToStaticValue(arg, checker, prefix, variables);
+        const styleObj = parseObjectToStaticValue(arg, context);
 
         return createStyleObjectNode(styleObj, cssClassName, fileName, styles);
       }
@@ -72,7 +73,7 @@ export const handleCreateStyles: NodeTransformer = (node, checker, prefix, varia
         }
 
         // The type must be a object
-        const styleObj = parseStyleObjFromType(type, checker, prefix, variables);
+        const styleObj = parseStyleObjFromType(type, context);
 
         return createStyleObjectNode(styleObj, cssClassName, fileName, styles);
       }
