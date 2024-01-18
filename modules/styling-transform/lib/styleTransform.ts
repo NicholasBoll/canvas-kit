@@ -10,16 +10,12 @@ import {handleCalc} from './utils/handleCalc';
 import {handlePx2Rem} from './utils/handlePx2Rem';
 import {handleFocusRing} from './utils/handleFocusRing';
 import {handleCssVar} from './utils/handleCssVar';
-import {NodeTransformer, TransformerContext, StylesOutput} from './utils/types';
+import {NodeTransformer, TransformerContext} from './utils/types';
 import {handleKeyframes} from './utils/handleKeyframes';
 
 export type NestedStyleObject = {[key: string]: string | NestedStyleObject};
 
-export interface StyleTransformerOptions {
-  prefix: string;
-  variables: TransformerContext['variables'];
-  keyframes: TransformerContext['keyframes'];
-  styles: TransformerContext['styles'];
+export interface StyleTransformerOptions extends TransformerContext {
   fallbackFiles?: string[];
   transformers?: NodeTransformer[];
 }
@@ -55,19 +51,15 @@ const defaultTransformers = [
 
 export default function styleTransformer(
   program: ts.Program,
-  {
-    variables = {},
+  options?: Partial<StyleTransformerOptions>
+): ts.TransformerFactory<ts.SourceFile> {
+  const {
+    variables,
     fallbackFiles = [],
     transformers = defaultTransformers,
     ...transformContext
-  }: Partial<StyleTransformerOptions> = {
-    prefix: 'css',
-    variables: {},
-    styles: {},
-    keyframes: {},
-    transformers: defaultTransformers,
-  }
-): ts.TransformerFactory<ts.SourceFile> {
+  } = withDefaultContext(program.getTypeChecker(), options);
+
   if (!loadedFallbacks) {
     const files = fallbackFiles
       .filter(file => file) // don't process empty files
@@ -88,33 +80,39 @@ export default function styleTransformer(
     loadedFallbacks = true;
   }
 
-  const checker = program.getTypeChecker();
   return context => {
     const visit: ts.Visitor = node => {
       // eslint-disable-next-line no-param-reassign
       node = ts.visitEachChild(node, visit, context);
 
-      if (ts.isSourceFile(node) && node.fileName !== 'test.ts' && styles[node.fileName]) {
+      if (
+        ts.isSourceFile(node) &&
+        node.fileName !== 'test.ts' &&
+        transformContext.styles[node.fileName]
+      ) {
         console.log('sourceFile:', node.fileName);
         ts.sys.writeFile(
           node.fileName.replace('tsx', 'css'),
-          (styles[node.fileName] || []).join('\n')
+          (transformContext.styles[node.fileName] || []).join('\n')
         );
         program.getCurrentDirectory(); //?
       }
 
       return handleTransformers(node, {
-        checker,
-        prefix: 'css',
         variables: vars,
-        styles,
-        keyframes,
         ...transformContext,
       })(transformers);
     };
 
     return node => ts.visitNode(node, visit);
   };
+}
+
+export function withDefaultContext<T extends TransformerContext>(
+  checker: ts.TypeChecker,
+  input: Partial<T> = {}
+): T {
+  return {prefix: 'css', variables: {}, styles, keyframes, checker, ...input} as T;
 }
 
 /**
@@ -124,8 +122,7 @@ export default function styleTransformer(
 export function transform(
   program: ts.Program,
   fileName = 'test.ts',
-  options?: Partial<StyleTransformerOptions>,
-  transformers?: NodeTransformer[]
+  options?: Partial<StyleTransformerOptions>
 ) {
   const source =
     program.getSourceFile(fileName) || ts.createSourceFile(fileName, '', ts.ScriptTarget.ES2019);

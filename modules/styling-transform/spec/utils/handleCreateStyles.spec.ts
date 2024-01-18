@@ -1,5 +1,8 @@
-import {transform, _reset} from '../../lib/styleTransform';
+import ts from 'typescript';
+import {transform, withDefaultContext, _reset} from '../../lib/styleTransform';
+import {handleCreateStyles} from '../../lib/utils/handleCreateStyles';
 import {createProgramFromSource} from '../createProgramFromSource';
+import {findNodes} from '../findNodes';
 
 describe('createStyles', () => {
   beforeEach(() => {
@@ -630,8 +633,7 @@ describe('createStyles', () => {
     expect(() => transform(program, 'test.ts')).toThrow(/File: test.ts:6:19/);
   });
 
-  it.only('should collect styles into a styles object', () => {
-    global.document = undefined;
+  it('should collect styles into a styles object', () => {
     const program = createProgramFromSource(`
       import {createStyles} from '@workday/canvas-kit-styling';
 
@@ -644,11 +646,13 @@ describe('createStyles', () => {
     `);
 
     const styles = {};
-    const result = transform(program, 'test.ts', {styles: styles});
-    global.document; //?
-    global.document === document; //?
-    document; //?
+    const sourceFile = program.getSourceFile('test.ts');
+    const node = findNodes(sourceFile, 'createStyles', ts.isCallExpression)[0]; //?
 
-    styles; //?
+    handleCreateStyles(node, withDefaultContext(program.getTypeChecker(), {styles})); //?
+
+    expect(styles['test.ts']).toContainEqual(
+      '.css-my-component{background-color:red;}.css-my-component:hover{background:blue;}'
+    );
   });
 });

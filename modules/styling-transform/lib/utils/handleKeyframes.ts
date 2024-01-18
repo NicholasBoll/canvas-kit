@@ -1,14 +1,14 @@
 import ts from 'typescript';
 
-import {NodeTransformer} from './types';
+import {NodeTransformer, TransformerContext} from './types';
 import {parseNodeToStaticValue} from './parseNodeToStaticValue';
 import {getVarName} from './getVarName';
-import {createStyleObjectNode, getStaticCssClassName} from './createStyleObjectNode';
+import {compileCSS, createStyleObjectNode, serializeStyles} from './createStyleObjectNode';
 import {isImportedFromStyling} from './isImportedFromStyling';
-import {parseObjectToStaticValue} from './parseObjectToStaticValue';
+import {NestedStyleObject, parseObjectToStaticValue} from './parseObjectToStaticValue';
 
 export const handleKeyframes: NodeTransformer = (node, context) => {
-  const {checker, keyframes} = context;
+  const {checker} = context;
   // keyframes`css`
   if (
     ts.isTaggedTemplateExpression(node) &&
@@ -16,19 +16,12 @@ export const handleKeyframes: NodeTransformer = (node, context) => {
     node.tag.text === 'keyframes' &&
     isImportedFromStyling(node.tag, checker)
   ) {
+    const fileName = node.getSourceFile()?.fileName || 'wtf.ts';
     // parseNodeToStaticValue can parse templates. Pass it through there to get a single static string
-    const styleObjNode = createStyleObjectNode(
-      parseNodeToStaticValue(node.template, context),
-      '{hash}'
-    );
-
+    const styleObj = parseNodeToStaticValue(node.template, context);
     const identifierName = getVarName(node);
-    const name = getStaticCssClassName(styleObjNode);
-    keyframes[identifierName] = `animation-${name}`;
 
-    return ts.factory.createCallExpression(ts.factory.createIdentifier('keyframes'), undefined, [
-      styleObjNode,
-    ]);
+    return createStyleReplacementNode(styleObj, identifierName, fileName, context);
   }
 
   // keyframes({})
@@ -39,19 +32,32 @@ export const handleKeyframes: NodeTransformer = (node, context) => {
     isImportedFromStyling(node.expression, checker)
   ) {
     if (ts.isObjectLiteralExpression(node.arguments[0])) {
+      const fileName = node.expression.getSourceFile()?.fileName || 'wtf.ts';
       const styleObj = parseObjectToStaticValue(node.arguments[0], context);
-
-      const styleObjNode = createStyleObjectNode(styleObj, '{hash}');
-
       const identifierName = getVarName(node);
-      const name = getStaticCssClassName(styleObjNode);
-      keyframes[identifierName] = `animation-${name}`;
 
-      return ts.factory.createCallExpression(ts.factory.createIdentifier('keyframes'), undefined, [
-        styleObjNode,
-      ]);
+      return createStyleReplacementNode(styleObj, identifierName, fileName, context);
     }
   }
 
   return;
 };
+
+function createStyleReplacementNode(
+  styleObj: NestedStyleObject | string,
+  identifierName: string,
+  fileName: string,
+  {styles, keyframes}: TransformerContext
+) {
+  const serialized = serializeStyles(styleObj);
+  const animationName = `animation-${serialized.name}`;
+  const styleOutput = compileCSS(`@keyframes ${animationName}{${serialized.styles}}`);
+  styles[fileName] = styles[fileName] || [];
+  styles[fileName].push(styleOutput);
+
+  keyframes[identifierName] = animationName;
+
+  return ts.factory.createCallExpression(ts.factory.createIdentifier('keyframes'), undefined, [
+    createStyleObjectNode(serialized.styles, serialized.name),
+  ]);
+}
