@@ -5,7 +5,7 @@ import {slugify} from '@workday/canvas-kit-styling';
 import {getVarName} from './getVarName';
 import {makeEmotionSafe} from './makeEmotionSafe';
 import {NestedStyleObject, parseObjectToStaticValue} from './parseObjectToStaticValue';
-import {createStyleObjectNode} from './createStyleObjectNode';
+import {compileCSS, createStyleObjectNode, serializeStyles} from './createStyleObjectNode';
 import {parseNodeToStaticValue} from './parseNodeToStaticValue';
 import {NodeTransformer, TransformerContext} from './types';
 import {isImportedFromStyling} from './isImportedFromStyling';
@@ -62,6 +62,8 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
         );
       }) as ts.PropertyAssignment | undefined;
 
+      const fileName = node.getSourceFile().fileName;
+
       function extractVariables(node: ts.Node): any {
         if (ts.isPropertyAssignment(node) && ts.isIdentifier(node.name)) {
           if (ts.isObjectLiteralExpression(node.initializer)) {
@@ -95,10 +97,15 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
             if (styleObj) {
               // The `as any` are necessary because the properties are readonly, even though they
               // can be changed in transformers.
-              const initializer = createStyleObjectNode({
-                ...stencilVariables,
-                ...styleObj,
-              });
+              const initializer = createStyleReplacementNode(
+                {
+                  ...stencilVariables,
+                  ...styleObj,
+                },
+                getClassName(property),
+                fileName,
+                context
+              );
 
               // We cast as any because TypeScript says these are readonly, but we're in a transform
               (initializer as any).parent = property;
@@ -128,7 +135,12 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
                   if (styleObj && modifier.name) {
                     // The `as any` are necessary because the properties are readonly, even though they
                     // can be changed in transformers.
-                    const initializer = createStyleObjectNode(styleObj);
+                    const initializer = createStyleReplacementNode(
+                      styleObj,
+                      getClassName(modifier),
+                      fileName,
+                      context
+                    );
 
                     // // We cast as any because TypeScript says these are readonly, but we're in a transform
                     (initializer as any).parent = modifier;
@@ -150,19 +162,58 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
           ) {
             property.initializer.elements.forEach(element => {
               if (ts.isObjectLiteralExpression(element)) {
+                const selectors: string[] = [];
+                let styleObj: NestedStyleObject | undefined;
+                let serialized: ReturnType<typeof serializeStyles>;
                 element.properties.forEach((compoundProperty, index, compoundProperties) => {
+                  /**
+                   * If the property is `modifiers`, we want to extract selectors from it. For
+                   * example,
+                   *
+                   * ```ts
+                   * const button = createStencil({
+                   *   // other config
+                   *   compound: {
+                   *     modifiers: { size: 'large', inverse: true },
+                   *     styles: {}
+                   *   }
+                   * })
+                   * ```
+                   *
+                   * After this, `selectors` should contain ['.button--size-large',
+                   * '.button--inverse']
+                   */
+                  if (
+                    compoundProperty.name &&
+                    ts.isIdentifier(compoundProperty.name) &&
+                    compoundProperty.name.text === 'modifiers' &&
+                    ts.isPropertyAssignment(compoundProperty) &&
+                    ts.isObjectLiteralExpression(compoundProperty.initializer)
+                  ) {
+                    compoundProperty.initializer.properties.forEach(modifier => {
+                      if (ts.isPropertyAssignment(modifier)) {
+                        let className = `.${getClassName(modifier.initializer)}`;
+                        if (ts.isStringLiteral(modifier.initializer)) {
+                          className += `-${modifier.initializer.text}`;
+                        }
+                        selectors.push(className);
+                      }
+                    });
+                  }
+
                   // styles key
                   if (
                     compoundProperty.name &&
                     ts.isIdentifier(compoundProperty.name) &&
                     compoundProperty.name.text === 'styles'
                   ) {
-                    const styleObj = parseStyleBlock(compoundProperty, context);
+                    styleObj = parseStyleBlock(compoundProperty, context);
 
                     if (styleObj) {
+                      serialized = serializeStyles(styleObj);
                       // The `as any` are necessary because the properties are readonly, even though they
                       // can be changed in transformers.
-                      const initializer = createStyleObjectNode(styleObj);
+                      const initializer = createStyleObjectNode(serialized.styles, serialized.name);
 
                       // We cast as any because TypeScript says these are readonly, but we're in a transform
                       (initializer as any).parent = compoundProperty;
@@ -171,6 +222,21 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
                         initializer
                       );
                     }
+                  }
+
+                  // We need to inject compound style selectors into a file. We'll compound the
+                  // selectors with multiple class names. This will increase specificity of compound
+                  // selectors. This will be harder to override and we don't increase specificity in
+                  // the runtime implementation, but runtime creates an extra CSS class name that
+                  // isn't known to anyone. It seems unreasonable to expect CSS users to remember to
+                  // add compound modifier class names. We'll make it so it is easier to author
+                  // components in CSS and let them sort the specificity issues.
+                  if (serialized) {
+                    const {styles} = context;
+
+                    const styleOutput = compileCSS(`${selectors.join('')}{${serialized.styles}}`);
+                    styles[fileName] = styles[fileName] || [];
+                    styles[fileName].push(styleOutput);
                   }
                 });
               }
@@ -252,4 +318,27 @@ function getReturnStatement(node: ts.FunctionLikeDeclaration): ts.Node | undefin
 
 function isFunctionLikeDeclaration(node: ts.Node): node is ts.FunctionLikeDeclaration {
   return (node as Object).hasOwnProperty('body');
+}
+
+function createStyleReplacementNode(
+  styleObj: NestedStyleObject,
+  className: string,
+  fileName: string,
+  {styles}: TransformerContext
+) {
+  const serialized = serializeStyles(styleObj);
+  const styleOutput = compileCSS(`.${className}{${serialized.styles}}`);
+  styles[fileName] = styles[fileName] || [];
+  styles[fileName].push(styleOutput);
+
+  return createStyleObjectNode(serialized.styles, serialized.name);
+}
+
+function getClassName(node: ts.Node): string {
+  return slugify(getVarName(node))
+    .replace('-stencil', '')
+    .replace('-base', '')
+    .replace('-modifiers', '-')
+    .replace('-true', '')
+    .replace('-compound', '');
 }

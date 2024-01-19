@@ -4,7 +4,7 @@ import {findNodes} from '../findNodes';
 import {createProgramFromSource} from '../createProgramFromSource';
 
 import {handleCreateStencil} from '../../lib/utils/handleCreateStencil';
-import {transform} from '../../lib/styleTransform';
+import {transform, withDefaultContext} from '../../lib/styleTransform';
 
 describe('handleCreateStencil', () => {
   it('should add a variable to the cache when the arguments are strings', () => {
@@ -12,11 +12,11 @@ describe('handleCreateStencil', () => {
       import {createStencil} from '@workday/canvas-kit-styling';
 
       const buttonStencil = createStencil({
-        base: {}
+        base: {
+          fontSize: '12px'
+        }
       })
     `);
-
-    const sourceFile = program.getSourceFile('test.ts');
 
     const result = transform(program, 'test.ts');
 
@@ -39,12 +39,12 @@ describe('handleCreateStencil', () => {
 
     const node = findNodes(sourceFile, 'createStencil', ts.isCallExpression)[0];
 
-    handleCreateStencil(node, {
-      checker: program.getTypeChecker(),
-      prefix: 'css',
-      variables,
-      keyframes: {},
-    });
+    handleCreateStencil(
+      node,
+      withDefaultContext(program.getTypeChecker(), {
+        variables,
+      })
+    );
 
     expect(variables).toHaveProperty('button-color', '--css-button-color');
   });
@@ -203,5 +203,58 @@ describe('handleCreateStencil', () => {
     const result = transform(program, 'test.ts');
 
     expect(result).toMatch(/styles: { name: "[0-9a-z]+", styles: "padding:20px;" }/);
+  });
+
+  it('should add to extracted styles', () => {
+    const program = createProgramFromSource(`
+      import {createStencil} from '@workday/canvas-kit-styling';
+
+      const buttonStencil = createStencil({
+        vars: {
+          color: 'red'
+        },
+        base({color}) {
+          return {
+            color: color
+          }
+        },
+        modifiers: {
+          size: {
+            large: {padding: 30},
+            small: {padding: 10}
+          },
+          inverse: {
+            true: {
+              color: 'while'
+            }
+          }
+        },
+        compound: [
+          {
+            modifiers: { size: 'large', inverse: true},
+            styles: { padding: 40 }
+          }
+        ]
+      })
+    `);
+
+    const styles = {};
+    const sourceFile = program.getSourceFile('test.ts');
+    const node = findNodes(sourceFile, 'createStencil', ts.isCallExpression)[0];
+
+    handleCreateStencil(node, withDefaultContext(program.getTypeChecker(), {styles}));
+
+    // base
+    expect(styles['test.ts']).toContainEqual(
+      '.button{--css-button-color:red;color:var(--css-button-color);}'
+    );
+
+    // modifiers
+    expect(styles['test.ts']).toContainEqual('.button--size-large{padding:30px;}');
+    expect(styles['test.ts']).toContainEqual('.button--size-small{padding:10px;}');
+    expect(styles['test.ts']).toContainEqual('.button--inverse{color:while;}');
+
+    // compound
+    expect(styles['test.ts']).toContainEqual('.button--size-large.button--inverse{padding:40px;}');
   });
 });
