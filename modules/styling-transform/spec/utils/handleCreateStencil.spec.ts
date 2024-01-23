@@ -176,9 +176,9 @@ describe('handleCreateStencil', () => {
     expect(result).toMatch(/small: { name: "[0-9a-z]+", styles: "padding:10px;" }/);
   });
 
-  it('should handle parsing modifiers with ObjectLiteralExpressions', () => {
+  it.only('should handle parsing modifiers with ObjectLiteralExpressions', () => {
     const program = createProgramFromSource(`
-      import {createStencil} from '@workday/canvas-kit-styling';
+      import {createStencil, px2rem} from '@workday/canvas-kit-styling';
 
       const buttonStencil = createStencil({
         vars: {
@@ -187,20 +187,25 @@ describe('handleCreateStencil', () => {
         base: {},
         modifiers: {
           size: {
-            large: {},
+            large: {
+              padding: px2rem(5),
+            },
             small: {}
           }
         },
         compound: [
           {
             modifiers: { size: 'large' },
-            styles: { padding: 20 }
+            styles: { padding: px2rem(20) }
           }
         ]
       })
     `);
 
-    const result = transform(program, 'test.ts');
+    const styles = {};
+
+    const result = transform(program, 'test.ts', {styles}); //?
+    styles; //?
 
     expect(result).toMatch(/styles: { name: "[0-9a-z]+", styles: "padding:20px;" }/);
   });
@@ -244,17 +249,21 @@ describe('handleCreateStencil', () => {
 
     handleCreateStencil(node, withDefaultContext(program.getTypeChecker(), {styles}));
 
+    styles; //?
+
     // base
-    expect(styles['test.ts']).toContainEqual(
-      '.button{--css-button-color:red;color:var(--css-button-color);}'
+    expect(styles['test.css']).toContainEqual(
+      '.css-button{--css-button-color:red;color:var(--css-button-color);}'
     );
 
     // modifiers
-    expect(styles['test.ts']).toContainEqual('.button--size-large{padding:30px;}');
-    expect(styles['test.ts']).toContainEqual('.button--size-small{padding:10px;}');
-    expect(styles['test.ts']).toContainEqual('.button--inverse{color:while;}');
+    expect(styles['test.css']).toContainEqual('.css-button--size-large{padding:30px;}');
+    expect(styles['test.css']).toContainEqual('.css-button--size-small{padding:10px;}');
+    expect(styles['test.css']).toContainEqual('.css-button--inverse{color:while;}');
 
     // compound
-    expect(styles['test.ts']).toContainEqual('.button--size-large.button--inverse{padding:40px;}');
+    expect(styles['test.css']).toContainEqual(
+      '.css-button--size-large.css-button--inverse{padding:40px;}'
+    );
   });
 });

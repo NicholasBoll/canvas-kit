@@ -2,13 +2,9 @@ import * as React from 'react';
 import {CountBadge} from '@workday/canvas-kit-react/badge';
 import {SecondaryButton, TertiaryButton} from '@workday/canvas-kit-react/button';
 import {accessibleHide} from '@workday/canvas-kit-react/common';
-import {createStyles, cssVar} from '@workday/canvas-kit-styling';
+import {createStyles, cssVar, calc} from '@workday/canvas-kit-styling';
 import {notificationsIcon} from '@workday/canvas-system-icons-web';
 import {base, system} from '@workday/canvas-tokens-web';
-
-function negate(value: string, fallback?: string) {
-  return `calc(${cssVar(value, fallback)} * -1)`;
-}
 
 const container = createStyles({
   display: 'flex',
@@ -29,8 +25,8 @@ const notificationContainerStyles = createStyles({
 
 const countBadgeStyles = createStyles({
   position: 'absolute',
-  top: negate(system.space.x4),
-  insetInlineEnd: negate(system.space.x1),
+  top: calc.negate(system.space.x4),
+  insetInlineEnd: calc.negate(system.space.x1),
 });
 
 const accessibleHideStyles = createStyles(accessibleHide);

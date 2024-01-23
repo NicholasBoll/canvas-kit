@@ -14,7 +14,7 @@ import {isImportedFromStyling} from './isImportedFromStyling';
  * Handle all arguments of the CallExpression `createStencil()`
  */
 export const handleCreateStencil: NodeTransformer = (node, context) => {
-  const {checker, prefix, variables} = context;
+  const {checker, prefix, variables, getFileName} = context;
   /**
    * This will match whenever a `createStencil()` call expression is encountered. It will loop
    * over all the config to extract variables and styles.
@@ -26,6 +26,8 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
     node.expression.text === 'createStencil' &&
     isImportedFromStyling(node.expression, checker)
   ) {
+    node.expression.getSourceFile()?.fileName; //?
+    const fileName = getFileName(node.expression.getSourceFile()?.fileName); //?
     const config = node.arguments[0];
 
     /**
@@ -49,7 +51,7 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
     const stencilVariables: Record<string, string> = {};
 
     // Stencil name is the variable name
-    const stencilName = slugify(getVarName(node)).replace('-stencil', '');
+    const stencilName = slugify(getVarName(node.expression)).replace('-stencil', ''); //?
 
     if (ts.isObjectLiteralExpression(config)) {
       // get variables first
@@ -61,8 +63,6 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
           ts.isPropertyAssignment(property)
         );
       }) as ts.PropertyAssignment | undefined;
-
-      const fileName = node.getSourceFile().fileName;
 
       function extractVariables(node: ts.Node): any {
         if (ts.isPropertyAssignment(node) && ts.isIdentifier(node.name)) {
@@ -102,7 +102,7 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
                   ...stencilVariables,
                   ...styleObj,
                 },
-                getClassName(property),
+                getClassName(property.name, context),
                 fileName,
                 context
               );
@@ -137,7 +137,7 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
                     // can be changed in transformers.
                     const initializer = createStyleReplacementNode(
                       styleObj,
-                      getClassName(modifier),
+                      getClassName(modifier.name, context),
                       fileName,
                       context
                     );
@@ -192,7 +192,7 @@ export const handleCreateStencil: NodeTransformer = (node, context) => {
                   ) {
                     compoundProperty.initializer.properties.forEach(modifier => {
                       if (ts.isPropertyAssignment(modifier)) {
-                        let className = `.${getClassName(modifier.initializer)}`;
+                        let className = `.${getClassName(modifier.initializer, context)}`;
                         if (ts.isStringLiteral(modifier.initializer)) {
                           className += `-${modifier.initializer.text}`;
                         }
@@ -334,11 +334,14 @@ function createStyleReplacementNode(
   return createStyleObjectNode(serialized.styles, serialized.name);
 }
 
-function getClassName(node: ts.Node): string {
-  return slugify(getVarName(node))
-    .replace('-stencil', '')
-    .replace('-base', '')
-    .replace('-modifiers', '-')
-    .replace('-true', '')
-    .replace('-compound', '');
+function getClassName(node: ts.Node, {prefix}: TransformerContext): string {
+  return (
+    `${prefix}-` +
+    slugify(getVarName(node))
+      .replace('-stencil', '')
+      .replace('-base', '')
+      .replace('-modifiers', '-')
+      .replace('-true', '')
+      .replace('-compound', '')
+  );
 }

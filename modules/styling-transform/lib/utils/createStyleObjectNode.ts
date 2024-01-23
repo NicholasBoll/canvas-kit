@@ -1,10 +1,11 @@
 import ts from 'typescript';
 import {serializeStyles as serializedStylesEmotion} from '@emotion/serialize';
-import {serialize, compile, stringify} from 'stylis';
+import {serialize, compile, middleware} from 'stylis';
 
 import {generateUniqueId} from '@workday/canvas-kit-styling';
 
 import {NestedStyleObject} from './parseObjectToStaticValue';
+import {prettyStringify} from './stylisFns';
 
 /**
  * Creates an AST node representation of the passed in `styleObj`, but in the format of `{name:
@@ -54,7 +55,7 @@ export function createStyleObjectNode(styles: string, name?: string) {
  * this the same way Emotion does it internally.
  */
 export function compileCSS(input: string): string {
-  return serialize(compile(input), stringify);
+  return serialize(compile(input), prettyStringify);
 }
 
 export function serializeStyles(input: NestedStyleObject | string) {

@@ -109,7 +109,8 @@ export function parseNodeToStaticValue(node: ts.Node, context: TransformerContex
 
   throw new Error(
     `Unknown type at: "${node.getText()}". Received "${typeValue}"\n${getErrorMessage(
-      node
+      node,
+      context
     )}\nFor static analysis of styles, please make sure all types resolve to string or numeric literals. Please use 'const' instead of 'let'. If using an object, cast using "as const" or use an interface with string or numeric literals.`
   );
 }

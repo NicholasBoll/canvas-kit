@@ -10,7 +10,7 @@ import {handleCalc} from './utils/handleCalc';
 import {handlePx2Rem} from './utils/handlePx2Rem';
 import {handleFocusRing} from './utils/handleFocusRing';
 import {handleCssVar} from './utils/handleCssVar';
-import {NodeTransformer, TransformerContext} from './utils/types';
+import {Config, NodeTransformer, TransformerContext} from './utils/types';
 import {handleKeyframes} from './utils/handleKeyframes';
 
 export type NestedStyleObject = {[key: string]: string | NestedStyleObject};
@@ -24,6 +24,8 @@ let vars: TransformerContext['variables'] = {};
 let keyframes: TransformerContext['keyframes'] = {};
 let styles: TransformerContext['styles'] = {};
 let loadedFallbacks = false;
+let configLoaded = false;
+let config: Config = {};
 
 /**
  * The reset is used in tests and should not be called normally.
@@ -53,12 +55,25 @@ export default function styleTransformer(
   program: ts.Program,
   options?: Partial<StyleTransformerOptions>
 ): ts.TransformerFactory<ts.SourceFile> {
+  if (!configLoaded) {
+    const configPath = getConfig(program.getCurrentDirectory());
+
+    if (configPath) {
+      console.log('Config file found:', configPath);
+      config = require(configPath).default;
+    }
+
+    configLoaded = true;
+  }
+
   const {
     variables,
     fallbackFiles = [],
     transformers = defaultTransformers,
     ...transformContext
-  } = withDefaultContext(program.getTypeChecker(), options);
+  } = withDefaultContext(program.getTypeChecker(), {...config, ...options});
+
+  const transform = handleTransformers(transformers);
 
   if (!loadedFallbacks) {
     const files = fallbackFiles
@@ -82,26 +97,46 @@ export default function styleTransformer(
 
   return context => {
     const visit: ts.Visitor = node => {
+      if (!transformContext.fileName) {
+        transformContext.fileName = node.getSourceFile()?.fileName;
+      }
       // eslint-disable-next-line no-param-reassign
       node = ts.visitEachChild(node, visit, context);
 
       if (
         ts.isSourceFile(node) &&
         node.fileName !== 'test.ts' &&
-        transformContext.styles[node.fileName]
+        transformContext.styles[transformContext.getFileName(node.fileName)]
       ) {
-        console.log('sourceFile:', node.fileName);
-        ts.sys.writeFile(
-          node.fileName.replace('tsx', 'css'),
-          (transformContext.styles[node.fileName] || []).join('\n')
+        console.log(
+          'sourceFile:',
+          node.fileName,
+          '->',
+          transformContext.getFileName(node.fileName)
         );
-        program.getCurrentDirectory(); //?
+        ts.sys.writeFile(
+          transformContext.getFileName(transformContext.getFileName(node.fileName)),
+          (transformContext.styles[transformContext.getFileName(node.fileName)] || []).join('\n')
+        );
       }
 
-      return handleTransformers(node, {
+      const maybeNewNode = transform(node, {
         variables: vars,
         ...transformContext,
-      })(transformers);
+      });
+
+      !!maybeNewNode; //?
+      if (maybeNewNode) {
+        !!node.getSourceFile();
+        !!maybeNewNode.getSourceFile();
+        ts.setSourceMapRange(maybeNewNode, {
+          pos: node.pos,
+          end: node.end,
+        });
+        maybeNewNode.parent = node.parent;
+      }
+
+      return maybeNewNode;
     };
 
     return node => ts.visitNode(node, visit);
@@ -112,7 +147,15 @@ export function withDefaultContext<T extends TransformerContext>(
   checker: ts.TypeChecker,
   input: Partial<T> = {}
 ): T {
-  return {prefix: 'css', variables: {}, styles, keyframes, checker, ...input} as T;
+  return {
+    prefix: 'css',
+    variables: {},
+    styles,
+    keyframes,
+    checker,
+    getFileName: path => path.replace(/\.tsx?/, '.css'),
+    ...input,
+  } as T;
 }
 
 /**
@@ -137,8 +180,8 @@ export function transform(
 }
 
 const handleTransformers =
-  (node: ts.Node, context: TransformerContext) =>
-  (transformers: ((node: ts.Node, context: TransformerContext) => ts.Node | void)[]) => {
+  (transformers: ((node: ts.Node, context: TransformerContext) => ts.Node | void)[]) =>
+  (node: ts.Node, context: TransformerContext) => {
     return (
       transformers.reduce((result, transformer) => {
         if (result) {
@@ -148,3 +191,9 @@ const handleTransformers =
       }, undefined as ts.Node | void) || node
     );
   };
+
+export function getConfig(basePath = '.') {
+  const tsconfigPath = ts.findConfigFile(basePath, ts.sys.fileExists, 'styling.config.ts');
+
+  return tsconfigPath;
+}

@@ -8,7 +8,7 @@ import {isImportedFromStyling} from './isImportedFromStyling';
 import {NestedStyleObject, parseObjectToStaticValue} from './parseObjectToStaticValue';
 
 export const handleKeyframes: NodeTransformer = (node, context) => {
-  const {checker} = context;
+  const {checker, getFileName} = context;
   // keyframes`css`
   if (
     ts.isTaggedTemplateExpression(node) &&
@@ -16,7 +16,7 @@ export const handleKeyframes: NodeTransformer = (node, context) => {
     node.tag.text === 'keyframes' &&
     isImportedFromStyling(node.tag, checker)
   ) {
-    const fileName = node.getSourceFile()?.fileName || 'wtf.ts';
+    const fileName = getFileName(node.getSourceFile()?.fileName || context.fileName);
     // parseNodeToStaticValue can parse templates. Pass it through there to get a single static string
     const styleObj = parseNodeToStaticValue(node.template, context);
     const identifierName = getVarName(node);
@@ -32,7 +32,7 @@ export const handleKeyframes: NodeTransformer = (node, context) => {
     isImportedFromStyling(node.expression, checker)
   ) {
     if (ts.isObjectLiteralExpression(node.arguments[0])) {
-      const fileName = node.expression.getSourceFile()?.fileName || 'wtf.ts';
+      const fileName = getFileName(node.expression.getSourceFile()?.fileName || context.fileName);
       const styleObj = parseObjectToStaticValue(node.arguments[0], context);
       const identifierName = getVarName(node);
 

@@ -7,6 +7,12 @@ import {NodeTransformer} from './types';
  * Handle the CallExpression `px2rem` to do static conversion and remove the CallExpression.
  */
 export const handlePx2Rem: NodeTransformer = (node, context) => {
+  if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
+    !!node.parent; //?
+    node.pos; //?
+    node.getSourceFile()?.fileName; //?
+    node.expression.text; //?
+  }
   if (
     ts.isCallExpression(node) &&
     ts.isIdentifier(node.expression) &&
@@ -20,6 +26,7 @@ export const handlePx2Rem: NodeTransformer = (node, context) => {
     if (ts.isNumericLiteral(pxArgument)) {
       const px = parseFloat(pxArgument.text);
       return ts.factory.createStringLiteral(`${px / base}rem`);
+      return ts.factory.updateCallExpression();
     }
   }
 

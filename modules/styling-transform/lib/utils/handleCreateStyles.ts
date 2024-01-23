@@ -12,7 +12,7 @@ import {getVarName} from './getVarName';
 import {slugify} from '@workday/canvas-kit-styling';
 
 export const handleCreateStyles: NodeTransformer = (node, context) => {
-  const {checker, prefix} = context;
+  const {checker, prefix, getFileName} = context;
   /**
    * Check if the node is a call expression that looks like:
    *
@@ -54,11 +54,11 @@ export const handleCreateStyles: NodeTransformer = (node, context) => {
   ) {
     const cssClassName = `${prefix}-${slugify(getVarName(node.expression))
       .replace('-styles', '')
-      .replace('-modifiers', '--')
+      .replace('-modifiers', '-')
       .replace('-true', '')}`; //?
 
     const newArguments = [...node.arguments].map(arg => {
-      const fileName = node.expression.getSourceFile()?.fileName || 'wtf.ts';
+      const fileName = getFileName(node.expression.getSourceFile().fileName);
       // An `ObjectLiteralExpression` is an object like `{foo:'bar'}`:
       // https://ts-ast-viewer.com/#code/MYewdgzgLgBFCmBbADjAvDA3gKBjAZiCAFwwDkARgIYBOZ2AvkA
       if (ts.isObjectLiteralExpression(arg)) {
