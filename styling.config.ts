@@ -17,11 +17,3 @@ const config: Config = {
 };
 
 export default config;
-
-{
-  {
-    config.getFileName(
-      '/Users/nicholas.boll/projects/canvas-kit/modules/react/card/lib/CardHeading.tsx'
-    ); //?
-  }
-}

@@ -100,7 +100,7 @@ export function parseStyleObjFromType(type: ts.Type, context: TransformerContext
 
     if (propType.isStringLiteral()) {
       // This isn't a component variable, it is a static CSS variable
-      result[property.name] = propType.value;
+      result[property.name] = maybeWrapCSSVariables(propType.value, context.variables);
       return result;
     }
 
@@ -108,6 +108,7 @@ export function parseStyleObjFromType(type: ts.Type, context: TransformerContext
       result[property.name] = `${propType.value}px`;
       return result;
     }
+
     return {
       ...result,
       ...parsePropertyToStaticValue(declaration, context),

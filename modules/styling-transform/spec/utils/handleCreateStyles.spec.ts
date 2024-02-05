@@ -50,16 +50,16 @@ describe('createStyles', () => {
     expect(result).toContain('createStyles(styles)');
   });
 
-  it('should parse simple objects with string values', () => {
+  it.only('should parse simple objects with string values', () => {
     const program = createProgramFromSource(`
-      import {createStyles} from '@workday/canvas-kit-styling';
+      import {createStyles, px2rem} from '@workday/canvas-kit-styling';
 
       const styles = createStyles({
-        fontSize: '12px'
+        fontSize: px2rem(12)
       })
     `);
 
-    const result = transform(program, 'test.ts');
+    const result = transform(program, 'test.ts'); //?
 
     expect(result).toContain('font-size:12px;');
   });

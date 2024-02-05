@@ -139,15 +139,33 @@ module.exports = {
     ];
 
     if (process.env.STATIC_CSS) {
+      // config.module.rules.push({
+      //   test: /.+(react|labs|preview).+\.tsx$/, // only React files
+      //   include: [modulesPath],
+      //   exclude: [/examples/, /stories/],
+      //   loaders: [
+      //     {
+      //       loader: require.resolve('ts-loader'),
+      //       options: {
+      //         compiler: 'ttypescript',
+      //         compilerOptions: {
+      //           declaration: false,
+      //           declarationMap: false,
+      //         },
+      //       },
+      //     },
+      //   ],
+      //   enforce: 'pre',
+      // });
       config.module.rules.push({
         test: /.+(react|labs|preview).+\.tsx$/, // only React files
         include: [modulesPath],
-        exclude: [/examples/, /stories\./],
+        exclude: [/examples/, /stories/],
         loaders: [
           {
-            loader: require.resolve('ts-loader'),
+            loader: path.resolve(__dirname, 'whole-source-loader'),
             options: {
-              compiler: 'ttypescript',
+              program: 'ttypescript',
             },
           },
         ],

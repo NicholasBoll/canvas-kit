@@ -62,6 +62,23 @@ describe('parseObjectToStaticValue', () => {
     });
   });
 
+  it('should wrap SpreadAssignment in var() wrappers if necessary', () => {
+    const program = createProgramFromSource(`
+      const foo = {
+        color: '--var-color'
+      } as const
+
+      const bar = { ...foo }
+    `);
+
+    const sourceFile = program.getSourceFile('test.ts');
+    const node = findNodes(sourceFile, '', ts.isObjectLiteralExpression)[1];
+
+    expect(parseObjectToStaticValue(node, withDefaultContext(program.getTypeChecker()))).toEqual({
+      color: 'var(--var-color)',
+    });
+  });
+
   it('should return the nested value of a SpreadAssignment', () => {
     const program = createProgramFromSource(`
       const foo = {

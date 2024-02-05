@@ -266,4 +266,50 @@ describe('handleCreateStencil', () => {
       '.css-button--size-large.css-button--inverse{padding:40px;}'
     );
   });
+
+  it.only('should wip', () => {
+    const program = createProgramFromSource(`
+      import {createStencil} from '@workday/canvas-kit-styling';
+
+      const buttonStencil = createStencil({
+        vars: {
+          color: 'red'
+        },
+        base({color}) {
+          return {
+            color: color
+          }
+        },
+        modifiers: {
+          size: {
+            'title.large': {fontSize: '--title-large'},
+            'title.small': {fontSize: '--title-small'}
+          },
+        }
+      })
+    `);
+
+    const styles = {};
+    const sourceFile = program.getSourceFile('test.ts');
+    const node = findNodes(sourceFile, 'createStencil', ts.isCallExpression)[0];
+
+    handleCreateStencil(node, withDefaultContext(program.getTypeChecker(), {styles}));
+
+    styles; //?
+
+    // base
+    expect(styles['test.css']).toContainEqual(
+      '.css-button{--css-button-color:red;color:var(--css-button-color);}'
+    );
+
+    // modifiers
+    expect(styles['test.css']).toContainEqual('.css-button--size-large{padding:30px;}');
+    expect(styles['test.css']).toContainEqual('.css-button--size-small{padding:10px;}');
+    expect(styles['test.css']).toContainEqual('.css-button--inverse{color:while;}');
+
+    // compound
+    expect(styles['test.css']).toContainEqual(
+      '.css-button--size-large.css-button--inverse{padding:40px;}'
+    );
+  });
 });

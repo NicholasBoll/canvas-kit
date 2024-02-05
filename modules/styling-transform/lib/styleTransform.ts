@@ -100,8 +100,8 @@ export default function styleTransformer(
       if (!transformContext.fileName) {
         transformContext.fileName = node.getSourceFile()?.fileName;
       }
-      // eslint-disable-next-line no-param-reassign
-      node = ts.visitEachChild(node, visit, context);
+
+      const visitedNodes = ts.visitEachChild(node, visit, context);
 
       if (
         ts.isSourceFile(node) &&
@@ -120,23 +120,27 @@ export default function styleTransformer(
         );
       }
 
-      const maybeNewNode = transform(node, {
+      const maybeNewNode = transform(visitedNodes, {
         variables: vars,
         ...transformContext,
-      });
+      }); //?
 
-      !!maybeNewNode; //?
+      // if (maybeNewNode) {
+      //   ts.setSourceMapRange(maybeNewNode, {
+      //     pos: node.pos,
+      //     end: node.end,
+      //   });
+      //   !!maybeNewNode.parent; //?
+      //   maybeNewNode.parent = node.parent;
+      //   return maybeNewNode;
+      // }
+
       if (maybeNewNode) {
-        !!node.getSourceFile();
-        !!maybeNewNode.getSourceFile();
-        ts.setSourceMapRange(maybeNewNode, {
-          pos: node.pos,
-          end: node.end,
-        });
-        maybeNewNode.parent = node.parent;
+        return maybeNewNode;
       }
 
-      return maybeNewNode;
+      // return ts.visitEachChild(node, visit, context);
+      return visitedNodes;
     };
 
     return node => ts.visitNode(node, visit);
@@ -182,14 +186,12 @@ export function transform(
 const handleTransformers =
   (transformers: ((node: ts.Node, context: TransformerContext) => ts.Node | void)[]) =>
   (node: ts.Node, context: TransformerContext) => {
-    return (
-      transformers.reduce((result, transformer) => {
-        if (result) {
-          return result;
-        }
-        return transformer(node, context);
-      }, undefined as ts.Node | void) || node
-    );
+    return transformers.reduce((result, transformer) => {
+      if (result) {
+        return result;
+      }
+      return transformer(node, context);
+    }, undefined as ts.Node | void);
   };
 
 export function getConfig(basePath = '.') {

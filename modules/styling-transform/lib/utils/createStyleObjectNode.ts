@@ -1,6 +1,6 @@
 import ts from 'typescript';
 import {serializeStyles as serializedStylesEmotion} from '@emotion/serialize';
-import {serialize, compile, middleware} from 'stylis';
+import {serialize, compile} from 'stylis';
 
 import {generateUniqueId} from '@workday/canvas-kit-styling';
 
@@ -18,17 +18,6 @@ import {prettyStringify} from './stylisFns';
  * 'animation-abc123'
  */
 export function createStyleObjectNode(styles: string, name?: string) {
-  // const serialized = serializeStyles([styleObj]);
-  // console.log('found', className);
-  // const styleOutput = serialize(compile(`.${className}{${serialized.styles}}`), stringify); //?
-  // serialized.name; //?
-  // fileName; //?
-  // serialized; //?
-  // styles[fileName] = styles[fileName] || [];
-  // styles[fileName].push(styleOutput);
-  // TODO: Move this out to another function. Extract the static CSS from this object instead
-  // OR separate creating serialized styles and creating the AST
-
   const styleExpression = ts.factory.createStringLiteral(styles);
 
   // create an emotion-optimized object: https://github.com/emotion-js/emotion/blob/f3b268f7c52103979402da919c9c0dd3f9e0e189/packages/serialize/src/index.js#L315-L322

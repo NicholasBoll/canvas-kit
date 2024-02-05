@@ -47,7 +47,7 @@ export const prettyStringify: Middleware = (element, index, children, callback) 
       }
   }
 
-  const childStr = serialize(element.children as Element[], callback); //?
+  const childStr = serialize(element.children as Element[], callback);
   if (childStr) {
     element.return = `${element.value} {\n${childStr}\n}\n\n`;
     return element.return;
