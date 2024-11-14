@@ -50,7 +50,6 @@ export const useTabsModel = createModelHook({
   requiredConfig: useOverflowListModel.requiredConfig,
   contextOverride: useOverflowListModel.Context,
 })(config => {
-  const initialSelectedRef = React.useRef(config.initialTab);
   const getId = config.getId || defaultGetId;
   const modality = useModalityType();
 
@@ -58,12 +57,6 @@ export const useTabsModel = createModelHook({
     useOverflowListModel.mergeConfig(config, {
       shouldCalculateOverflow: modality !== 'touch',
       orientation: config.orientation || 'horizontal',
-      onRegisterItem(data) {
-        if (!initialSelectedRef.current) {
-          initialSelectedRef.current = getId(data.item);
-          events.select({id: initialSelectedRef.current});
-        }
-      },
       initialSelectedIds: config.initialTab
         ? [config.initialTab]
         : config.items?.length
@@ -75,8 +68,20 @@ export const useTabsModel = createModelHook({
 
   const panels = useListModel();
 
+  // Make there's always a selected tab, falling back to the first tab
+  const selectedIds = model.state.selectedIds.length
+    ? model.state.selectedIds
+    : model.state.items.length
+    ? [model.state.items[0].id]
+    : [];
+
+  // make sure there's always a cursor, falling back to the first tab
+  const cursorId = model.state.cursorId || selectedIds[0] || '';
+
   const state = {
     ...model.state,
+    selectedIds,
+    cursorId,
     getId,
     orientation: config.orientation || 'horizontal',
     /**
