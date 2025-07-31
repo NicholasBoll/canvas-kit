@@ -26,10 +26,11 @@ function wrapStyleObj(styleObj: NestedStyleObject, context: TransformerContext):
   for (const key in styleObj) {
     if (styleObj.hasOwnProperty(key)) {
       const value = styleObj[key];
-      if (typeof value === 'object') {
+      if (Array.isArray(value)) {
+        styleObj[key] = value.map(item => maybeWrapCSSVariables(item, context.names));
+      } else if (typeof value === 'object') {
         styleObj[key] = wrapStyleObj(value, context);
-      }
-      if (typeof value === 'string') {
+      } else if (typeof value === 'string') {
         styleObj[key] = maybeWrapCSSVariables(value, context.names);
       }
     }
@@ -76,7 +77,7 @@ function parsePropertyToStaticValue(node: ts.Node, context: TransformerContext):
     const key = ts.isIdentifier(node.name)
       ? node.name.text
       : parseNodeToStaticValue(node.name, context);
-    if (key) {
+    if (key && !Array.isArray(key)) {
       if (ts.isObjectLiteralExpression(node.initializer)) {
         // nested
         styleObj[key] = parseObjectToStaticValue(node.initializer, context);

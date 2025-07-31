@@ -22,7 +22,7 @@ export const handleCalc = createPropertyTransform((node, context) => {
       return calc[method](toStaticValue(args[0]).toString(), toStaticValue(args[1]).toString());
     }
     if (method === 'multiply' || method === 'divide') {
-      return calc[method](toStaticValue(args[0]).toString(), toStaticValue(args[1]));
+      return calc[method](toStaticValue(args[0]).toString(), toStaticValue(args[1]).toString());
     }
     if (method === 'negate') {
       return calc.negate(toStaticValue(args[0]).toString());

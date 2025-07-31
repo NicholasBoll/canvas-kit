@@ -27,7 +27,7 @@ interface PluginConfig {
 }
 
 export class StylingWebpackPlugin {
-  private compilerOptions: ts.CompilerOptions;
+  public compilerOptions: ts.CompilerOptions;
   public builderProgram!: ts.BuilderProgram;
   public transformers!: ts.TransformerFactory<ts.SourceFile>[];
   public postTransform?: (code: string, id: string) => string | undefined;

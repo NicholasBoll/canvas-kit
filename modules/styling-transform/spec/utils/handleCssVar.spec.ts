@@ -79,4 +79,10 @@ describe('handleCssVar', () => {
 
     expect(result).toEqual(cssVar('--some-var', 'red'));
   });
+
+  it('should handle an object of cssVars', () => {
+    const program = createProgramFromSource(`
+      cssVar(['--some-var', '--some-other-var'])
+    `);
+  });
 });

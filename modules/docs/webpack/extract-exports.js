@@ -18,9 +18,11 @@
     It will extract out the export name only if it starts with a capital. In the examples here, that would be
     "Banner" in all cases except for the last one which would be "Example"
   * @param {string} source
+    @returns {string[]}
   */
 function extractExports(source) {
-  const exportPattern = /export (?:default|const|var|function)(?: class)?(?: function)? ([^:\s<();]*)/;
+  const exportPattern =
+    /export (?:default|const|var|function)(?: class)?(?: function)? ([^:\s<();]*)/;
   const exports = (source.match(new RegExp(exportPattern, 'g')) || [])
     .map(match => match.match(exportPattern)[1] || 'Example') // default export name to "Example"
     .filter(name => name.charAt(0).toUpperCase() === name.charAt(0))

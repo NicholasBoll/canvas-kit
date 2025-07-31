@@ -15,7 +15,7 @@ function handlePropertyTransforms(node: ts.Node, context: TransformerContext): s
 export function parseNodeToStaticValue(
   node: ts.Node,
   context: TransformerContext
-): string | number {
+): string | number | (string | number)[] {
   const {checker} = context;
 
   const value = handlePropertyTransforms(node, context);
@@ -122,6 +122,19 @@ export function parseNodeToStaticValue(
     if (value) {
       return value;
     }
+  }
+
+  // A as const
+  if (ts.isAsExpression(node)) {
+    const value = parseNodeToStaticValue(node.expression, context);
+    if (value) {
+      return value; //?
+    }
+  }
+
+  // A as const
+  if (ts.isArrayLiteralExpression(node)) {
+    return node.elements.map(element => parseNodeToStaticValue(element, context)).flat(); //?
   }
 
   // If we got here, we cannot statically analyze by the AST alone. We have to check the type of the

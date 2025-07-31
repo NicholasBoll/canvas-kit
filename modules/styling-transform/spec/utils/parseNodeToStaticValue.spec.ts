@@ -144,6 +144,33 @@ describe('parseNodeToStaticValue', () => {
     );
   });
 
+  it('should return the value of an AsExpression', () => {
+    const program = createProgramFromSource(`
+        const foo = '12px' as const
+      `);
+
+    const sourceFile = program.getSourceFile('test.ts')!;
+    const node = findNodes(sourceFile, '', ts.isAsExpression)![0];
+
+    expect(parseNodeToStaticValue(node, withDefaultContext(program.getTypeChecker()))).toEqual(
+      '12px'
+    );
+  });
+
+  it('should return the values of an ArrayExpression', () => {
+    const program = createProgramFromSource(`
+        const foo = ['12px', '13px']
+      `);
+
+    const sourceFile = program.getSourceFile('test.ts')!;
+    const node = findNodes(sourceFile, '', ts.isArrayLiteralExpression)![0];
+
+    expect(parseNodeToStaticValue(node, withDefaultContext(program.getTypeChecker()))).toEqual([
+      '12px',
+      '13px',
+    ]);
+  });
+
   it('should return the string value of a ComputedPropertyName of a variable', () => {
     const program = createProgramFromSource(`
       const temp = {

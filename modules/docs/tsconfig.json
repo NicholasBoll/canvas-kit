@@ -1,4 +1,11 @@
 {
   "extends": "../../tsconfig.json",
-  "exclude": ["node_modules", "ts-tmp", "dist", "**/spec", "**/fixtures", "**/stories", "**/lib/stackblitz"]
+  "exclude": ["node_modules", "ts-tmp", "dist", "**/spec", "**/fixtures", "**/stories", "**/lib/stackblitz"],
+  "compilerOptions": {
+    "plugins": [
+      {
+        "transform": "../../.storybook/typescript-transform.ts"
+      }
+    ]
+  }
 }

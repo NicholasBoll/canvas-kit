@@ -140,6 +140,23 @@ describe('parseObjectToStaticValue', () => {
     });
   });
 
+  it.only('should handle spreading an object with an array value', () => {
+    const program = createProgramFromSource(`
+      const foo = {
+        color: ['12px', '13px']
+      }
+
+      const bar = { ...foo }
+    `);
+
+    const sourceFile = program.getSourceFile('test.ts')!;
+    const node = findNodes(sourceFile, '', ts.isObjectLiteralExpression)![1];
+
+    expect(parseObjectToStaticValue(node, withDefaultContext(program.getTypeChecker()))).toEqual({
+      color: ['12px', '13px'],
+    });
+  });
+
   it('should return the nested value of a SpreadAssignment', () => {
     const program = createProgramFromSource(`
       const foo = {

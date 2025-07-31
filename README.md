@@ -58,8 +58,8 @@ import '@workday/canvas-tokens-web/css/system/_variables.css';
 
 import {App} from './App';
 
+injectGlobal(fonts);
 injectGlobal({
-  ...fonts,
   'html, body': {
     fontFamily: cssVar(system.fontFamily.default),
     margin: 0,

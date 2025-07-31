@@ -5,13 +5,13 @@ import {jsx} from '@emotion/react';
 import {Flex} from '@workday/canvas-kit-react/layout';
 import {PrimaryButton} from '@workday/canvas-kit-react/button';
 import {base} from '@workday/canvas-tokens-web';
-import {createStyles, cssVar} from '@workday/canvas-kit-styling';
+import {createStyles} from '@workday/canvas-kit-styling';
 
 const backgroundColors = {
-  cssProp: cssVar(base.chiliMango500),
-  styledComponent: cssVar(base.kiwi500),
-  styleProps: cssVar(base.pomegranate500),
-  createStyles: cssVar(base.grapeSoda500),
+  cssProp: base.chiliMango500,
+  styledComponent: base.kiwi500,
+  styleProps: base.pomegranate500,
+  createStyles: base.grapeSoda500,
 };
 
 const StyledPrimaryButton = styled(PrimaryButton)({

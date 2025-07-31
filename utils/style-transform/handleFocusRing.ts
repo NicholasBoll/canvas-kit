@@ -24,9 +24,9 @@ export const handleFocusRing = createObjectTransform((node, context) => {
         if (ts.isPropertyAssignment(property) && ts.isIdentifier(property.name)) {
           const key = property.name.text;
           if (['width', 'separation'].includes(key)) {
-            args[key] = parseNodeToStaticValue(property.initializer, context);
+            args[key] = parseNodeToStaticValue(property.initializer, context).toString();
           } else if (key !== 'animate') {
-            args[key] = parseNodeToStaticValue(property.initializer, context);
+            args[key] = parseNodeToStaticValue(property.initializer, context).toString();
           }
         }
       });

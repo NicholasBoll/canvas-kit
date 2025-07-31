@@ -16,11 +16,13 @@ export const handleParentModifier = createPropertyTransform((node, context) => {
     const args = node.expression.arguments.map(arg => parseNodeToStaticValue(arg, context));
     const hash = args[0].toString().replace('css-', 'm');
 
-    // add a mapping from `css-{hash}` to `{hash}` for extraction string replacement
-    names[args[0]] = hash;
+    if (!Array.isArray(args[0])) {
+      // add a mapping from `css-{hash}` to `{hash}` for extraction string replacement
+      names[args[0]] = hash;
 
-    // map the `{hash}` to the extracted CSS class name
-    extractedNames[hash] = extractedNames[args[0]];
+      // map the `{hash}` to the extracted CSS class name
+      extractedNames[hash] = extractedNames[args[0]];
+    }
 
     return parentModifier(args[0].toString());
   }

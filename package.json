@@ -25,6 +25,7 @@
     "@types/chroma-js": "^1.4.3",
     "@types/cypress-axe": "^0.4.0",
     "@types/emoji-js": "^3.4.0",
+    "@types/fs-extra": "^11.0.4",
     "@types/jest-axe": "^3.5.9",
     "@types/lodash": "^4.14.136",
     "@types/markdown-to-jsx": "^6.9.0",
